@@ -1,4 +1,10 @@
 UIScrollSlidingPages
-====================
+=========================
 
-WORK IN PROGRESS - Allows you to add multiple view controllers and have them scroll horizontally inside one view. Also has a header scroller that shows next, current and previous items, and scrolls in proportion to the content view. Similar in style to the Groupon app.
+This is a WORK IN PROGRESS control that will eventually allow you to add multiple view controllers and have them scroll horizontally, each with a header view in a separate scroller that shows next and previous items in the scroller, and scrolls in proportion to the content view.
+
+Usage
+---
+* You should not use this control yet. It is still in development! It will likely change a lot.
+
+
