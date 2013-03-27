@@ -49,6 +49,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate)name:UIDeviceOrientationDidChangeNotification object:nil];
+
     
     //change this to adjust height of top nav titles (untested)
     int topScrollerHeight = 50;
@@ -77,9 +79,6 @@
     bottomScrollView.delegate = self; //move the top scroller proportionally as you drag the bottom.
     [self.view addSubview:bottomScrollView];
     
-    //remove this
-    topScrollView.backgroundColor = [UIColor redColor];
-
 }
 
 -(void)setDataSource:(id<TTSlidingPagesDataSource>)dataSource{
@@ -185,10 +184,10 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == bottomScrollView){
-        ////set the correct page on the pagedots
+        //set the correct page on the pagedots
         //CGFloat pageWidth = scrollView.frame.size.width;
         //float fractionalPage = scrollView.contentOffset.x / pageWidth;
-        //NSInteger page = lround(fractionalPage);
+        //currentPage = lround(fractionalPage);
         //pageDots.currentPage = page;
         
         //translate the scroll to the top scroll
@@ -198,6 +197,33 @@
         //multiply that by the content size of the top scroller. E.g if the top scroller is 50px wide, multiplied by 0.03 means we should scroll it to 1.5px, this'll get rounded in the computation, and the scroller will take care of it because paging is enabled.
         topScrollView.contentOffset = CGPointMake(topScrollView.contentSize.width * percentageScrolled, 0);
     }
+}
+
+-(void)didRotate{
+    CGFloat pageWidth = bottomScrollView.frame.size.width;
+    float fractionalPage = bottomScrollView.contentOffset.x / pageWidth;
+    currentPageBeforeRotation = lround(fractionalPage);
+}
+
+-(void)viewWillLayoutSubviews{
+    //this will get called when the screen rotates, at which point we need to fix the frames of all the subviews to be the new correct x position horizontally. The autolayout mask will automatically change the width for us.
+    
+    //reposition the subviews and set the new contentsize width
+    CGRect frame;
+    int nextXPosition = 0;
+    for (UIView *view in bottomScrollView.subviews) {
+        frame = view.frame;
+        frame.size.width = bottomScrollView.frame.size.width;
+        frame.origin.x = nextXPosition;
+        nextXPosition += frame.size.width;
+        view.frame = frame;
+    }
+    bottomScrollView.contentSize = CGSizeMake(nextXPosition, bottomScrollView.contentSize.height);
+
+    //set it back to the same page as it was before (the contentoffset will be different now the widths are different)
+    int contentOffsetWidth = currentPageBeforeRotation * bottomScrollView.frame.size.width;
+    bottomScrollView.contentOffset = CGPointMake(contentOffsetWidth, 0);
+    
 }
 
 @end

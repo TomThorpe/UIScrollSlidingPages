@@ -32,6 +32,7 @@
 #import "TTSlidingPagesDataSource.h"
 
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
+    int currentPageBeforeRotation;
     UIScrollView *bottomScrollView, *topScrollView;
     NSMutableArray *viewControllers;
 }
@@ -39,5 +40,6 @@
 @property (nonatomic, strong) id<TTSlidingPagesDataSource> dataSource;
 
 -(void)reloadPages;
+-(void)didRotate;
 
 @end
