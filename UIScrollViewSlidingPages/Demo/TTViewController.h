@@ -10,7 +10,6 @@
 #import "TTSlidingPagesDataSource.h"
 
 @interface TTViewController : UIViewController<TTSlidingPagesDataSource>{
-    TTScrollSlidingPagesController *slider;
 }
 
 @end

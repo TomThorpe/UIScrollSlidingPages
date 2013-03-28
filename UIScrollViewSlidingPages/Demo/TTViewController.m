@@ -30,14 +30,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
+    //initial setup of the TTScrollSlidingPagesController. 
+    TTScrollSlidingPagesController *slider = [[TTScrollSlidingPagesController alloc] init];
+
     
-    slider = [[TTScrollSlidingPagesController alloc] init];
-    slider.view.frame = self.view.frame;
+    //set properties to customiser the slider. Make sure you set these BEFORE you access any other properties on the slider, such as the view or the datasource. Best to do it immediately after calling the init method.
+    //slider.titleScrollerHeight = 100;
+    //slider.titleScrollerItemWidth=60;
+    
+    //set the datasource.
     slider.dataSource = self;
     
+    //add the slider's view to this view as a subview, and add the viewcontroller to this viewcontrollers child collection (so that it gets retained and stays in memory! And gets all relevant events in the view controller lifecycle)
+    slider.view.frame = self.view.frame;
     [self.view addSubview:slider.view];
+    [self addChildViewController:slider];
     
         
 }

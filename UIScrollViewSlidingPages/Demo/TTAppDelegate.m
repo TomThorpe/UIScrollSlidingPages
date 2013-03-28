@@ -9,7 +9,7 @@
 #import "TTAppDelegate.h"
 
 #import "TableViews/TabTwoViewController.h"
-#import "TableViews/TTViewController.h"
+#import "TTViewController.h"
 
 @implementation TTAppDelegate
 

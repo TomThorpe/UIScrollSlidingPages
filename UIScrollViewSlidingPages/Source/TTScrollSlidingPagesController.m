@@ -41,7 +41,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        //set defaults
+        self.titleScrollerHeight = 50;
+        self.titleScrollerItemWidth = 120;
+        self.titleScrollerBackgroundColour = [UIColor blackColor];
+        self.titleScrollerTextColour = [UIColor whiteColor];
     }
     return self;
 }
@@ -50,14 +54,9 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate)name:UIDeviceOrientationDidChangeNotification object:nil];
-
     
-    //change this to adjust height of top nav titles (untested)
-    int topScrollerHeight = 50;
-    int topScrollerFrameWidth = 120;
-    
-    //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller
-    topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, topScrollerFrameWidth, topScrollerHeight)];
+    //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
+    topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
     topScrollView.center = CGPointMake(self.view.center.x, topScrollView.center.y); //center it horizontally
     topScrollView.pagingEnabled = YES;
     topScrollView.clipsToBounds = NO;
@@ -65,12 +64,17 @@
     topScrollView.showsVerticalScrollIndicator = NO;
     topScrollView.showsHorizontalScrollIndicator = NO;
     topScrollView.directionalLockEnabled = YES;
+    topScrollView.backgroundColor = [UIColor clearColor];
     topScrollView.userInteractionEnabled = NO; //for now I won't let the user drag the top scroller, might allow it in the future.
-    [self.view addSubview:topScrollView];
-
+    UIView *topScrollViewWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.titleScrollerHeight)];//make the view to put the scroll view inside.
+    topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour; //set the background colour (the whole point of having the wrapper)
+    [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
+    [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
+    
     
     //set up the bottom scroller (for the content to go in)
-    bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, topScrollerHeight, self.view.frame.size.width, self.view.frame.size.height-topScrollerHeight)];
+    bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.titleScrollerHeight, self.view.frame.size.width, self.view.frame.size.height-self.titleScrollerHeight)];
     bottomScrollView.pagingEnabled = YES;
     bottomScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
     bottomScrollView.showsVerticalScrollIndicator = NO;
@@ -78,8 +82,8 @@
     bottomScrollView.directionalLockEnabled = YES;
     bottomScrollView.delegate = self; //move the top scroller proportionally as you drag the bottom.
     [self.view addSubview:bottomScrollView];
-    
 }
+
 
 -(void)setDataSource:(id<TTSlidingPagesDataSource>)dataSource{
     _dataSource = dataSource;
@@ -99,11 +103,6 @@
     if (self.dataSource == nil){
         [NSException raise:@"TTSlidingPagesController data source missing" format:@"There was no data source set for the TTSlidingPagesControlller. You must set the .dataSource property on TTSlidingPagesController to an object instance that implements TTSlidingPagesDataSource, also make sure you do this before the view will be loaded (so before you add it as a subview to any other view that is about to appear)"];
     }
-    
-    if (viewControllers == nil){
-        viewControllers = [[NSMutableArray alloc] init];
-    }
-    [viewControllers removeAllObjects];
     
     //remove any existing items from the subviews
     [topScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -139,6 +138,8 @@
             label.text = page.headerText;
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
+            label.textColor = self.titleScrollerTextColour;
+            label.backgroundColor = [UIColor clearColor];
             topItem = (UIView *)label;
         }
         topItem.frame = CGRectMake(nextTopScrollerXPosition, 0, topScrollView.frame.size.width, topScrollView.frame.size.height);
@@ -152,7 +153,6 @@
         if (page.contentViewController != nil){
             [self addChildViewController:page.contentViewController];
             [page.contentViewController didMoveToParentViewController:self];
-            [viewControllers addObject:page.contentViewController];
         }
         
         //put it in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).

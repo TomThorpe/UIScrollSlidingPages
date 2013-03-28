@@ -144,6 +144,9 @@
 		9F7024C416DBF7270003B5FA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				9F9B9B981703758A00CD45B4 /* TTViewController.h */,
+				9F9B9B991703758A00CD45B4 /* TTViewController.m */,
+				9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */,
 				9F7024D216DBFC9B0003B5FA /* about-tomthorpelogo.png */,
 				9F7024C516DBF7AA0003B5FA /* TableViews */,
 				9F70249016DBF6650003B5FA /* Supporting Files */,
@@ -163,9 +166,6 @@
 				9F7024CC16DBF7F80003B5FA /* TabTwoViewController.m */,
 				9F7024CD16DBF7F80003B5FA /* TabTwoViewController.xib */,
 				9F7024D016DBFBE20003B5FA /* FancyCellView.xib */,
-				9F9B9B981703758A00CD45B4 /* TTViewController.h */,
-				9F9B9B991703758A00CD45B4 /* TTViewController.m */,
-				9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */,
 			);
 			path = TableViews;
 			sourceTree = "<group>";

@@ -34,12 +34,35 @@
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
     int currentPageBeforeRotation;
     UIScrollView *bottomScrollView, *topScrollView;
-    NSMutableArray *viewControllers;
 }
-
-@property (nonatomic, strong) id<TTSlidingPagesDataSource> dataSource;
 
 -(void)reloadPages;
 -(void)didRotate;
+
+
+@property (nonatomic, strong) id<TTSlidingPagesDataSource> dataSource;
+
+/**  @property titleScrollerHeight
+ *   @brief The height of the top scroller
+ *   The height of the top navigation scroller (the one with the header texts or images in). If not set, this will default to 50px.  **/
+@property (nonatomic) int titleScrollerHeight;
+
+/**  @property titleScrollerItemWidth
+ *   @brief The width of each item in the top scroller
+ *   The width of each individual item in the top scroller. The wider it is, the less of the previous and next items you'll see, the narrower it is the more of the previous and next items you'll see but the more likely you won't have enough width for your title! Default if not set is 120px  **/
+@property (nonatomic) int titleScrollerItemWidth;
+
+/**  @property titleScrollerBackgroundColour
+ *   @brief The background colour of the top scroller
+ *   The background colour of the top scroller. If you want it to be a texture image, you can use [UIColor colorWithPatternImage]. If not set, the default will be black. **/
+@property (nonatomic, strong) UIColor *titleScrollerBackgroundColour;
+
+/**  @property titleScrollerBackgroundColour
+ *   @brief The colour of the text in the top scroller
+ *   The colour of the text in the top scroller. If not set, the default will be white. **/
+@property (nonatomic, strong) UIColor *titleScrollerTextColour;
+
+
+
 
 @end
