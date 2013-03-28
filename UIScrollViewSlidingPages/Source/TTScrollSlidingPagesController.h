@@ -33,6 +33,7 @@
 
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
     int currentPageBeforeRotation;
+    bool viewDidLoadHasBeenCalled;
     UIScrollView *bottomScrollView, *topScrollView;
 }
 

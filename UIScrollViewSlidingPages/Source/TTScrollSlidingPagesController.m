@@ -41,6 +41,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        viewDidLoadHasBeenCalled = NO;
         //set defaults
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 120;
@@ -53,6 +54,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    viewDidLoadHasBeenCalled = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate)name:UIDeviceOrientationDidChangeNotification object:nil];
     
     //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
@@ -225,5 +229,31 @@
     bottomScrollView.contentOffset = CGPointMake(contentOffsetWidth, 0);
     
 }
+
+
+#pragma mark Setters for properties to warn someone if they attempt to set a property after viewDidLoad has already been called (they won't work if so!)
+-(void)raiseErrorIfViewDidLoadHasBeenCalled{
+    if (viewDidLoadHasBeenCalled)
+    {
+         [NSException raise:@"TTSlidingPagesController set custom property too late" format:@"The app attempted to set one of the custom properties on TTSlidingPagesController (such as TitleScrollerHeight, TitleScrollerItemWidth etc.) after viewDidLoad has already been loaded. This won't work, you need to set the properties before viewDidLoad has been called - so before you access the .view property or set the dataSource. It is best to set the custom properties immediately after calling init on TTSlidingPagesController"];
+    }
+}
+-(void)setTitleScrollerHeight:(int)titleScrollerHeight{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerHeight = titleScrollerHeight;
+}
+-(void)setTitleScrollerItemWidth:(int)titleScrollerItemWidth{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerItemWidth = titleScrollerItemWidth;
+}
+-(void)setTitleScrollerBackgroundColour:(UIColor *)titleScrollerBackgroundColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerBackgroundColour = titleScrollerBackgroundColour;
+}
+-(void)setTitleScrollerTextColour:(UIColor *)titleScrollerTextColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerTextColour = titleScrollerTextColour;
+}
+
 
 @end
