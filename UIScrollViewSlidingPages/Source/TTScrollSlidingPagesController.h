@@ -63,6 +63,11 @@
  *   The colour of the text in the top scroller. If not set, the default will be white. **/
 @property (nonatomic, strong) UIColor *titleScrollerTextColour;
 
+/**  @property disableTopScrollerShadow
+ *   @brief Disables the shadow effect on the top header scroller
+ *   If set to YES the shadow effect on the top header scroller will be disabled. Default is NO. **/
+@property (nonatomic, strong) UIColor *disableTopScrollerShadow;
+
 
 
 

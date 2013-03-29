@@ -30,6 +30,7 @@
 
 #import "TTScrollSlidingPagesController.h"
 #import "TTSlidingPage.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface TTScrollSlidingPagesController ()
 
@@ -47,6 +48,7 @@
         self.titleScrollerItemWidth = 120;
         self.titleScrollerBackgroundColour = [UIColor blackColor];
         self.titleScrollerTextColour = [UIColor whiteColor];
+        self.disableTopScrollerShadow = NO;
     }
     return self;
 }
@@ -74,6 +76,7 @@
     topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour; //set the background colour (the whole point of having the wrapper)
     [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
+    
     [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
     
     
@@ -86,6 +89,15 @@
     bottomScrollView.directionalLockEnabled = YES;
     bottomScrollView.delegate = self; //move the top scroller proportionally as you drag the bottom.
     [self.view addSubview:bottomScrollView];
+    
+    //add the drop shadow on the top scroller (if enabled)
+    if (!self.disableTopScrollerShadow){
+        topScrollViewWrapper.layer.masksToBounds = NO;
+        topScrollViewWrapper.layer.shadowOffset = CGSizeMake(0, 4);
+        topScrollViewWrapper.layer.shadowRadius = 4;
+        topScrollViewWrapper.layer.shadowOpacity = 0.3;
+        [self.view bringSubviewToFront:topScrollViewWrapper];//bring view to sit on top so you can see the shadow!
+    }
 }
 
 
@@ -253,6 +265,10 @@
 -(void)setTitleScrollerTextColour:(UIColor *)titleScrollerTextColour{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _titleScrollerTextColour = titleScrollerTextColour;
+}
+-(void)setDisableTopScrollerShadow:(UIColor *)disableTopScrollerShadow{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _disableTopScrollerShadow = disableTopScrollerShadow;
 }
 
 
