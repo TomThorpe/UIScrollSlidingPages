@@ -11,6 +11,7 @@
 #import "TabOneViewController.h"
 #import "TabTwoViewController.h"
 #import "TTSlidingPage.h"
+#import "TTSlidingPageTitle.h"
 
 @interface TTViewController ()
 
@@ -66,6 +67,7 @@
 -(int)numberOfPagesForSlidingPagesViewController:(TTScrollSlidingPagesController *)source{
     return 7; //just return 7 pages as an example
 }
+
 -(TTSlidingPage *)pageForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index{
     UIViewController *viewController;
     if (index % 2 == 0){ //just an example, alternating views between one example table view and another.
@@ -74,15 +76,19 @@
         viewController = [[TabTwoViewController alloc] init];
     }
     
-    TTSlidingPage *page;
+    return [[TTSlidingPage alloc] initWithContentViewController:viewController];
+}
+
+-(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index{
+    TTSlidingPageTitle *title;
     if (index == 0){
         //use a image as the header for the first page
-        page = [[TTSlidingPage alloc] initWithHeaderImage:[UIImage imageNamed:@"about-tomthorpelogo.png"] andContentViewController:viewController];
+        title= [[TTSlidingPageTitle alloc] initWithHeaderImage:[UIImage imageNamed:@"about-tomthorpelogo.png"]];
     } else {
         //all other pages just use a simple text header
-        page = [[TTSlidingPage alloc] initWithHeaderText:[NSString stringWithFormat:@"Page %d", index+1] andContentViewController:viewController];
+        title = [[TTSlidingPageTitle alloc] initWithHeaderText:[NSString stringWithFormat:@"Page %d", index+1]];
     }
-    return page;
+    return title;
 }
 
 @end

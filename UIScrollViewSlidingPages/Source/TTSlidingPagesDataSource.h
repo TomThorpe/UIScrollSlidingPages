@@ -31,10 +31,13 @@
 #import <Foundation/Foundation.h>
 @class TTScrollSlidingPagesController;
 @class TTSlidingPage;
+@class TTSlidingPageTitle;
 
 @protocol TTSlidingPagesDataSource <NSObject>
 
 -(int)numberOfPagesForSlidingPagesViewController:(TTScrollSlidingPagesController *)source;
+
 -(TTSlidingPage *)pageForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;
+-(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;
 
 @end

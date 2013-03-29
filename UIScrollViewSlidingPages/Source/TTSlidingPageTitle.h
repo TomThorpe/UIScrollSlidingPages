@@ -1,8 +1,8 @@
 //
-//  TTSlidingPage.m
-//  UIScrollViewSlidingPages
+//  TTSlidingPageTitle.h
+//  UIScrollSlidingPages
 //
-//  Created by Thomas Thorpe on 27/03/2013.
+//  Created by Thomas Thorpe on 29/03/2013.
 //  Copyright (c) 2013 Thomas Thorpe. All rights reserved.
 //
 
@@ -28,36 +28,17 @@
  SOFTWARE.
  */
 
-#import "TTSlidingPage.h"
+#import <Foundation/Foundation.h>
 
-@implementation TTSlidingPage
+@interface TTSlidingPageTitle : NSObject
 
--(id)initWithContentViewController:(UIViewController *)contentViewController
-{
-    self = [super init];
-    if(self)
-    {
-        self.contentViewController = contentViewController;
-    }
-    return (self);
-}
+-(id)initWithHeaderText:(NSString*)headerText;
+-(id)initWithHeaderImage:(UIImage*)headerImage;
 
+//The title text to go in the nav bar
+@property(strong, nonatomic) NSString *headerText;
 
--(id)initWithContentView:(UIView *)contentView
-{
-    self = [super init];
-    if(self)
-    {
-        self.contentView = contentView;
-    }
-    return (self);
-}
-
--(void)setContentViewController:(UIViewController *)contentViewController{
-    _contentViewController = contentViewController;
-    if (contentViewController != nil){
-        self.contentView = contentViewController.view;
-    }
-}
+//An image to use in the nav bar (if you set this, the title text will not be used)
+@property(strong, nonatomic) UIImage *headerImage;
 
 @end

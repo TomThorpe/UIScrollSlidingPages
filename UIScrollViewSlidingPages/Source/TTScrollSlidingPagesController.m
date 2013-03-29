@@ -30,6 +30,7 @@
 
 #import "TTScrollSlidingPagesController.h"
 #import "TTSlidingPage.h"
+#import "TTSlidingPageTitle.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface TTScrollSlidingPagesController ()
@@ -157,20 +158,18 @@
     int nextTopScrollerXPosition = 0;
     
     //loop through each page and add it to the scroller
-    for (int i=0; i<numOfPages; i++){
-        //get the page
-        TTSlidingPage *page = [self.dataSource pageForSlidingPagesViewController:self atIndex:i];
-        
+    for (int i=0; i<numOfPages; i++){        
         //top scroller (nav) add----
+        TTSlidingPageTitle *title = [self.dataSource titleForSlidingPagesViewController:self atIndex:i];
         UIView *topItem;
-        if (page.headerImage != nil){
+        if (title.headerImage != nil){
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
-            imageView.image = page.headerImage;
+            imageView.image = title.headerImage;
             topItem = (UIView *)imageView;
         } else {
             UILabel *label = [[UILabel alloc] init];
-            label.text = page.headerText;
+            label.text = title.headerText;
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
             label.textColor = self.titleScrollerTextColour;
@@ -183,6 +182,7 @@
         
         
         //bottom scroller add-----
+        TTSlidingPage *page = [self.dataSource pageForSlidingPagesViewController:self atIndex:i];//get the page
         UIView *contentView = page.contentView;
         
         if (page.contentViewController != nil){

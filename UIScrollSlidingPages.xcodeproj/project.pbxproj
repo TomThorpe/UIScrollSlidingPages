@@ -26,6 +26,7 @@
 		9F7024CE16DBF7F80003B5FA /* TabTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7024CC16DBF7F80003B5FA /* TabTwoViewController.m */; };
 		9F7024CF16DBF7F80003B5FA /* TabTwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024CD16DBF7F80003B5FA /* TabTwoViewController.xib */; };
 		9F7024D116DBFBE20003B5FA /* FancyCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024D016DBFBE20003B5FA /* FancyCellView.xib */; };
+		9F936B55170650EF001622D8 /* TTSlidingPageTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F936B54170650EF001622D8 /* TTSlidingPageTitle.m */; };
 		9F9B9B9B1703758A00CD45B4 /* TTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9B991703758A00CD45B4 /* TTViewController.m */; };
 		9F9B9B9C1703758A00CD45B4 /* TTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */; };
 		9F9B9BA117037C0B00CD45B4 /* TTScrollSlidingPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9BA017037C0B00CD45B4 /* TTScrollSlidingPagesController.m */; };
@@ -59,6 +60,8 @@
 		9F7024CC16DBF7F80003B5FA /* TabTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabTwoViewController.m; sourceTree = "<group>"; };
 		9F7024CD16DBF7F80003B5FA /* TabTwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabTwoViewController.xib; sourceTree = "<group>"; };
 		9F7024D016DBFBE20003B5FA /* FancyCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FancyCellView.xib; sourceTree = "<group>"; };
+		9F936B53170650EF001622D8 /* TTSlidingPageTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSlidingPageTitle.h; sourceTree = "<group>"; };
+		9F936B54170650EF001622D8 /* TTSlidingPageTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSlidingPageTitle.m; sourceTree = "<group>"; };
 		9F9B9B981703758A00CD45B4 /* TTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTViewController.h; sourceTree = "<group>"; };
 		9F9B9B991703758A00CD45B4 /* TTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTViewController.m; sourceTree = "<group>"; };
 		9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTViewController.xib; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 				9F9B9BA017037C0B00CD45B4 /* TTScrollSlidingPagesController.m */,
 				9F9B9BA31703836D00CD45B4 /* TTSlidingPage.h */,
 				9F9B9BA41703836D00CD45B4 /* TTSlidingPage.m */,
+				9F936B53170650EF001622D8 /* TTSlidingPageTitle.h */,
+				9F936B54170650EF001622D8 /* TTSlidingPageTitle.m */,
 				9F9B9BA7170387BE00CD45B4 /* TTSlidingPagesDataSource.h */,
 			);
 			path = Source;
@@ -294,6 +299,7 @@
 				9F9B9B9B1703758A00CD45B4 /* TTViewController.m in Sources */,
 				9F9B9BA117037C0B00CD45B4 /* TTScrollSlidingPagesController.m in Sources */,
 				9F9B9BA51703836D00CD45B4 /* TTSlidingPage.m in Sources */,
+				9F936B55170650EF001622D8 /* TTSlidingPageTitle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,23 +33,13 @@
 @interface TTSlidingPage : NSObject
 
 //if your view has a controller associated with it, you should use this initialiser and pass the view controller. This will make sure it gets retained and messages are passed to it correctly. 
--(id)initWithHeaderText:(NSString *)headerText andContentViewController:(UIViewController *)contentViewController;
-//if your view has a controller associated with it, you should use this initialiser and pass the view controller. This will make sure it gets retained and messages are passed to it correctly. 
--(id)initWithHeaderImage:(UIImage *)headerImage andContentViewController:(UIViewController *)contentViewController;
+-(id)initWithContentViewController:(UIViewController *)contentViewController;
 
 //if you use this method and just pass in a content view as a UIView, you must keep your own reference to the view controller, otherwise it might get deallocated and things will start going weird. Use this constructor at your own risk. 
--(id)initWithHeaderText:(NSString *)headerText andContentView:(UIView *)contentView;
+-(id)initWithContentView:(UIView *)contentView;
 
-//if you use this method and just pass in a content view as a UIView, you must keep your own reference to the view controller, otherwise it might get deallocated and things will start going weird. Use this constructor at your own risk. 
--(id)initWithHeaderImage:(UIImage *)headerImage andContentView:(UIView *)contentView;
 
-//The title text to go in the nav bar
-@property(strong, nonatomic) NSString *headerText;
-
-//An image to use in the nav bar (if you set this, the title text will not be used)
-@property(strong, nonatomic) UIImage *headerImage;
-
-//the view controller for the content area. Preferbale to just setting a view, as it will make sure the correct view controller heirarchy gets maintained, and that the viewcontroller doesnt get deallocated.
+//the view controller for the content area. Preferbale to just setting a view
 @property(strong, nonatomic) UIViewController *contentViewController;
 
 //The view to go in the content area. You should only use this if you are keeping your own reference to the view controller. Use at your own risk.

@@ -1,8 +1,8 @@
 //
-//  TTSlidingPage.m
-//  UIScrollViewSlidingPages
+//  TTSlidingPageTitle.m
+//  UIScrollSlidingPages
 //
-//  Created by Thomas Thorpe on 27/03/2013.
+//  Created by Thomas Thorpe on 29/03/2013.
 //  Copyright (c) 2013 Thomas Thorpe. All rights reserved.
 //
 
@@ -28,36 +28,26 @@
  SOFTWARE.
  */
 
-#import "TTSlidingPage.h"
+#import "TTSlidingPageTitle.h"
 
-@implementation TTSlidingPage
+@implementation TTSlidingPageTitle
 
--(id)initWithContentViewController:(UIViewController *)contentViewController
-{
+-(id)initWithHeaderText:(NSString*)headerText{
     self = [super init];
     if(self)
     {
-        self.contentViewController = contentViewController;
+        self.headerText = headerText;
     }
     return (self);
 }
 
-
--(id)initWithContentView:(UIView *)contentView
-{
+-(id)initWithHeaderImage:(UIImage*)headerImage{
     self = [super init];
     if(self)
     {
-        self.contentView = contentView;
+        self.headerImage = headerImage;
     }
     return (self);
-}
-
--(void)setContentViewController:(UIViewController *)contentViewController{
-    _contentViewController = contentViewController;
-    if (contentViewController != nil){
-        self.contentView = contentViewController.view;
-    }
 }
 
 @end
