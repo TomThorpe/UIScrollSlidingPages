@@ -62,7 +62,7 @@
 
 /**  @property titleScrollerBackgroundColour
  *   @brief The background colour of the top scroller
- *   The background colour of the top scroller. If you want it to be a texture image, you can use [UIColor colorWithPatternImage]. If not set, the default will be black. **/
+ *   The background colour of the top scroller. If you want it to be a texture image, you can use [UIColor colorWithPatternImage]. If not set, the default is a black diamonds pattern (credit: from http://subtlepatterns.com/ as long as you copy the diagmonds.png files within the Images folder in the same folder as this source). **/
 @property (nonatomic, strong) UIColor *titleScrollerBackgroundColour;
 
 /**  @property titleScrollerBackgroundColour

@@ -46,7 +46,14 @@
         //set defaults
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 120;
-        self.titleScrollerBackgroundColour = [UIColor blackColor];
+        
+        UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
+        if (backgroundImage != nil){
+            self.titleScrollerBackgroundColour = [UIColor colorWithPatternImage:backgroundImage];
+        } else {
+            self.titleScrollerBackgroundColour = [UIColor blackColor];
+        }
+        
         self.titleScrollerTextColour = [UIColor whiteColor];
         self.disableTitleScrollerShadow = NO;
         self.disableUIPageControl = NO;

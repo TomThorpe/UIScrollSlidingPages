@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F2035E61706475B00438E50 /* diagmonds.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035E31706475B00438E50 /* diagmonds.png */; };
+		9F2035E71706475B00438E50 /* diagmonds_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035E41706475B00438E50 /* diagmonds_@2X.png */; };
+		9F2035E81706475B00438E50 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035E51706475B00438E50 /* readme.txt */; };
 		9F70248A16DBF6650003B5FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F70248916DBF6650003B5FA /* UIKit.framework */; };
 		9F70248C16DBF6650003B5FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F70248B16DBF6650003B5FA /* Foundation.framework */; };
 		9F70248E16DBF6650003B5FA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F70248D16DBF6650003B5FA /* CoreGraphics.framework */; };
@@ -30,6 +33,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F2035E31706475B00438E50 /* diagmonds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diagmonds.png; sourceTree = "<group>"; };
+		9F2035E41706475B00438E50 /* diagmonds_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "diagmonds_@2X.png"; sourceTree = "<group>"; };
+		9F2035E51706475B00438E50 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		9F70248616DBF6650003B5FA /* UIScrollSlidingPages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollSlidingPages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F70248916DBF6650003B5FA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9F70248B16DBF6650003B5FA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -77,6 +83,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F2035E11706475B00438E50 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9F2035E21706475B00438E50 /* diagmonds */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		9F2035E21706475B00438E50 /* diagmonds */ = {
+			isa = PBXGroup;
+			children = (
+				9F2035E31706475B00438E50 /* diagmonds.png */,
+				9F2035E41706475B00438E50 /* diagmonds_@2X.png */,
+				9F2035E51706475B00438E50 /* readme.txt */,
+			);
+			path = diagmonds;
+			sourceTree = "<group>";
+		};
 		9F70247D16DBF6650003B5FA = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +156,7 @@
 		9F7024C016DBF6C00003B5FA /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				9F2035E11706475B00438E50 /* Images */,
 				9F9B9B9F17037C0B00CD45B4 /* TTScrollSlidingPagesController.h */,
 				9F9B9BA017037C0B00CD45B4 /* TTScrollSlidingPagesController.m */,
 				9F9B9BA31703836D00CD45B4 /* TTSlidingPage.h */,
@@ -240,6 +265,9 @@
 				9F7024D116DBFBE20003B5FA /* FancyCellView.xib in Resources */,
 				9F7024D316DBFC9B0003B5FA /* about-tomthorpelogo.png in Resources */,
 				9F9B9B9C1703758A00CD45B4 /* TTViewController.xib in Resources */,
+				9F2035E61706475B00438E50 /* diagmonds.png in Resources */,
+				9F2035E71706475B00438E50 /* diagmonds_@2X.png in Resources */,
+				9F2035E81706475B00438E50 /* readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
