@@ -66,8 +66,7 @@
 /**  @property disableTopScrollerShadow
  *   @brief Disables the shadow effect on the top header scroller
  *   If set to YES the shadow effect on the top header scroller will be disabled. Default is NO. **/
-@property (nonatomic, strong) UIColor *disableTopScrollerShadow;
-
+@property (nonatomic) BOOL disableTopScrollerShadow;
 
 
 

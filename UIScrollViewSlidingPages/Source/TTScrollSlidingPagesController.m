@@ -266,10 +266,11 @@
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _titleScrollerTextColour = titleScrollerTextColour;
 }
--(void)setDisableTopScrollerShadow:(UIColor *)disableTopScrollerShadow{
+-(void)setDisableTopScrollerShadow:(BOOL)disableTopScrollerShadow{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _disableTopScrollerShadow = disableTopScrollerShadow;
 }
+
 
 
 @end
