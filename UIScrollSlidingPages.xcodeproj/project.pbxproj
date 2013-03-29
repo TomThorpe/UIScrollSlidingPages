@@ -10,6 +10,7 @@
 		9F2035E61706475B00438E50 /* diagmonds.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035E31706475B00438E50 /* diagmonds.png */; };
 		9F2035E71706475B00438E50 /* diagmonds_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035E41706475B00438E50 /* diagmonds_@2X.png */; };
 		9F2035E81706475B00438E50 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035E51706475B00438E50 /* readme.txt */; };
+		9F2035EB170648E600438E50 /* about-tomthorpelogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F2035EA170648E600438E50 /* about-tomthorpelogo.png */; };
 		9F70248A16DBF6650003B5FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F70248916DBF6650003B5FA /* UIKit.framework */; };
 		9F70248C16DBF6650003B5FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F70248B16DBF6650003B5FA /* Foundation.framework */; };
 		9F70248E16DBF6650003B5FA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F70248D16DBF6650003B5FA /* CoreGraphics.framework */; };
@@ -25,7 +26,6 @@
 		9F7024CE16DBF7F80003B5FA /* TabTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7024CC16DBF7F80003B5FA /* TabTwoViewController.m */; };
 		9F7024CF16DBF7F80003B5FA /* TabTwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024CD16DBF7F80003B5FA /* TabTwoViewController.xib */; };
 		9F7024D116DBFBE20003B5FA /* FancyCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024D016DBFBE20003B5FA /* FancyCellView.xib */; };
-		9F7024D316DBFC9B0003B5FA /* about-tomthorpelogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024D216DBFC9B0003B5FA /* about-tomthorpelogo.png */; };
 		9F9B9B9B1703758A00CD45B4 /* TTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9B991703758A00CD45B4 /* TTViewController.m */; };
 		9F9B9B9C1703758A00CD45B4 /* TTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */; };
 		9F9B9BA117037C0B00CD45B4 /* TTScrollSlidingPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9BA017037C0B00CD45B4 /* TTScrollSlidingPagesController.m */; };
@@ -36,6 +36,7 @@
 		9F2035E31706475B00438E50 /* diagmonds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diagmonds.png; sourceTree = "<group>"; };
 		9F2035E41706475B00438E50 /* diagmonds_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "diagmonds_@2X.png"; sourceTree = "<group>"; };
 		9F2035E51706475B00438E50 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		9F2035EA170648E600438E50 /* about-tomthorpelogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-tomthorpelogo.png"; sourceTree = "<group>"; };
 		9F70248616DBF6650003B5FA /* UIScrollSlidingPages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIScrollSlidingPages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F70248916DBF6650003B5FA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9F70248B16DBF6650003B5FA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,7 +59,6 @@
 		9F7024CC16DBF7F80003B5FA /* TabTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabTwoViewController.m; sourceTree = "<group>"; };
 		9F7024CD16DBF7F80003B5FA /* TabTwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabTwoViewController.xib; sourceTree = "<group>"; };
 		9F7024D016DBFBE20003B5FA /* FancyCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FancyCellView.xib; sourceTree = "<group>"; };
-		9F7024D216DBFC9B0003B5FA /* about-tomthorpelogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-tomthorpelogo.png"; sourceTree = "<group>"; };
 		9F9B9B981703758A00CD45B4 /* TTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTViewController.h; sourceTree = "<group>"; };
 		9F9B9B991703758A00CD45B4 /* TTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTViewController.m; sourceTree = "<group>"; };
 		9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTViewController.xib; sourceTree = "<group>"; };
@@ -99,6 +99,14 @@
 				9F2035E51706475B00438E50 /* readme.txt */,
 			);
 			path = diagmonds;
+			sourceTree = "<group>";
+		};
+		9F2035E9170648E600438E50 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9F2035EA170648E600438E50 /* about-tomthorpelogo.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		9F70247D16DBF6650003B5FA = {
@@ -169,10 +177,10 @@
 		9F7024C416DBF7270003B5FA /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				9F2035E9170648E600438E50 /* Images */,
 				9F9B9B981703758A00CD45B4 /* TTViewController.h */,
 				9F9B9B991703758A00CD45B4 /* TTViewController.m */,
 				9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */,
-				9F7024D216DBFC9B0003B5FA /* about-tomthorpelogo.png */,
 				9F7024C516DBF7AA0003B5FA /* TableViews */,
 				9F70249016DBF6650003B5FA /* Supporting Files */,
 				9F70249816DBF6650003B5FA /* TTAppDelegate.h */,
@@ -263,11 +271,11 @@
 				9F7024CA16DBF7E20003B5FA /* TabOneViewController.xib in Resources */,
 				9F7024CF16DBF7F80003B5FA /* TabTwoViewController.xib in Resources */,
 				9F7024D116DBFBE20003B5FA /* FancyCellView.xib in Resources */,
-				9F7024D316DBFC9B0003B5FA /* about-tomthorpelogo.png in Resources */,
 				9F9B9B9C1703758A00CD45B4 /* TTViewController.xib in Resources */,
 				9F2035E61706475B00438E50 /* diagmonds.png in Resources */,
 				9F2035E71706475B00438E50 /* diagmonds_@2X.png in Resources */,
 				9F2035E81706475B00438E50 /* readme.txt in Resources */,
+				9F2035EB170648E600438E50 /* about-tomthorpelogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

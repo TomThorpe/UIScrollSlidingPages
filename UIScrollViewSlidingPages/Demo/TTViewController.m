@@ -64,18 +64,25 @@
 
 #pragma mark TTSlidingPagesDataSource methods
 -(int)numberOfPagesForSlidingPagesViewController:(TTScrollSlidingPagesController *)source{
-    return 2;
+    return 7; //just return 7 pages as an example
 }
 -(TTSlidingPage *)pageForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index{
-    if (index == 0){
-        UIViewController *viewC1= [[TabOneViewController alloc] init];
-        TTSlidingPage *page1 = [[TTSlidingPage alloc] initWithHeaderText:@"Page 1" andContentViewController:viewC1];
-        return page1;
+    UIViewController *viewController;
+    if (index % 2 == 0){ //just an example, alternating views between one example table view and another.
+        viewController = [[TabOneViewController alloc] init];
     } else {
-        UIViewController *viewC2 = [[TabTwoViewController alloc] init];
-        TTSlidingPage *page2 = [[TTSlidingPage alloc] initWithHeaderText:@"Page 2" andContentViewController:viewC2];
-        return page2;
+        viewController = [[TabTwoViewController alloc] init];
     }
+    
+    TTSlidingPage *page;
+    if (index == 0){
+        //use a image as the header for the first page
+        page = [[TTSlidingPage alloc] initWithHeaderImage:[UIImage imageNamed:@"about-tomthorpelogo.png"] andContentViewController:viewController];
+    } else {
+        //all other pages just use a simple text header
+        page = [[TTSlidingPage alloc] initWithHeaderText:[NSString stringWithFormat:@"Page %d", index+1] andContentViewController:viewController];
+    }
+    return page;
 }
 
 @end
