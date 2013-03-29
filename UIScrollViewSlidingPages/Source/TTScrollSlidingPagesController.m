@@ -164,7 +164,10 @@
         //top scroller (nav) add----
         UIView *topItem;
         if (page.headerImage != nil){
-            topItem = (UIView *)page.headerImage;
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.image = page.headerImage;
+            topItem = (UIView *)imageView;
         } else {
             UILabel *label = [[UILabel alloc] init];
             label.text = page.headerText;
