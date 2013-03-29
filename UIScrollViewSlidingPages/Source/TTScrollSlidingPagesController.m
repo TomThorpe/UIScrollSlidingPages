@@ -49,6 +49,7 @@
         self.titleScrollerBackgroundColour = [UIColor blackColor];
         self.titleScrollerTextColour = [UIColor whiteColor];
         self.disableTopScrollerShadow = NO;
+        self.disableTopScrollerShadow = NO;
     }
     return self;
 }
@@ -61,6 +62,17 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate)name:UIDeviceOrientationDidChangeNotification object:nil];
     
+    int nextYPosition = 0;
+    if (!self.disableUIPageControl){
+        //create and add the UIPageControl
+        int pageViewHeight = 15;
+        pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageViewHeight)];
+        pageControl.backgroundColor = [UIColor blackColor];
+        pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [self.view addSubview:pageControl];
+         nextYPosition += pageViewHeight;
+    }
+    
     //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
     topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
     topScrollView.center = CGPointMake(self.view.center.x, topScrollView.center.y); //center it horizontally
@@ -72,16 +84,15 @@
     topScrollView.directionalLockEnabled = YES;
     topScrollView.backgroundColor = [UIColor clearColor];
     topScrollView.userInteractionEnabled = NO; //for now I won't let the user drag the top scroller, might allow it in the future.
-    UIView *topScrollViewWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.titleScrollerHeight)];//make the view to put the scroll view inside.
+    UIView *topScrollViewWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight)];//make the view to put the scroll view inside.
     topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour; //set the background colour (the whole point of having the wrapper)
     [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
-    
     [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
-    
+    nextYPosition += self.titleScrollerHeight;
     
     //set up the bottom scroller (for the content to go in)
-    bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.titleScrollerHeight, self.view.frame.size.width, self.view.frame.size.height-self.titleScrollerHeight)];
+    bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.view.frame.size.height-nextYPosition)];
     bottomScrollView.pagingEnabled = YES;
     bottomScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
     bottomScrollView.showsVerticalScrollIndicator = NO;
@@ -187,24 +198,25 @@
     topScrollView.contentOffset = CGPointMake(initialPage * topScrollView.frame.size.width, 0);
     bottomScrollView.contentOffset = CGPointMake(initialPage * bottomScrollView.frame.size.width, 0);
     
-//    //set the number of dots on the page control, and set the initial selected dot
-//    pageDots.numberOfPages = numberOfPages; //if you dont set the number of pages before you set the currentpage, it won't work. so make sure you do it it in the order here.
-//    pageDots.currentPage = initialPage;
-//    
-//    
-//    //fade in the page dots
-//    [UIView animateWithDuration:1.5 animations:^{
-//        pageDots.alpha = 1.0f;
-//    }];
+    //set the number of dots on the page control, and set the initial selected dot
+      pageControl.numberOfPages = numOfPages;
+      pageControl.currentPage = initialPage;
+    
+    
+      //fade in the page dots
+    if (pageControl.alpha != 1.0){
+        [UIView animateWithDuration:1.5 animations:^{
+            pageControl.alpha = 1.0f;
+        }];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == bottomScrollView){
         //set the correct page on the pagedots
-        //CGFloat pageWidth = scrollView.frame.size.width;
-        //float fractionalPage = scrollView.contentOffset.x / pageWidth;
-        //currentPage = lround(fractionalPage);
-        //pageDots.currentPage = page;
+        CGFloat pageWidth = scrollView.frame.size.width;
+        float fractionalPage = scrollView.contentOffset.x / pageWidth;
+        pageControl.currentPage = lround(fractionalPage);
         
         //translate the scroll to the top scroll
         //find out what percentage the bottom scroller is scroller through it's views (e.g if its total views are 100px wide, but it has scrolled to 3px, it is 0.03 or 3% through it's scroll area
@@ -269,6 +281,10 @@
 -(void)setDisableTopScrollerShadow:(BOOL)disableTopScrollerShadow{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _disableTopScrollerShadow = disableTopScrollerShadow;
+}
+-(void)setDisableUIPageControl:(BOOL)disableUIPageControl{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _disableUIPageControl = disableUIPageControl;
 }
 
 

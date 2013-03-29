@@ -34,6 +34,7 @@
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
     int currentPageBeforeRotation;
     bool viewDidLoadHasBeenCalled;
+    UIPageControl *pageControl;
     UIScrollView *bottomScrollView, *topScrollView;
 }
 
@@ -67,6 +68,11 @@
  *   @brief Disables the shadow effect on the top header scroller
  *   If set to YES the shadow effect on the top header scroller will be disabled. Default is NO. **/
 @property (nonatomic) BOOL disableTopScrollerShadow;
+
+/**  @property disableUIPageControl
+ *   @brief Disables the UIPageControl (the page dots) at the top of the screen
+ *   If set to YES the UIPageControl at the top of the screen will not be added. Default is NO. **/
+@property (nonatomic) BOOL disableUIPageControl;
 
 
 
