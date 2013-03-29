@@ -48,8 +48,9 @@
         self.titleScrollerItemWidth = 120;
         self.titleScrollerBackgroundColour = [UIColor blackColor];
         self.titleScrollerTextColour = [UIColor whiteColor];
-        self.disableTopScrollerShadow = NO;
-        self.disableTopScrollerShadow = NO;
+        self.disableTitleScrollerShadow = NO;
+        self.disableUIPageControl = NO;
+        self.initialPageNumber = 0;
     }
     return self;
 }
@@ -102,7 +103,7 @@
     [self.view addSubview:bottomScrollView];
     
     //add the drop shadow on the top scroller (if enabled)
-    if (!self.disableTopScrollerShadow){
+    if (!self.disableTitleScrollerShadow){
         topScrollViewWrapper.layer.masksToBounds = NO;
         topScrollViewWrapper.layer.shadowOffset = CGSizeMake(0, 4);
         topScrollViewWrapper.layer.shadowRadius = 4;
@@ -148,9 +149,6 @@
     int nextXPosition = 0;
     int nextTopScrollerXPosition = 0;
     
-    //what page should the view start on? (change this if you want)
-    int initialPage = 1;
-    
     //loop through each page and add it to the scroller
     for (int i=0; i<numOfPages; i++){
         //get the page
@@ -194,21 +192,22 @@
     topScrollView.contentSize = CGSizeMake(nextTopScrollerXPosition, topScrollView.frame.size.height);
     bottomScrollView.contentSize = CGSizeMake(nextXPosition, bottomScrollView.frame.size.height);
     
-    //scroll to the initialpage
-    topScrollView.contentOffset = CGPointMake(initialPage * topScrollView.frame.size.width, 0);
-    bottomScrollView.contentOffset = CGPointMake(initialPage * bottomScrollView.frame.size.width, 0);
+    int initialPage = self.initialPageNumber;
     
     //set the number of dots on the page control, and set the initial selected dot
-      pageControl.numberOfPages = numOfPages;
-      pageControl.currentPage = initialPage;
+    pageControl.numberOfPages = numOfPages;
+    pageControl.currentPage = initialPage;
     
     
-      //fade in the page dots
+    //fade in the page dots
     if (pageControl.alpha != 1.0){
         [UIView animateWithDuration:1.5 animations:^{
             pageControl.alpha = 1.0f;
         }];
     }
+    
+    //scroll to the initialpage
+    [self scrollToPage:initialPage animated:NO];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -231,6 +230,12 @@
     CGFloat pageWidth = bottomScrollView.frame.size.width;
     float fractionalPage = bottomScrollView.contentOffset.x / pageWidth;
     currentPageBeforeRotation = lround(fractionalPage);
+}
+
+-(void)scrollToPage:(int)page animated:(BOOL)animated{
+    currentPageBeforeRotation = page;
+    [topScrollView setContentOffset: CGPointMake(page * topScrollView.frame.size.width, 0) animated:animated];
+    [bottomScrollView setContentOffset: CGPointMake(page * bottomScrollView.frame.size.width, 0) animated:animated];
 }
 
 -(void)viewWillLayoutSubviews{
@@ -278,14 +283,15 @@
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _titleScrollerTextColour = titleScrollerTextColour;
 }
--(void)setDisableTopScrollerShadow:(BOOL)disableTopScrollerShadow{
+-(void)setDisableTitleScrollerShadow:(BOOL)disableTitleScrollerShadow{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
-    _disableTopScrollerShadow = disableTopScrollerShadow;
+    _disableTitleScrollerShadow = disableTitleScrollerShadow;
 }
 -(void)setDisableUIPageControl:(BOOL)disableUIPageControl{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _disableUIPageControl = disableUIPageControl;
 }
+//-initialPageNumber can be set whenever so it's included here.
 
 
 

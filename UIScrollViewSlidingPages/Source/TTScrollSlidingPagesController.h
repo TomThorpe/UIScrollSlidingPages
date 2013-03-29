@@ -38,8 +38,14 @@
     UIScrollView *bottomScrollView, *topScrollView;
 }
 
--(void)reloadPages;
+
 -(void)didRotate;
+/**Don't use anything above this. Feel free to use anything below!*/
+
+
+-(void)reloadPages;
+-(void)scrollToPage:(int)page animated:(BOOL)animated;
+
 
 
 @property (nonatomic, strong) id<TTSlidingPagesDataSource> dataSource;
@@ -67,12 +73,17 @@
 /**  @property disableTopScrollerShadow
  *   @brief Disables the shadow effect on the top header scroller
  *   If set to YES the shadow effect on the top header scroller will be disabled. Default is NO. **/
-@property (nonatomic) BOOL disableTopScrollerShadow;
+@property (nonatomic) BOOL disableTitleScrollerShadow;
 
 /**  @property disableUIPageControl
  *   @brief Disables the UIPageControl (the page dots) at the top of the screen
  *   If set to YES the UIPageControl at the top of the screen will not be added. Default is NO. **/
 @property (nonatomic) BOOL disableUIPageControl;
+
+/**  @property initialPageNumber
+ *   @brief Sets the scroller to scroll to a specific page initially
+ *   Sets the scroller to scroll to a specific page initially (either on the first load, or afrer calling reloadPages). Default is 0. **/
+@property (nonatomic) int initialPageNumber;
 
 
 

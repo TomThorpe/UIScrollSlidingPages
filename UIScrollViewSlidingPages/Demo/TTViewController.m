@@ -39,6 +39,10 @@
     //set properties to customiser the slider. Make sure you set these BEFORE you access any other properties on the slider, such as the view or the datasource. Best to do it immediately after calling the init method.
     //slider.titleScrollerHeight = 100;
     //slider.titleScrollerItemWidth=60;
+    //slider.titleScrollerBackgroundColour = [UIColor darkGrayColor];
+    //slider.disableTitleScrollerShadow = YES;
+    //slider.disableUIPageControl = YES;
+    //slider.initialPageNumber = 1;
     
     //set the datasource.
     slider.dataSource = self;
