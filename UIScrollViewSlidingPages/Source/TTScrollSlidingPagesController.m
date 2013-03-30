@@ -59,6 +59,7 @@
         self.disableTitleScrollerShadow = NO;
         self.disableUIPageControl = NO;
         self.initialPageNumber = 0;
+        self.pagingEnabled = YES;
     }
     return self;
 }
@@ -102,7 +103,7 @@
     
     //set up the bottom scroller (for the content to go in)
     bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.view.frame.size.height-nextYPosition)];
-    bottomScrollView.pagingEnabled = YES;
+    bottomScrollView.pagingEnabled = self.pagingEnabled;
     bottomScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
     bottomScrollView.showsVerticalScrollIndicator = NO;
     bottomScrollView.showsHorizontalScrollIndicator = NO;
@@ -119,15 +120,6 @@
         [self.view bringSubviewToFront:topScrollViewWrapper];//bring view to sit on top so you can see the shadow!
     }
 }
-
-
--(void)setDataSource:(id<TTSlidingPagesDataSource>)dataSource{
-    _dataSource = dataSource;
-    if (self.view != nil){
-        [self reloadPages];
-    }
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -182,19 +174,25 @@
         
         
         //bottom scroller add-----
+        //set the default width of the page
+        int pageWidth = bottomScrollView.frame.size.width;
+        //if the datasource implements the widthForPageOnSlidingPagesViewController:atIndex method, use it to override the width of the page
+        if ([self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)] ){
+            pageWidth = [self.dataSource widthForPageOnSlidingPagesViewController:self atIndex:i];
+        }
+        
         TTSlidingPage *page = [self.dataSource pageForSlidingPagesViewController:self atIndex:i];//get the page
         UIView *contentView = page.contentView;
+        
+        //put it in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).
+        contentView.frame = CGRectMake(nextXPosition, 0, pageWidth, bottomScrollView.frame.size.height);
+        [bottomScrollView addSubview:contentView];
+        nextXPosition = nextXPosition + contentView.frame.size.width;
         
         if (page.contentViewController != nil){
             [self addChildViewController:page.contentViewController];
             [page.contentViewController didMoveToParentViewController:self];
         }
-        
-        //put it in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).
-        contentView.frame = CGRectMake(nextXPosition, 0, bottomScrollView.frame.size.width, bottomScrollView.frame.size.height);
-        [bottomScrollView addSubview:contentView];
-        nextXPosition = nextXPosition + contentView.frame.size.width;
-        
         
     }
     
@@ -220,35 +218,49 @@
     [self scrollToPage:initialPage animated:NO];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == bottomScrollView){
-        //set the correct page on the pagedots
-        CGFloat pageWidth = scrollView.frame.size.width;
-        float fractionalPage = scrollView.contentOffset.x / pageWidth;
-        pageControl.currentPage = lround(fractionalPage);
-        
-        //translate the scroll to the top scroll
-        //find out what percentage the bottom scroller is scroller through it's views (e.g if its total views are 100px wide, but it has scrolled to 3px, it is 0.03 or 3% through it's scroll area
-        float percentageScrolled = scrollView.contentOffset.x / scrollView.contentSize.width;
-        
-        //multiply that by the content size of the top scroller. E.g if the top scroller is 50px wide, multiplied by 0.03 means we should scroll it to 1.5px, this'll get rounded in the computation, and the scroller will take care of it because paging is enabled.
-        topScrollView.contentOffset = CGPointMake(topScrollView.contentSize.width * percentageScrolled, 0);
+-(int)getCurrentDisplayedPage{
+    //cycle through all the subviews until you get to a position that matches the offset then that's what page youre on (each view can be a different width)
+    int page = 0;
+    int xPosition = 0;
+    for (UIView *view in bottomScrollView.subviews)
+    {
+        xPosition += view.frame.size.width;
+        if (bottomScrollView.contentOffset.x < xPosition){
+            break;
+        }
+        page++;
     }
+    
+    return page;
 }
 
+-(int)getXPositionOfPage:(int)page{
+    int xPosition = 0;
+    int curPage = 0;
+    for (UIView *subview in bottomScrollView.subviews)
+    {
+        if (curPage >= page){
+            break;
+        }
+        curPage++;
+        xPosition += subview.frame.size.width; //each view could in theory have a different width
+    }
+    
+    return xPosition;
+}
+
+
 -(void)didRotate{
-    CGFloat pageWidth = bottomScrollView.frame.size.width;
-    float fractionalPage = bottomScrollView.contentOffset.x / pageWidth;
-    currentPageBeforeRotation = lround(fractionalPage);
+    currentPageBeforeRotation = [self getCurrentDisplayedPage];
 }
 
 -(void)scrollToPage:(int)page animated:(BOOL)animated{
     currentPageBeforeRotation = page;
     [topScrollView setContentOffset: CGPointMake(page * topScrollView.frame.size.width, 0) animated:animated];
-    [bottomScrollView setContentOffset: CGPointMake(page * bottomScrollView.frame.size.width, 0) animated:animated];
+    [bottomScrollView setContentOffset: CGPointMake([self getXPositionOfPage:page],0) animated:animated];
 }
 
--(void)viewWillLayoutSubviews{
+-(void)viewDidLayoutSubviews{
     //this will get called when the screen rotates, at which point we need to fix the frames of all the subviews to be the new correct x position horizontally. The autolayout mask will automatically change the width for us.
     
     //reposition the subviews and set the new contentsize width
@@ -256,19 +268,59 @@
     int nextXPosition = 0;
     for (UIView *view in bottomScrollView.subviews) {
         frame = view.frame;
-        frame.size.width = bottomScrollView.frame.size.width;
         frame.origin.x = nextXPosition;
         nextXPosition += frame.size.width;
         view.frame = frame;
     }
     bottomScrollView.contentSize = CGSizeMake(nextXPosition, bottomScrollView.contentSize.height);
-
+    
     //set it back to the same page as it was before (the contentoffset will be different now the widths are different)
-    int contentOffsetWidth = currentPageBeforeRotation * bottomScrollView.frame.size.width;
+    int contentOffsetWidth = [self getXPositionOfPage:currentPageBeforeRotation];
     bottomScrollView.contentOffset = CGPointMake(contentOffsetWidth, 0);
     
 }
 
+#pragma mark UIScrollView delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == bottomScrollView){
+        int currentPage = [self getCurrentDisplayedPage];
+        
+        //set the correct page on the pagedots
+        pageControl.currentPage = currentPage;
+                
+        //translate the scroll to the top scroll
+        //get the x position of the page in the top scroller
+        int topXPosition = self.titleScrollerItemWidth * currentPage;
+        
+        //work out the percentage past this page the view currently is, by getting the xPosition of the next page and seeing how close it is
+        float currentPageStartXPosition = [self getXPositionOfPage:currentPage]; //subtract the current page's start x position from both the current offset and next page's start position, to mean that we're on a base level. So for example if we're on page 1 so that the currentPageStartXPosition is 320, and the current offset is 330, the next page xPosition is 640, then 330-320 - 10, and 640-320 - 320. So we're 10 pixels into 320, so roughly 3%.
+        float nextPagesXPosition = [self getXPositionOfPage:currentPage+1];
+        float percentageTowardsNextPage = (scrollView.contentOffset.x-currentPageStartXPosition) / (nextPagesXPosition-currentPageStartXPosition);
+        //multiply the percentage towards the next page that you are, by the width of each topScroller item, and add it to the topXPosition
+        
+        float addToTopXPosition = percentageTowardsNextPage * self.titleScrollerItemWidth;
+        topXPosition = topXPosition + roundf(addToTopXPosition);
+        
+        topScrollView.contentOffset = CGPointMake(topXPosition, 0);
+    }
+}
+
+#pragma mark property setters - for when need to do fancy things as well as set the value
+
+-(void)setDataSource:(id<TTSlidingPagesDataSource>)dataSource{
+    _dataSource = dataSource;
+    if (self.view != nil){
+        [self reloadPages];
+    }
+}
+
+-(void)setPagingEnabled:(BOOL)pagingEnabled{
+    _pagingEnabled = pagingEnabled;
+    if (bottomScrollView != nil){
+        bottomScrollView.pagingEnabled = pagingEnabled;
+    }
+}
 
 #pragma mark Setters for properties to warn someone if they attempt to set a property after viewDidLoad has already been called (they won't work if so!)
 -(void)raiseErrorIfViewDidLoadHasBeenCalled{

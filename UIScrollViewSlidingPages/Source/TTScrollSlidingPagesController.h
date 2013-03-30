@@ -45,6 +45,8 @@
 
 -(void)reloadPages;
 -(void)scrollToPage:(int)page animated:(BOOL)animated;
+-(int)getCurrentDisplayedPage;
+-(int)getXPositionOfPage:(int)page;
 
 
 
@@ -84,6 +86,11 @@
  *   @brief Sets the scroller to scroll to a specific page initially
  *   Sets the scroller to scroll to a specific page initially (either on the first load, or afrer calling reloadPages). Default is 0. **/
 @property (nonatomic) int initialPageNumber;
+
+/**  @property pagingEnabled
+ *   @brief Whether the content view "snaps" to each page. Dont set this to NO if you implement widthForPageOnSlidingPagesViewController:atIndex in the delegate as it won't work properly!
+ *   Whether the content view "snaps" to each page (YES), or if the scroll is continous (NO). Default is YES. **/
+@property (nonatomic) BOOL pagingEnabled;
 
 
 

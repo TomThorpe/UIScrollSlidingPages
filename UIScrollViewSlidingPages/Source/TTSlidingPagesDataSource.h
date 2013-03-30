@@ -40,4 +40,11 @@
 -(TTSlidingPage *)pageForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;
 -(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;
 
+@optional
+/**  @method widthForPageOnSlidingPagesViewController:atIndex
+ *   @brief An optional method to specify the width of one of your pages, if you don't want it to be the full width of the control.
+ *   An optional method to specify the width of one of your pages, if you don't implement this method each page will just be the width of the TTScrollSlidingPagesController view. This should NOT be used when paging is disabled. **/
+-(int)widthForPageOnSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;
+
+
 @end

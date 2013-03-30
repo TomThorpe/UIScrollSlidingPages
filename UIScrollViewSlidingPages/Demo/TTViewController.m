@@ -44,6 +44,7 @@
     //slider.disableTitleScrollerShadow = YES;
     //slider.disableUIPageControl = YES;
     //slider.initialPageNumber = 1;
+    slider.pagingEnabled = NO;
     
     //set the datasource.
     slider.dataSource = self;
@@ -89,6 +90,15 @@
         title = [[TTSlidingPageTitle alloc] initWithHeaderText:[NSString stringWithFormat:@"Page %d", index+1]];
     }
     return title;
+}
+
+-(int)widthForPageOnSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index
+{
+    if (index ==3){
+        return 130;
+    } else {
+        return self.view.frame.size.width;
+    }
 }
 
 @end
