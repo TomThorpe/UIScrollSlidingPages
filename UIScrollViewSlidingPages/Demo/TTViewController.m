@@ -44,7 +44,7 @@
     //slider.disableTitleScrollerShadow = YES;
     //slider.disableUIPageControl = YES;
     //slider.initialPageNumber = 1;
-    slider.pagingEnabled = NO;
+    //slider.pagingEnabled = NO;
     
     //set the datasource.
     slider.dataSource = self;
@@ -92,13 +92,14 @@
     return title;
 }
 
--(int)widthForPageOnSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index
-{
-    if (index ==3){
-        return 130;
-    } else {
-        return self.view.frame.size.width;
-    }
-}
+//The below method in the datasource might get removed from the control some time in the future as it doesn't work that well with the headers if the width is small.
+//-(int)widthForPageOnSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index
+//{
+//    if (index ==3){
+//        return 130;
+//    } else {
+//        return self.view.frame.size.width;
+//    }
+//}
 
 @end
