@@ -32,6 +32,7 @@
 #import "TTSlidingPage.h"
 #import "TTSlidingPageTitle.h"
 #import <QuartzCore/QuartzCore.h>
+#import "TTBlackTriangle.h"
 
 @interface TTScrollSlidingPagesController ()
 
@@ -73,15 +74,23 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate)name:UIDeviceOrientationDidChangeNotification object:nil];
     
     int nextYPosition = 0;
+    int pageViewHeight = 0;
     if (!self.disableUIPageControl){
         //create and add the UIPageControl
-        int pageViewHeight = 15;
+        pageViewHeight = 15;
         pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageViewHeight)];
         pageControl.backgroundColor = [UIColor blackColor];
         pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.view addSubview:pageControl];
          nextYPosition += pageViewHeight;
     }
+    
+    //add a triangle view to point to the currently selected page
+    int triangleWidth = 30;
+    int triangleHeight = 10;
+    TTBlackTriangle *triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight)];
+    triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    [self.view addSubview:triangle];
     
     //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
     topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
@@ -119,6 +128,8 @@
         topScrollViewWrapper.layer.shadowOpacity = 0.3;
         [self.view bringSubviewToFront:topScrollViewWrapper];//bring view to sit on top so you can see the shadow!
     }
+    
+    [self.view bringSubviewToFront:triangle];
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,7 +176,16 @@
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
             label.textColor = self.titleScrollerTextColour;
+            label.font = [UIFont boldSystemFontOfSize:16];
             label.backgroundColor = [UIColor clearColor];
+            
+            //add subtle drop shadow
+            label.layer.shadowColor = [[UIColor blackColor] CGColor];
+            label.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+            label.layer.shadowRadius = 2.0f;
+            label.layer.shadowOpacity = 1.0f;
+            
+            //set view as the top item
             topItem = (UIView *)label;
         }
         topItem.frame = CGRectMake(nextTopScrollerXPosition, 0, topScrollView.frame.size.width, topScrollView.frame.size.height);
@@ -202,16 +222,17 @@
     
     int initialPage = self.initialPageNumber;
     
-    //set the number of dots on the page control, and set the initial selected dot
-    pageControl.numberOfPages = numOfPages;
-    pageControl.currentPage = initialPage;
-    
-    
-    //fade in the page dots
-    if (pageControl.alpha != 1.0){
-        [UIView animateWithDuration:1.5 animations:^{
-            pageControl.alpha = 1.0f;
-        }];
+    if (!self.disableUIPageControl){
+        //set the number of dots on the page control, and set the initial selected dot
+        pageControl.numberOfPages = numOfPages;
+        pageControl.currentPage = initialPage;
+        
+        //fade in the page dots
+        if (pageControl.alpha != 1.0){
+            [UIView animateWithDuration:1.5 animations:^{
+                pageControl.alpha = 1.0f;
+            }];
+        }
     }
     
     //scroll to the initialpage

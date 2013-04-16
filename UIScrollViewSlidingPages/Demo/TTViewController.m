@@ -87,7 +87,24 @@
         title= [[TTSlidingPageTitle alloc] initWithHeaderImage:[UIImage imageNamed:@"about-tomthorpelogo.png"]];
     } else {
         //all other pages just use a simple text header
-        title = [[TTSlidingPageTitle alloc] initWithHeaderText:[NSString stringWithFormat:@"Page %d", index+1]];
+        switch (index) {
+            case 1:
+                title = [[TTSlidingPageTitle alloc] initWithHeaderText:@"Page 2"];
+                break;
+            case 2:
+                title = [[TTSlidingPageTitle alloc] initWithHeaderText:@"Another Page"];
+                break;
+            case 3:
+                title = [[TTSlidingPageTitle alloc] initWithHeaderText:@"More Stuff"];
+                break;
+            case 4:
+                title = [[TTSlidingPageTitle alloc] initWithHeaderText:@"Another Page"];
+                break;
+            default:
+                title = [[TTSlidingPageTitle alloc] initWithHeaderText:[NSString stringWithFormat:@"Page %d", index+1]];
+                break;
+        }
+        
     }
     return title;
 }
