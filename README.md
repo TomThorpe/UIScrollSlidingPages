@@ -7,9 +7,7 @@ This is a WORK IN PROGRESS control that will eventually allow you to add multipl
 
 Screenshots
 =========================
-![Screenshot](Screenshots/1.png)
-![Screenshot](Screenshots/2.png)
-![Screenshot](Screenshots/3.png)
+![Screenshot](Screenshots/1.png)  ![Screenshot](Screenshots/2.png)  ![Screenshot](Screenshots/3.png)
 
 Usage
 ---
