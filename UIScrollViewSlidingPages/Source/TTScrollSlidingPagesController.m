@@ -102,7 +102,8 @@
     topScrollView.showsHorizontalScrollIndicator = NO;
     topScrollView.directionalLockEnabled = YES;
     topScrollView.backgroundColor = [UIColor clearColor];
-    topScrollView.userInteractionEnabled = NO; //for now I won't let the user drag the top scroller, might allow it in the future.
+    topScrollView.pagingEnabled = self.pagingEnabled;
+    topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
     UIView *topScrollViewWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight)];//make the view to put the scroll view inside.
     topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour; //set the background colour (the whole point of having the wrapper)
@@ -270,6 +271,14 @@
     return xPosition;
 }
 
+-(int)getWidthOfPage:(int)page {
+    int pageWidth = bottomScrollView.frame.size.width;
+    if ([self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)]){
+        pageWidth = [self.dataSource widthForPageOnSlidingPagesViewController:self atIndex:page];
+    }
+    return pageWidth;
+}
+
 
 -(void)didRotate{
     currentPageBeforeRotation = [self getCurrentDisplayedPage];
@@ -303,14 +312,40 @@
 
 #pragma mark UIScrollView delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == bottomScrollView){
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {    
+    if (scrollView == topScrollView){
+        //translate the top scroll to the bottom scroll
+        
+        //get the page number of the scroll item (e.g third header = 3rd page).
+        int pageNumber = topScrollView.contentOffset.x / self.titleScrollerItemWidth;
+        
+        //get the width of the bottom scroller item at that page
+        int bottomPageWidth = [self getWidthOfPage:pageNumber];
+        
+        //work out the start of that page number in the bottom scroller (e.g if the 3rd bottom scroller page starts at 520px, then it's 520)
+        int bottomPageStart = [self getXPositionOfPage:pageNumber];
+        
+        //work out the percent through the header you have scrolled in the top scroller
+        int startOfTopPage = pageNumber * self.titleScrollerItemWidth;
+        float percentOfTop = (topScrollView.contentOffset.x - startOfTopPage) / self.titleScrollerItemWidth;
+        
+        //translate that to the percent through the bottom scroller page to scroll, by doing the (percent through the top header * the bottom width) + the bottomPageStart.
+        int bottomScrollOffset = (percentOfTop * bottomPageWidth) + bottomPageStart;
+        
+        
+       // float scrollPercentage = topScrollView.contentOffset.x / topScrollView.contentSize.width;
+       // float bottomScrollOffset = scrollPercentage * bottomScrollView.contentSize.width;
+        
+        
+        bottomScrollView.delegate = nil;
+        bottomScrollView.contentOffset = CGPointMake(bottomScrollOffset, 0);
+        bottomScrollView.delegate = self;
+        
+    }
+    else if (scrollView == bottomScrollView){
+        //translate the bottom scroll to the top scroll. The bottom scroll items can in theory be different widths so it's a bit more complicated.
         int currentPage = [self getCurrentDisplayedPage];
         
-        //set the correct page on the pagedots
-        pageControl.currentPage = currentPage;
-                
-        //translate the scroll to the top scroll
         //get the x position of the page in the top scroller
         int topXPosition = self.titleScrollerItemWidth * currentPage;
         
@@ -323,8 +358,15 @@
         float addToTopXPosition = percentageTowardsNextPage * self.titleScrollerItemWidth;
         topXPosition = topXPosition + roundf(addToTopXPosition);
         
+        topScrollView.delegate = nil;
         topScrollView.contentOffset = CGPointMake(topXPosition, 0);
+        topScrollView.delegate = self;
     }
+    
+    int currentPage = [self getCurrentDisplayedPage];
+    
+    //set the correct page on the pagedots
+    pageControl.currentPage = currentPage;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
