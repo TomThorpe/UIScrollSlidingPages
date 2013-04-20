@@ -32,6 +32,7 @@
 		9F9B9B9C1703758A00CD45B4 /* TTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */; };
 		9F9B9BA117037C0B00CD45B4 /* TTScrollSlidingPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9BA017037C0B00CD45B4 /* TTScrollSlidingPagesController.m */; };
 		9F9B9BA51703836D00CD45B4 /* TTSlidingPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9BA41703836D00CD45B4 /* TTSlidingPage.m */; };
+		9FFDC5CC1722EEA1002A5689 /* TTScrollViewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFDC5CB1722EEA1002A5689 /* TTScrollViewWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,8 @@
 		9F9B9BA31703836D00CD45B4 /* TTSlidingPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSlidingPage.h; sourceTree = "<group>"; };
 		9F9B9BA41703836D00CD45B4 /* TTSlidingPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSlidingPage.m; sourceTree = "<group>"; };
 		9F9B9BA7170387BE00CD45B4 /* TTSlidingPagesDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTSlidingPagesDataSource.h; sourceTree = "<group>"; };
+		9FFDC5CA1722EEA1002A5689 /* TTScrollViewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTScrollViewWrapper.h; sourceTree = "<group>"; };
+		9FFDC5CB1722EEA1002A5689 /* TTScrollViewWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTScrollViewWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,8 @@
 				9F9B9BA7170387BE00CD45B4 /* TTSlidingPagesDataSource.h */,
 				9F602A65171E083F00088A9C /* TTBlackTriangle.h */,
 				9F602A66171E083F00088A9C /* TTBlackTriangle.m */,
+				9FFDC5CA1722EEA1002A5689 /* TTScrollViewWrapper.h */,
+				9FFDC5CB1722EEA1002A5689 /* TTScrollViewWrapper.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 				9F9B9BA51703836D00CD45B4 /* TTSlidingPage.m in Sources */,
 				9F936B55170650EF001622D8 /* TTSlidingPageTitle.m in Sources */,
 				9F602A67171E083F00088A9C /* TTBlackTriangle.m in Sources */,
+				9FFDC5CC1722EEA1002A5689 /* TTScrollViewWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

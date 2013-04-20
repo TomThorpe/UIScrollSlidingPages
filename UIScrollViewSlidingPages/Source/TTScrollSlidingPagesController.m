@@ -33,6 +33,7 @@
 #import "TTSlidingPageTitle.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TTBlackTriangle.h"
+#import "TTScrollViewWrapper.h"
 
 @interface TTScrollSlidingPagesController ()
 
@@ -104,9 +105,10 @@
     topScrollView.backgroundColor = [UIColor clearColor];
     topScrollView.pagingEnabled = self.pagingEnabled;
     topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
-    UIView *topScrollViewWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight)];//make the view to put the scroll view inside.
+    TTScrollViewWrapper *topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
     topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour; //set the background colour (the whole point of having the wrapper)
+    topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour;
+    //pass touch events from the wrapper onto the scrollview (so you can drag from the entire width, as the scrollview itself only lives in the very centre, but with clipToBounds turned off)
     [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
     [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
     nextYPosition += self.titleScrollerHeight;
@@ -363,13 +365,18 @@
         topScrollView.delegate = self;
     }
     
-    int currentPage = [self getCurrentDisplayedPage];
-    
-    //set the correct page on the pagedots
-    pageControl.currentPage = currentPage;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    
+    //update the pagedots pagenuber
+    if (!self.disableUIPageControl){
+        int currentPage = [self getCurrentDisplayedPage];
+        
+        //set the correct page on the pagedots
+        pageControl.currentPage = currentPage;
+    }
+    
     /*Just do a quick check, that if the paging enabled property is YES (paging is enabled), the user should not define widthForPageOnSlidingPagesViewController on the datasource delegate because scrollviews do not cope well with paging being enabled for scrollviews where each subview is not full width! */
     if (self.pagingEnabled == YES && [self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)]){
         NSLog(@"Warning: TTScrollSlidingPagesController. You have paging enabled in the TTScrollSlidingPagesController (pagingEnabled is either not set, or specifically set to YES), but you have also implemented widthForPageOnSlidingPagesViewController:atIndex:. ScrollViews do not cope well with paging being disabled when items have custom widths. You may get weird behaviour with your paging, in which case you should either disable paging (set pagingEnabled to NO) and keep widthForPageOnSlidingPagesViewController:atIndex: implented, or not implement widthForPageOnSlidingPagesViewController:atIndex: in your datasource for the TTScrollSlidingPagesController instance.");
