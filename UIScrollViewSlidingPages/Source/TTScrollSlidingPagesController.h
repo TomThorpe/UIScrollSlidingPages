@@ -30,11 +30,13 @@
 
 #import <UIKit/UIKit.h>
 #import "TTSlidingPagesDataSource.h"
+@class TTScrollViewWrapper;
 
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
     int currentPageBeforeRotation;
     bool viewDidLoadHasBeenCalled;
     UIPageControl *pageControl;
+    TTScrollViewWrapper *topScrollViewWrapper;
     UIScrollView *bottomScrollView, *topScrollView;
 }
 

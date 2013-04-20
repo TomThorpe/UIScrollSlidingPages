@@ -41,6 +41,9 @@
 
 @implementation TTScrollSlidingPagesController
 
+/**
+ Initalises the control and sets all the default values for the user-settable properties.
+ */
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -66,6 +69,9 @@
     return self;
 }
 
+/**
+ Initialse the top and bottom scrollers (but don't populate them with pages yet)
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -105,10 +111,17 @@
     topScrollView.backgroundColor = [UIColor clearColor];
     topScrollView.pagingEnabled = self.pagingEnabled;
     topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
-    TTScrollViewWrapper *topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
+    topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
     topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour;
     //pass touch events from the wrapper onto the scrollview (so you can drag from the entire width, as the scrollview itself only lives in the very centre, but with clipToBounds turned off)
+    
+    //single tap to switch to different item
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(topScrollViewTapped:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [topScrollViewWrapper addGestureRecognizer: singleTap];
+    
     [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
     [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
     nextYPosition += self.titleScrollerHeight;
@@ -141,6 +154,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ Goes through the datasource and finds all the pages, then populates the topScrollView and bottomScrollView with all the pages and headers. 
+ 
+ It clears any of the views in both scrollViews first, so if you need to reload all the pages with new data from the dataSource for some reason, you can call this method.
+ */
 -(void)reloadPages{
     if (self.dataSource == nil){
         [NSException raise:@"TTSlidingPagesController data source missing" format:@"There was no data source set for the TTSlidingPagesControlller. You must set the .dataSource property on TTSlidingPagesController to an object instance that implements TTSlidingPagesDataSource, also make sure you do this before the view will be loaded (so before you add it as a subview to any other view that is about to appear)"];
@@ -242,6 +260,12 @@
     [self scrollToPage:initialPage animated:NO];
 }
 
+
+/**
+ Gets number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page). 
+ 
+ @return Returns the number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page). 
+ */
 -(int)getCurrentDisplayedPage{
     //cycle through all the subviews until you get to a position that matches the offset then that's what page youre on (each view can be a different width)
     int page = 0;
@@ -258,6 +282,12 @@
     return page;
 }
 
+/**
+ Gets the x position of the requested page in the bottom scroller. For example, if you ask for page 5, and page 5 starts at the contentOffset 520px in the bottom scroller, this will return 520.
+ 
+ @param page The page number requested.
+ @return Returns the x position of the requested page in the bottom scroller
+ */
 -(int)getXPositionOfPage:(int)page{
     int xPosition = 0;
     int curPage = 0;
@@ -273,6 +303,12 @@
     return xPosition;
 }
 
+/**
+ Gets the width of a specific page in the bottom scroll view. Most of the time this will be the width of the scrollview itself, but if you have widthForPageOnSlidingPagesViewController implemented on the datasource it might be different - hence this method.
+ 
+ @param page The page number requested.
+ @return Returns the width of the page requested.
+ */
 -(int)getWidthOfPage:(int)page {
     int pageWidth = bottomScrollView.frame.size.width;
     if ([self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)]){
@@ -281,16 +317,70 @@
     return pageWidth;
 }
 
+/**
+ Gets the page based on an X position in the topScrollView. For example, if you pass in 100 and each topScrollView width is 50, then this would return page 2.
+ 
+ @param page The X position in the topScrollView
+ @return Returns the page. For example, if you pass in 100 and each topScrollView width is 50, then this would return page 2.
+ */
+-(int)getTopScrollViewPageForXPosition:(int)xPosition{
+    return xPosition / self.titleScrollerItemWidth; 
+}
+
+/**
+ Scrolls the bottom scorller (content scroller) to a particular page number.
+ 
+ @param page The page number to scroll to.
+ @param animated Whether the scroll should be animated to move along to the page (YES) or just directly scroll to the page (NO)
+ */
+-(void)scrollToPage:(int)page animated:(BOOL)animated{
+    //keep track of the current page (for the rotation if it ever happens)
+    currentPageBeforeRotation = page;
+    
+    //scroll to the page
+    [bottomScrollView setContentOffset: CGPointMake([self getXPositionOfPage:page],0) animated:animated];
+
+    if (!animated){
+        //if the scroll is not animated, we also need to move the topScrollView - we don't want (if it's animated, it'll call the scrollViewDidScroll delegate which keeps everything in sync, so calling it twice would mess things up).
+            [topScrollView setContentOffset: CGPointMake(page * topScrollView.frame.size.width, 0) animated:animated];
+    }
+    
+    //update the pagedots pagenumber
+    if (!self.disableUIPageControl){
+        pageControl.currentPage = page;
+    }
+}
+
+
+
+
+/**
+ Handler for the gesture recogniser on the top scrollview wrapper. When the topscrollview wrapper is tapped, this works out the tap position and scrolls the view to that page.
+ */
+- (void)topScrollViewTapped:(id)sender {
+    //get the point that was tapped within the context of the topScrollView (not the wrapper)
+    CGPoint point = [sender locationInView:topScrollView];
+    
+    //we need to add on the contentOffset of the topScrollView
+    //int position = point.x + topScrollView.contentOffset.x;
+    
+    //find out what page in the topscroller would be at that x location
+    int page = [self getTopScrollViewPageForXPosition:point.x];
+    
+    //if not already on the page, scroll to the page!
+    if ([self getCurrentDisplayedPage] != page){
+        [self scrollToPage:page animated:YES];
+    }
+    
+}
+
+
+#pragma mark Some delegate methods for handling rotation.
 
 -(void)didRotate{
     currentPageBeforeRotation = [self getCurrentDisplayedPage];
 }
 
--(void)scrollToPage:(int)page animated:(BOOL)animated{
-    currentPageBeforeRotation = page;
-    [topScrollView setContentOffset: CGPointMake(page * topScrollView.frame.size.width, 0) animated:animated];
-    [bottomScrollView setContentOffset: CGPointMake([self getXPositionOfPage:page],0) animated:animated];
-}
 
 -(void)viewDidLayoutSubviews{
     //this will get called when the screen rotates, at which point we need to fix the frames of all the subviews to be the new correct x position horizontally. The autolayout mask will automatically change the width for us.
@@ -317,32 +407,26 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {    
     if (scrollView == topScrollView){
         //translate the top scroll to the bottom scroll
-        
+
         //get the page number of the scroll item (e.g third header = 3rd page).
-        int pageNumber = topScrollView.contentOffset.x / self.titleScrollerItemWidth;
-        
+        int pageNumber =  [self getTopScrollViewPageForXPosition:topScrollView.contentOffset.x];
+
         //get the width of the bottom scroller item at that page
         int bottomPageWidth = [self getWidthOfPage:pageNumber];
-        
+
         //work out the start of that page number in the bottom scroller (e.g if the 3rd bottom scroller page starts at 520px, then it's 520)
         int bottomPageStart = [self getXPositionOfPage:pageNumber];
-        
+
         //work out the percent through the header you have scrolled in the top scroller
         int startOfTopPage = pageNumber * self.titleScrollerItemWidth;
         float percentOfTop = (topScrollView.contentOffset.x - startOfTopPage) / self.titleScrollerItemWidth;
-        
+
         //translate that to the percent through the bottom scroller page to scroll, by doing the (percent through the top header * the bottom width) + the bottomPageStart.
         int bottomScrollOffset = (percentOfTop * bottomPageWidth) + bottomPageStart;
-        
-        
-       // float scrollPercentage = topScrollView.contentOffset.x / topScrollView.contentSize.width;
-       // float bottomScrollOffset = scrollPercentage * bottomScrollView.contentSize.width;
-        
-        
+
         bottomScrollView.delegate = nil;
         bottomScrollView.contentOffset = CGPointMake(bottomScrollOffset, 0);
         bottomScrollView.delegate = self;
-        
     }
     else if (scrollView == bottomScrollView){
         //translate the bottom scroll to the top scroll. The bottom scroll items can in theory be different widths so it's a bit more complicated.
@@ -430,7 +514,7 @@
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _disableUIPageControl = disableUIPageControl;
 }
-//-initialPageNumber can be set whenever so it's included here.
+
 
 
 
