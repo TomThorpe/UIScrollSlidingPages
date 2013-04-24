@@ -393,9 +393,14 @@
     //reposition the subviews and set the new contentsize width
     CGRect frame;
     int nextXPosition = 0;
+    int page = 0;
     for (UIView *view in bottomScrollView.subviews) {
+        view.transform = CGAffineTransformIdentity;
         frame = view.frame;
+        frame.size.width = [self getWidthOfPage:page];
         frame.origin.x = nextXPosition;
+        frame.origin.y = 0;
+        page++;
         nextXPosition += frame.size.width;
         view.frame = frame;
     }
