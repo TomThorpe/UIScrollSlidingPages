@@ -94,6 +94,11 @@
  *   Whether the content view "snaps" to each page (YES), or if the scroll is continous (NO). Default is YES. **/
 @property (nonatomic) BOOL pagingEnabled;
 
+/**  @property zoomOutAnimationDisabled
+ *   @brief Whether the "zoom out" effect that happens as you scroll from page to page should be disabled. Default is NO.
+ *   Whether the "zoom out" effect that happens as you scroll from page to page should be disabled. Default is NO **/
+@property (nonatomic) bool zoomOutAnimationDisabled;
+
 
 
 @end

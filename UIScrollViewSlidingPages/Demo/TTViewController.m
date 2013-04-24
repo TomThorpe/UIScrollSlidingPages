@@ -45,6 +45,7 @@
     //slider.disableUIPageControl = YES;
     //slider.initialPageNumber = 1;
     //slider.pagingEnabled = NO;
+    //slider.zoomOutAnimationDisabled = YES;
     
     //set the datasource.
     slider.dataSource = self;

@@ -65,6 +65,7 @@
         self.disableUIPageControl = NO;
         self.initialPageNumber = 0;
         self.pagingEnabled = YES;
+        self.zoomOutAnimationDisabled = NO;
     }
     return self;
 }
@@ -267,16 +268,15 @@
  @return Returns the number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page). 
  */
 -(int)getCurrentDisplayedPage{
-    //cycle through all the subviews until you get to a position that matches the offset then that's what page youre on (each view can be a different width)
+    //sum through all the views until you get to a position that matches the offset then that's what page youre on (each view can be a different width)
     int page = 0;
-    int xPosition = 0;
-    for (UIView *view in bottomScrollView.subviews)
-    {
-        xPosition += view.frame.size.width;
-        if (bottomScrollView.contentOffset.x < xPosition){
-            break;
+    int currentXPosition = 0;
+    while (currentXPosition <= bottomScrollView.contentOffset.x && currentXPosition < bottomScrollView.contentSize.width){
+        currentXPosition += [self getWidthOfPage:page];
+        
+        if (currentXPosition <= bottomScrollView.contentOffset.x){
+            page++;
         }
-        page++;
     }
     
     return page;
@@ -289,18 +289,13 @@
  @return Returns the x position of the requested page in the bottom scroller
  */
 -(int)getXPositionOfPage:(int)page{
-    int xPosition = 0;
-    int curPage = 0;
-    for (UIView *subview in bottomScrollView.subviews)
-    {
-        if (curPage >= page){
-            break;
-        }
-        curPage++;
-        xPosition += subview.frame.size.width; //each view could in theory have a different width
+    //each view could in theory have a different width
+    int currentTotal = 0;
+    for (int curPage = 0; curPage < page; curPage++){
+        currentTotal += [self getWidthOfPage:curPage];
     }
     
-    return xPosition;
+    return currentTotal;
 }
 
 /**
@@ -405,6 +400,37 @@
 #pragma mark UIScrollView delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {    
+    int currentPage = [self getCurrentDisplayedPage];
+    
+    if (!self.zoomOutAnimationDisabled){
+        //Do a zoom out effect on the current view and next view depending on the amount scrolled
+        double minimumZoom = 0.93;
+        double zoomSpeed = 1000;//increase this number to slow down the zoom
+        UIView *currentView = [bottomScrollView.subviews objectAtIndex:currentPage];
+        UIView *nextView;
+        if (currentPage < [bottomScrollView.subviews count]-1){
+            nextView = [bottomScrollView.subviews objectAtIndex:currentPage+1];
+        }
+        
+        //currentView zooms out as scroll left
+        int distanceFromPageOrigin = bottomScrollView.contentOffset.x - [self getXPositionOfPage:currentPage]; //find out how far the scroll is away from the start of the page, and use this to adjust the transform of the currentView
+        if (distanceFromPageOrigin < 0) {distanceFromPageOrigin = 0;}
+        double scaleAmount = 1-(distanceFromPageOrigin/zoomSpeed);
+        if (scaleAmount < minimumZoom ){scaleAmount = minimumZoom;}
+        currentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, scaleAmount, scaleAmount);
+        
+        //nextView zooms in as scroll left
+        if (nextView != nil){
+            //find out how far the scroll is away from the start of the next page, and use this to adjust the transform of the nextView
+            distanceFromPageOrigin = (bottomScrollView.contentOffset.x - [self getXPositionOfPage:currentPage+1]) * -1;//multiply by minus 1 to get the distance to the next page (because otherwise the result would be -300 for example, as in 300 away from the next page)
+            if (distanceFromPageOrigin < 0) {distanceFromPageOrigin = 0;}
+            scaleAmount = 1-(distanceFromPageOrigin/zoomSpeed);
+            if (scaleAmount < minimumZoom ){scaleAmount = minimumZoom;}
+            nextView.transform = CGAffineTransformScale(CGAffineTransformIdentity, scaleAmount, scaleAmount);
+        }
+    }
+    
+    
     if (scrollView == topScrollView){
         //translate the top scroll to the bottom scroll
 
@@ -430,7 +456,6 @@
     }
     else if (scrollView == bottomScrollView){
         //translate the bottom scroll to the top scroll. The bottom scroll items can in theory be different widths so it's a bit more complicated.
-        int currentPage = [self getCurrentDisplayedPage];
         
         //get the x position of the page in the top scroller
         int topXPosition = self.titleScrollerItemWidth * currentPage;
