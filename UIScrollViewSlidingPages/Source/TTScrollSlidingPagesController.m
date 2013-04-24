@@ -205,7 +205,7 @@
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
             label.textColor = self.titleScrollerTextColour;
-            label.font = [UIFont boldSystemFontOfSize:18];
+            label.font = [UIFont boldSystemFontOfSize:19];
             label.backgroundColor = [UIColor clearColor];
             
             //add subtle drop shadow
