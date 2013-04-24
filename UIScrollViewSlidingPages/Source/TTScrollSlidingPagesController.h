@@ -61,7 +61,7 @@
 
 /**  @property titleScrollerItemWidth
  *   @brief The width of each item in the top scroller
- *   The width of each individual item in the top scroller. The wider it is, the less of the previous and next items you'll see, the narrower it is the more of the previous and next items you'll see but the more likely you won't have enough width for your title! Default if not set is 120px  **/
+ *   The width of each individual item in the top scroller. The wider it is, the less of the previous and next items you'll see, the narrower it is the more of the previous and next items you'll see but the more likely you won't have enough width for your title! Default if not set is 150px  **/
 @property (nonatomic) int titleScrollerItemWidth;
 
 /**  @property titleScrollerBackgroundColour

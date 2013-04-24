@@ -51,7 +51,7 @@
         viewDidLoadHasBeenCalled = NO;
         //set defaults
         self.titleScrollerHeight = 50;
-        self.titleScrollerItemWidth = 120;
+        self.titleScrollerItemWidth = 150;
         
         UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
         if (backgroundImage != nil){
@@ -187,7 +187,14 @@
         //top scroller (nav) add----
         TTSlidingPageTitle *title = [self.dataSource titleForSlidingPagesViewController:self atIndex:i];
         UIView *topItem;
-        if (title.headerImage != nil){
+        if (title == nil){
+            //do nothing, just empty view
+            NSLog(@"TTScrollSlidingPagesController Notice: An empty title object was returned in the titleForSlidingPagesViewController method of the datasource. Titles should be instances of TTSlidingPageTitle. An empty view is being put in it's place.");
+            topItem = [[UIView alloc] init];
+        } else if (![title isKindOfClass:[TTSlidingPageTitle class]]){ //if someone has implemented the datasource wrong tell them
+            [NSException raise:@"TTScrollSlidingPagesController Wrong Title Type" format:@"TTScrollSlidingPagesController: Titles should be instances of TTSlidingPageTitle, one was returned that wasn't a TTSlidingPageTitle. Did you implement the titleForSlidingPagesViewController method in the datasource correctly and with the right return type?"];
+        }
+        else if (title.headerImage != nil){
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             imageView.image = title.headerImage;
@@ -198,7 +205,7 @@
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
             label.textColor = self.titleScrollerTextColour;
-            label.font = [UIFont boldSystemFontOfSize:16];
+            label.font = [UIFont boldSystemFontOfSize:18];
             label.backgroundColor = [UIColor clearColor];
             
             //add subtle drop shadow
@@ -224,6 +231,9 @@
         }
         
         TTSlidingPage *page = [self.dataSource pageForSlidingPagesViewController:self atIndex:i];//get the page
+        if (page == nil || ![page isKindOfClass:[TTSlidingPage class]]){
+            [NSException raise:@"TTScrollSlidingPagesController Wrong Page Content Type" format:@"TTScrollSlidingPagesController: Page contents should be instances of TTSlidingPage, one was returned that was either nil, or wasn't a TTSlidingPage. Make sure your pageForSlidingPagesViewController method in the datasource always returns a TTSlidingPage instance for each page requested."];
+        }
         UIView *contentView = page.contentView;
         
         //put it in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).
