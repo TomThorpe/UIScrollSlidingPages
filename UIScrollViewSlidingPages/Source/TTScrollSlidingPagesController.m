@@ -149,6 +149,11 @@
     [self.view bringSubviewToFront:triangle];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    //store the page you were on so if you come back to this view (for example from a navigation controller), the viewDidLayoutSubviews method will know which page to navigate to (for example if the screen was portrait when you left, then you changed to landscape, and navigate back, then viewDidLayoutSubviews will need to change all the sizes of the views, but still know what page to set the offset to)
+    currentPageBeforeRotation = [self getCurrentDisplayedPage];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
