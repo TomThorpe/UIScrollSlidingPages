@@ -79,8 +79,6 @@
     
     viewDidLoadHasBeenCalled = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate)name:UIDeviceOrientationDidChangeNotification object:nil];
-    
     int nextYPosition = 0;
     int pageViewHeight = 0;
     if (!self.disableUIPageControl){
@@ -90,7 +88,7 @@
         pageControl.backgroundColor = [UIColor blackColor];
         pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.view addSubview:pageControl];
-         nextYPosition += pageViewHeight;
+        nextYPosition += pageViewHeight;
     }
     
     //add a triangle view to point to the currently selected page
@@ -135,6 +133,7 @@
     bottomScrollView.showsHorizontalScrollIndicator = NO;
     bottomScrollView.directionalLockEnabled = YES;
     bottomScrollView.delegate = self; //move the top scroller proportionally as you drag the bottom.
+    bottomScrollView.alwaysBounceVertical = NO;
     [self.view addSubview:bottomScrollView];
     
     //add the drop shadow on the top scroller (if enabled)
@@ -149,10 +148,6 @@
     [self.view bringSubviewToFront:triangle];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    //store the page you were on so if you come back to this view (for example from a navigation controller), the viewDidLayoutSubviews method will know which page to navigate to (for example if the screen was portrait when you left, then you changed to landscape, and navigate back, then viewDidLayoutSubviews will need to change all the sizes of the views, but still know what page to set the offset to)
-    currentPageBeforeRotation = [self getCurrentDisplayedPage];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -161,7 +156,7 @@
 }
 
 /**
- Goes through the datasource and finds all the pages, then populates the topScrollView and bottomScrollView with all the pages and headers. 
+ Goes through the datasource and finds all the pages, then populates the topScrollView and bottomScrollView with all the pages and headers.
  
  It clears any of the views in both scrollViews first, so if you need to reload all the pages with new data from the dataSource for some reason, you can call this method.
  */
@@ -188,7 +183,7 @@
     int nextTopScrollerXPosition = 0;
     
     //loop through each page and add it to the scroller
-    for (int i=0; i<numOfPages; i++){        
+    for (int i=0; i<numOfPages; i++){
         //top scroller (nav) add----
         TTSlidingPageTitle *title = [self.dataSource titleForSlidingPagesViewController:self atIndex:i];
         UIView *topItem;
@@ -278,9 +273,9 @@
 
 
 /**
- Gets number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page). 
+ Gets number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page).
  
- @return Returns the number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page). 
+ @return Returns the number of the page currently displayed in the bottom scroller (zero based - so starting at 0 for the first page).
  */
 -(int)getCurrentDisplayedPage{
     //sum through all the views until you get to a position that matches the offset then that's what page youre on (each view can be a different width)
@@ -334,7 +329,7 @@
  @return Returns the page. For example, if you pass in 100 and each topScrollView width is 50, then this would return page 2.
  */
 -(int)getTopScrollViewPageForXPosition:(int)xPosition{
-    return xPosition / self.titleScrollerItemWidth; 
+    return xPosition / self.titleScrollerItemWidth;
 }
 
 /**
@@ -349,10 +344,10 @@
     
     //scroll to the page
     [bottomScrollView setContentOffset: CGPointMake([self getXPositionOfPage:page],0) animated:animated];
-
+    
     if (!animated){
         //if the scroll is not animated, we also need to move the topScrollView - we don't want (if it's animated, it'll call the scrollViewDidScroll delegate which keeps everything in sync, so calling it twice would mess things up).
-            [topScrollView setContentOffset: CGPointMake(page * topScrollView.frame.size.width, 0) animated:animated];
+        [topScrollView setContentOffset: CGPointMake(page * topScrollView.frame.size.width, 0) animated:animated];
     }
     
     //update the pagedots pagenumber
@@ -403,13 +398,14 @@
         view.transform = CGAffineTransformIdentity;
         frame = view.frame;
         frame.size.width = [self getWidthOfPage:page];
+        frame.size.height = bottomScrollView.frame.size.height;
         frame.origin.x = nextXPosition;
         frame.origin.y = 0;
         page++;
         nextXPosition += frame.size.width;
         view.frame = frame;
     }
-    bottomScrollView.contentSize = CGSizeMake(nextXPosition, bottomScrollView.contentSize.height);
+    bottomScrollView.contentSize = CGSizeMake(nextXPosition, bottomScrollView.frame.size.height);
     
     //set it back to the same page as it was before (the contentoffset will be different now the widths are different)
     int contentOffsetWidth = [self getXPositionOfPage:currentPageBeforeRotation];
@@ -419,7 +415,7 @@
 
 #pragma mark UIScrollView delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {    
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     int currentPage = [self getCurrentDisplayedPage];
     
     if (!self.zoomOutAnimationDisabled){
@@ -453,23 +449,23 @@
     
     if (scrollView == topScrollView){
         //translate the top scroll to the bottom scroll
-
+        
         //get the page number of the scroll item (e.g third header = 3rd page).
         int pageNumber =  [self getTopScrollViewPageForXPosition:topScrollView.contentOffset.x];
-
+        
         //get the width of the bottom scroller item at that page
         int bottomPageWidth = [self getWidthOfPage:pageNumber];
-
+        
         //work out the start of that page number in the bottom scroller (e.g if the 3rd bottom scroller page starts at 520px, then it's 520)
         int bottomPageStart = [self getXPositionOfPage:pageNumber];
-
+        
         //work out the percent through the header you have scrolled in the top scroller
         int startOfTopPage = pageNumber * self.titleScrollerItemWidth;
         float percentOfTop = (topScrollView.contentOffset.x - startOfTopPage) / self.titleScrollerItemWidth;
-
+        
         //translate that to the percent through the bottom scroller page to scroll, by doing the (percent through the top header * the bottom width) + the bottomPageStart.
         int bottomScrollOffset = (percentOfTop * bottomPageWidth) + bottomPageStart;
-
+        
         bottomScrollView.delegate = nil;
         bottomScrollView.contentOffset = CGPointMake(bottomScrollOffset, 0);
         bottomScrollView.delegate = self;
@@ -497,11 +493,14 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    int currentPage = [self getCurrentDisplayedPage];
+    
+    //store the page you were on so if you have a rotate event, or you come back to this view you know what page to start at. (for example from a navigation controller), the viewDidLayoutSubviews method will know which page to navigate to (for example if the screen was portrait when you left, then you changed to landscape, and navigate back, then viewDidLayoutSubviews will need to change all the sizes of the views, but still know what page to set the offset to)
+    currentPageBeforeRotation = [self getCurrentDisplayedPage];
+    
     
     //update the pagedots pagenuber
     if (!self.disableUIPageControl){
-        int currentPage = [self getCurrentDisplayedPage];
-        
         //set the correct page on the pagedots
         pageControl.currentPage = currentPage;
     }
@@ -532,7 +531,7 @@
 -(void)raiseErrorIfViewDidLoadHasBeenCalled{
     if (viewDidLoadHasBeenCalled)
     {
-         [NSException raise:@"TTSlidingPagesController set custom property too late" format:@"The app attempted to set one of the custom properties on TTSlidingPagesController (such as TitleScrollerHeight, TitleScrollerItemWidth etc.) after viewDidLoad has already been loaded. This won't work, you need to set the properties before viewDidLoad has been called - so before you access the .view property or set the dataSource. It is best to set the custom properties immediately after calling init on TTSlidingPagesController"];
+        [NSException raise:@"TTSlidingPagesController set custom property too late" format:@"The app attempted to set one of the custom properties on TTSlidingPagesController (such as TitleScrollerHeight, TitleScrollerItemWidth etc.) after viewDidLoad has already been loaded. This won't work, you need to set the properties before viewDidLoad has been called - so before you access the .view property or set the dataSource. It is best to set the custom properties immediately after calling init on TTSlidingPagesController"];
     }
 }
 -(void)setTitleScrollerHeight:(int)titleScrollerHeight{
