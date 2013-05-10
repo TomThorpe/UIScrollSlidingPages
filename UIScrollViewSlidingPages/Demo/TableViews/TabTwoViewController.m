@@ -49,6 +49,7 @@
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.text = @"Some more text here";
     cell.detailTextLabel.textColor = [UIColor whiteColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
