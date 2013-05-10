@@ -50,19 +50,74 @@ For example, to instantiate `TTScrollSlidingPagesController` and add it to the c
     [self addChildViewController:slider]; //this makes sure the instance isn't released from memory :-)
 ```
 
-###Implementing TSlidingPagesDataSource
+###Implementing TTSlidingPagesDataSource
 * `-numberOfPagesForSlidingPagesViewController:` This returns an integer which indicates how many pages the control has. The below two methods will then each be called this many times, one for each page.
-* `-pageForSlidingPagesViewController:atIndex:` This returns a `TTSlidingPage` instance containing the view or viewController for the view you want to be in the content area for the page. See the diagram below.
-* `titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;` This returns a `TTSlidingPageTitle` instance that contains the title text or image of the header for the page. See the diagram below.
+* `-pageForSlidingPagesViewController:atIndex:` This returns a `TTSlidingPage` instance containing the view or viewController for the view you want to be in the content area for the page. See below for a description of the `TTSlidingPage` class
+* `titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;` This returns a `TTSlidingPageTitle` instance that contains the title text or image of the header for the page. See below for a description of the `TTSlidingPageTitle` class.
 
-**WORK IN PROGRESS, README TBC**
+
+#####TTSlidingPage
+This is returned by the `TTSlidingPagesDataSource`. It represents the page content view for a a given page that will go in the content area. You can instantiate it either with a UIViewController has the content using `-initWithContentViewController:(UIViewController *)contentViewController` (recommended as it means the view stack will be correctly maintained), or using `initWithContentView:(UIView *)contentView;` if you only have a UIView. 
+
+#####TTSlidingPageTitle
+This is returned by the `TTSlidingPagesDataSource`. It represents the header for a given page that will go in the header area. It can either be an image or text. To instantiate it with an image use `initWithHeaderImage:(UIImage*)headerImage` or instantiate it with plain text use `initWithHeaderText:(NSString*)headerText`
+
+####Full Example of implementing TTSlidingPagesDataSource
+
+For example, to implement the TTSlidingPagesDataSource to your class, add "<TTSlidingPagesDataSource>" after your class name in the .h header file, for example:
+
+``` objc
+@interface TTViewController : UIViewController<TTSlidingPagesDataSource>{
+}
+```
+
+
+Then implement the three datasource methods methods:
+
+``` objc
+-(int)numberOfPagesForSlidingPagesViewController:(TTScrollSlidingPagesController *)source{
+    return 5; //5 pages. The below two methods will each now get called 5 times, one for 
+}
+
+-(TTSlidingPage *)pageForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index{
+    UIViewController *viewController = [[UIViewController alloc] init];    
+    return [[TTSlidingPage alloc] initWithContentViewController:viewController]; //in reality, you would return a view controller for the page (given by index) that you want
+}
+
+-(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index{
+    TTSlidingPageTitle *title;
+    if (index == 0){ //for the first page, have an image, for all other pages use text
+        //use a image as the header for the first page
+        title= [[TTSlidingPageTitle alloc] initWithHeaderImage:[UIImage imageNamed:@"randomImage.png"]];
+    } else {
+        //all other pages just use a simple text header
+        title = [[TTSlidingPageTitle alloc] initWithHeaderText:@"A page"]; //in reality you would have the correct header text for your page number given by "index"       
+    }
+    return title;
+}
+
+``` 
 
 Options
 ---
+int titleScrollerHeight;
+int titleScrollerItemWidth;
+UIColor *titleScrollerBackgroundColour;
+UIColor *titleScrollerTextColour;
+disableTitleScrollerShadow;
+disableUIPageControl;
+initialPageNumber;
+pagingEnabled;
+zoomOutAnimationDisabled;
+
 **WORK IN PROGRESS, README TBC**
  
-Example Code
---- 
+Methods
+---
+-(void)reloadPages;
+-(void)scrollToPage:(int)page animated:(BOOL)animated;
+-(int)getCurrentDisplayedPage;
+
 **WORK IN PROGRESS, README TBC**
  
 Demo
