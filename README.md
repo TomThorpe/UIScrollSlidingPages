@@ -51,7 +51,7 @@ For example, to instantiate `TTScrollSlidingPagesController` and add it to the c
 ```
 
 ###Implementing TSlidingPagesDataSource
-
+* `-numberOfPagesForSlidingPagesViewController:` This returns an integer which indicates how many pages the control has. The below two methods will then each be called this many times, one for each page.
 * `-pageForSlidingPagesViewController:atIndex:` This returns a `TTSlidingPage` instance containing the view or viewController for the view you want to be in the content area for the page. See the diagram below.
 * `titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;` This returns a `TTSlidingPageTitle` instance that contains the title text or image of the header for the page. See the diagram below.
 
@@ -67,11 +67,14 @@ Example Code
  
 Demo
 ---
-The included source is an XCode project which you can open to see a demo.
+The included source is an XCode project which you can open to see a demo. You can refer to this demos for reference of how to use the library if anything is unclear :-)
 
-All the work is done in `TTViewController.m`. The `viewDidLoad` method contains some of the options properties that have been commented out to mean the demo is using the defaults. Try uncommenting them and playing around.
+The control is instantiated in `TTViewController.m`'s `viewDidLoad` method. There are then some of the options properties that have been commented out to mean the demo is using the defaults. Try uncommenting them and playing around. Finally, the app sets the dataSource property for the instance to `self`, then adds the view as a subView to the current view.
 
-You can refer to these demos for reference of how to use the library if anything is unclear :-)
+`TTViewController` also implements `TTSlidingPagesDataSource`. It returns 7 for the number of pages. For the headers, on page 0 it returns an image, on the remaining pages it returns text. For the page contents it returns instances of `TabOneViewController` and `TabTwoViewController`, which could be any UIViewController.
+
+Incidentally, `TabOneViewController` and `TabTwoViewController` are actually instances of one of my other libraries, `UITableViewZoomController` which can be found here [https://github.com/TomThorpe/UITableViewZoomController](https://github.com/TomThorpe/UITableViewZoomController)
+
 
 Limitation
 ---
