@@ -56,12 +56,12 @@ For example, to instantiate `TTScrollSlidingPagesController` and add it to the c
 
 ###Implementing TTSlidingPagesDataSource
 * `-numberOfPagesForSlidingPagesViewController:` This returns an integer which indicates how many pages the control has. The below two methods will then each be called this many times, one for each page.
-* `-pageForSlidingPagesViewController:atIndex:` This returns a `TTSlidingPage` instance containing the view or viewController for the view you want to be in the content area for the page. See below for a description of the `TTSlidingPage` class
-* `titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;` This returns a `TTSlidingPageTitle` instance that contains the title text or image of the header for the page. See below for a description of the `TTSlidingPageTitle` class.
+* `-pageForSlidingPagesViewController:atIndex:` This returns the content view of the requested page (index) in the form of a `TTSlidingPage` instance. See below for a description of `TTSlidingPage`.
+* `titleForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index;` This returns the header of the requested page (either an image or text) in the form of a `TTSlidingPageTitle` instance. See below for a description of `TTSlidingPageTitle`.
 
 
 #####TTSlidingPage
-This is returned by the `TTSlidingPagesDataSource`. It represents the page content view for a a given page that will go in the content area. You can instantiate it either with a UIViewController has the content using `-initWithContentViewController:(UIViewController *)contentViewController` (recommended as it means the view stack will be correctly maintained), or using `initWithContentView:(UIView *)contentView;` if you only have a UIView. 
+This is returned by the `TTSlidingPagesDataSource`. It represents the page content view for a a given page that will go in the content area. You can instantiate it either with a UIViewController using `-initWithContentViewController:(UIViewController *)contentViewController` (recommended), or using `initWithContentView:(UIView *)contentView;` if you only have a UIView and will manage the controller yourself. 
 
 #####TTSlidingPageTitle
 This is returned by the `TTSlidingPagesDataSource`. It represents the header for a given page that will go in the header area. It can either be an image or text. To instantiate it with an image use `initWithHeaderImage:(UIImage*)headerImage` or instantiate it with plain text use `initWithHeaderText:(NSString*)headerText`
