@@ -75,6 +75,13 @@ You can refer to these demos for reference of how to use the library if anything
 
 Limitation
 ---
-Currently, despite using the same sort of `dataSource` delegate as UITableViewControllers do, the control still loads **ALL** the views as soon as it appears. This means if you have lots of pages, this means the control is best suited for only a few pages (probably less than 10 or so), otherwise you might start to see it slow down. Some day in the future I might make it only load pages as they are needed, but I can't promise anything!
+Currently, despite using the same sort of `dataSource` delegate as UITableViewControllers do, the control still loads **ALL** the views as soon as it appears. This means if you have lots of pages it will still load them **all** into memory rather than being smarter and only loading the current (and possible next/previous) page. 
+This has two main ramifications:
+ 
+ * The control is best suited for only a few pages (probably less than 10 or so), otherwise you might start to see it slow down. 
+ 
+ * The `viewDidAppear` method will get called for all the pages instantly, even those that aren't actually visible yet.
+ 
+Some day in the future I might make it only load pages as they are needed, but I can't promise anything. I created this control for my own app, and it wasn't necessary for me as I only use a few pages. Sorry!
 
 
