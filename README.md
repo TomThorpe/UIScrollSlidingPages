@@ -81,7 +81,7 @@ Then implement the three datasource methods methods:
 
 -(TTSlidingPage *)pageForSlidingPagesViewController:(TTScrollSlidingPagesController*)source atIndex:(int)index{
     UIViewController *viewController = [[UIViewController alloc] init];    
-    return [[TTSlidingPage alloc] initWithContentViewController:viewController]; //in reality, you would return a view controller for the page (given by index) that you want
+    return [[TTSlidingPage alloc] initWithContentViewController:viewController]; //in reality, you would return an actual view controller for the page (given by index) that you want, rather than just a blank UIViewController. In the demo app in the repository, I return instances of my own UIViewController subclass; TabOneViewController and TabTwoViewController. You can also just use a UIView but this wont preserve the full view hierarchy unless you handle it yourself.
 }
 
 -(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index{
