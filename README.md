@@ -71,9 +71,9 @@ The included source is an XCode project which you can open to see a demo. You ca
 
 The control is instantiated in `TTViewController.m`'s `viewDidLoad` method. There are then some of the options properties that have been commented out to mean the demo is using the defaults. Try uncommenting them and playing around. Finally, the app sets the dataSource property for the instance to `self`, then adds the view as a subView to the current view.
 
-`TTViewController` also implements `TTSlidingPagesDataSource`. It returns 7 for the number of pages. For the headers, on page 0 it returns an image, on the remaining pages it returns text. For the page contents it returns instances of `TabOneViewController` and `TabTwoViewController`, which could be any UIViewController.
+`TTViewController` also implements `TTSlidingPagesDataSource`. It returns 7 for the number of pages. For the headers, on page 0 it returns an image, on the remaining pages it returns text. For the page contents it returns alternating instances of `TabOneViewController` and `TabTwoViewController` - this could be any UIViewController. 
 
-Incidentally, `TabOneViewController` and `TabTwoViewController` are actually instances of one of my other libraries, `UITableViewZoomController` which can be found here [https://github.com/TomThorpe/UITableViewZoomController](https://github.com/TomThorpe/UITableViewZoomController)
+Incidentally, `TabOneViewController` and `TabTwoViewController` are actually instances of one of my other libraries, `UITableViewZoomController` which can be found here [https://github.com/TomThorpe/UITableViewZoomController](https://github.com/TomThorpe/UITableViewZoomController). This is a UITableViewController that fades and zooms each cell in as it appears like the Google+ app.
 
 
 Limitation
