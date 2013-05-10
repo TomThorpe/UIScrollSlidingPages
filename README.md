@@ -8,13 +8,10 @@ Example Screenshots
 
 ![Screenshot](Screenshots/uiscrollslidingpages.gif)
 
-This is a **WORK IN PROGRESS** control that will eventually allow you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. Similar in style to the Groupon app.
-
-You should not use this control yet unless you accept the fact that it may change dramatically.
+This control allows you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. Similar in style to the Groupon app.
 
 
 ![Screenshot](Screenshots/1.png)  ![Screenshot](Screenshots/2.png)  ![Screenshot](Screenshots/3.png)
-
 
 
 Installation
@@ -100,26 +97,25 @@ Then implement the three datasource methods methods:
 
 Options
 ---
-int titleScrollerHeight;
-int titleScrollerItemWidth;
-UIColor *titleScrollerBackgroundColour;
-UIColor *titleScrollerTextColour;
-disableTitleScrollerShadow;
-disableUIPageControl;
-initialPageNumber;
-pagingEnabled;
-zoomOutAnimationDisabled;
+You should set these options after you have instantiated the control, before you set the `dataSource` and before the control is displayed).
 
-**WORK IN PROGRESS, README TBC**
+* `int titleScrollerHeight` - The height in pixels of the header area. Default is 50px.
+* `int titleScrollerItemWidth` - The width in pixels of each 'page' in the header area. The smaller this is the more of the next and previous pages you can see in the header. Default is 150px.
+* `UIColor *titleScrollerBackgroundColour` - The background colour of the header area. As a tip, you can use the [UIColor colorWithPatternImage] method to set an image as the background here. The default is either the diagmonds.png background texture included with the source if you include it in your project (credit: from http://subtlepatterns.com/),  black if you dont. 
+* `UIColor *titleScrollerTextColour` - The colour of the text in the header area. Default is white.
+* `BOOL disableTitleScrollerShadow` - Allows you to disable the shadow effect on the text in the header area. Default is NO.
+* `BOOL disableUIPageControl` - Allows you to disable the `UIPageControl` at the top of the page (this is the "page dots" that show you how many pages there are, and what the current page is). Default is NO.
+* `int initialPageNumber` - Allows you to set a starting page number (zero-based, so first page is 0) for the page displayed (either on the first load, or afrer calling -reloadPages), which means for example you can start with pages to both the left and the right if you start at a page that isn't 0. Default is 0.
+* `BOOL pagingEnabled` - Whether the content view "snaps" to each page. Default is YES.
+* `BOOL zoomOutAnimationDisabled` - Whether the "zoom out" effect that happens as you scroll from page to page should be disabled. Default is NO.
  
 Methods
 ---
--(void)reloadPages;
--(void)scrollToPage:(int)page animated:(BOOL)animated;
--(int)getCurrentDisplayedPage;
+* `-(void)reloadPages` - Empties the control and reloads all the pages.
+* `-(void)scrollToPage:(int)page animated:(BOOL)animated` Move to a specific page number. If animated is set to NO the change will be instant, otherwise the page will "scroll" to the page.
+* `-(int)getCurrentDisplayedPage` - Returns the index of the page that is currently being displayed. The pages start at 0.
 
-**WORK IN PROGRESS, README TBC**
- 
+
 Demo
 ---
 The included source is an XCode project which you can open to see a demo. You can refer to this demos for reference of how to use the library if anything is unclear :-)
