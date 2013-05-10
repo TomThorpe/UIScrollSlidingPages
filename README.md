@@ -1,15 +1,16 @@
 UIScrollSlidingPages
 =========================
+This control allows you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. Similar in style to the Groupon app.
 
 An example of an app using this control as it's main UI is the Tom Thorpe Photography app, available on the [App Store](https://itunes.apple.com/us/app/tom-thorpe-photography/id614901245?mt=8)
 
 Example Screenshots
 ---
+Video:
 
 ![Screenshot](Screenshots/uiscrollslidingpages.gif)
 
-This control allows you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. Similar in style to the Groupon app.
-
+Screenshots:
 
 ![Screenshot](Screenshots/1.png)  ![Screenshot](Screenshots/2.png)  ![Screenshot](Screenshots/3.png)
 
