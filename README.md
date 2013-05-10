@@ -14,6 +14,20 @@ Screenshots:
 
 ![Screenshot](Screenshots/1.png)  ![Screenshot](Screenshots/2.png)  ![Screenshot](Screenshots/3.png)
 
+What is UIScrollSlidingPages?
+---
+UIScrollSlidingPages is the project name for the `TTScrollSlidingPagesController` UIViewController. The control is a horizontal paged scroller complete with a header area, the standard "page dots" showing the current page, and an UI effect as you scroll between pages.
+
+![image](Screenshots/diagram.png)
+
+As mentioned above, the control contains two main "areas" - the content area and the header area. 
+
+The content area takes up the full width of the control and is paged, meaning the user sees one page at a time. 
+
+Each page in the content area has an associated header in the header area. The header of the current page is displayed in the centre of the header area. However, the header area items do not take up the full width, allowing the user to see the next and previous page headers. 
+
+The user may scroll horizontally between the pages by dragging left to right anywhere on the control, or tapping one of the pages in the header area. The two areas will stay in-sync to mean that the header of the current page is always in the centre of the header area.
+
 
 Installation
 ---
@@ -22,14 +36,6 @@ Installation
                                                                                                                                                                                                                                                         
 Usage
 ---
-###What is UIScrollSlidingPages?
-UIScrollSlidingPages is the project name for the `TTScrollSlidingPagesController` UIViewController. The control is a horizontal paged scroller complete with a header area, the standard "page dots" showing the current page, and an UI effect as you scroll between pages.
-
-![image](Screenshots/diagram.png)
-
-As mentioned above, the control contains two main "areas" - the content area and the header area - and is made up of "pages". The content area takes up the full width of the control and is paged, meaning the user sees one page at a time, whereas the pages in the header area do not take up the full width, allowing the user to see the next and previous page headers. The user may scroll horizontally between the pages by dragging left to right anywhere on the control, or tapping one of the pages in the header area. The two areas will stay in-sync to mean that the header of the current page is always in the middle of the header area.
-
-
 
 ### Instantiating the View Controller.
 
