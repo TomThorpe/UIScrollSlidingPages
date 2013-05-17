@@ -32,6 +32,8 @@ The content area takes up the full width of the control and is paged, meaning th
 
 Each page in the content area has an associated header in the header area. The header of the current page is displayed in the centre of the header area. However, the header area items do not take up the full width, allowing the user to see the next and previous page headers. 
 
+The header area can be hidden, however, by setting the `titleScrollerHidden` option to `YES` before the control is loaded.
+
 The user may scroll horizontally between the pages by dragging left to right anywhere on the control, or tapping one of the pages in the header area. The two areas will stay in-sync to mean that the header of the current page is always in the centre of the header area.
 
 
