@@ -50,6 +50,7 @@
     if (self) {
         viewDidLoadHasBeenCalled = NO;
         //set defaults
+        self.titleScrollerHidden = NO;
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 150;
         
@@ -90,41 +91,45 @@
         [self.view addSubview:pageControl];
         nextYPosition += pageViewHeight;
     }
-    
-    //add a triangle view to point to the currently selected page
-    int triangleWidth = 30;
-    int triangleHeight = 10;
-    TTBlackTriangle *triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight)];
-    triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    [self.view addSubview:triangle];
-    
-    //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
-    topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
-    topScrollView.center = CGPointMake(self.view.center.x, topScrollView.center.y); //center it horizontally
-    topScrollView.pagingEnabled = YES;
-    topScrollView.clipsToBounds = NO;
-    topScrollView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    topScrollView.showsVerticalScrollIndicator = NO;
-    topScrollView.showsHorizontalScrollIndicator = NO;
-    topScrollView.directionalLockEnabled = YES;
-    topScrollView.backgroundColor = [UIColor clearColor];
-    topScrollView.pagingEnabled = self.pagingEnabled;
-    topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
-    topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
-    topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour;
-    //pass touch events from the wrapper onto the scrollview (so you can drag from the entire width, as the scrollview itself only lives in the very centre, but with clipToBounds turned off)
-    
-    //single tap to switch to different item
-    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(topScrollViewTapped:)];
-    singleTap.numberOfTapsRequired = 1;
-    singleTap.numberOfTouchesRequired = 1;
-    [topScrollViewWrapper addGestureRecognizer: singleTap];
-    
-    [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
-    [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
-    nextYPosition += self.titleScrollerHeight;
-    
+
+    TTBlackTriangle *triangle;
+    if (!self.titleScrollerHidden){
+        //add a triangle view to point to the currently selected page from the header
+        int triangleWidth = 30;
+        int triangleHeight = 10;
+        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight)];
+        triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [self.view addSubview:triangle];
+        
+        //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
+        topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
+        topScrollView.center = CGPointMake(self.view.center.x, topScrollView.center.y); //center it horizontally
+        topScrollView.pagingEnabled = YES;
+        topScrollView.clipsToBounds = NO;
+        topScrollView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        topScrollView.showsVerticalScrollIndicator = NO;
+        topScrollView.showsHorizontalScrollIndicator = NO;
+        topScrollView.directionalLockEnabled = YES;
+        topScrollView.backgroundColor = [UIColor clearColor];
+        topScrollView.pagingEnabled = self.pagingEnabled;
+        topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
+        topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
+        topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour;
+        //pass touch events from the wrapper onto the scrollview (so you can drag from the entire width, as the scrollview itself only lives in the very centre, but with clipToBounds turned off)
+        
+        //single tap to switch to different item
+        UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(topScrollViewTapped:)];
+        singleTap.numberOfTapsRequired = 1;
+        singleTap.numberOfTouchesRequired = 1;
+        [topScrollViewWrapper addGestureRecognizer: singleTap];
+        
+        [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
+        [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
+        nextYPosition += self.titleScrollerHeight;
+    }
+        
+        
     //set up the bottom scroller (for the content to go in)
     bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.view.frame.size.height-nextYPosition)];
     bottomScrollView.pagingEnabled = self.pagingEnabled;
@@ -136,8 +141,8 @@
     bottomScrollView.alwaysBounceVertical = NO;
     [self.view addSubview:bottomScrollView];
     
-    //add the drop shadow on the top scroller (if enabled)
-    if (!self.disableTitleScrollerShadow){
+    //add the drop shadow on the top scroller (if enabled) and bring the view to the front
+    if (!self.titleScrollerHidden && !self.disableTitleScrollerShadow){
         topScrollViewWrapper.layer.masksToBounds = NO;
         topScrollViewWrapper.layer.shadowOffset = CGSizeMake(0, 4);
         topScrollViewWrapper.layer.shadowRadius = 4;
@@ -145,7 +150,9 @@
         [self.view bringSubviewToFront:topScrollViewWrapper];//bring view to sit on top so you can see the shadow!
     }
     
-    [self.view bringSubviewToFront:triangle];
+    if (triangle != nil){
+        [self.view bringSubviewToFront:triangle];
+    }
 }
 
 
@@ -533,6 +540,10 @@
     {
         [NSException raise:@"TTSlidingPagesController set custom property too late" format:@"The app attempted to set one of the custom properties on TTSlidingPagesController (such as TitleScrollerHeight, TitleScrollerItemWidth etc.) after viewDidLoad has already been loaded. This won't work, you need to set the properties before viewDidLoad has been called - so before you access the .view property or set the dataSource. It is best to set the custom properties immediately after calling init on TTSlidingPagesController"];
     }
+}
+-(void)setTitleScrollerHidden:(bool)titleScrollerHidden{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerHidden = titleScrollerHidden;
 }
 -(void)setTitleScrollerHeight:(int)titleScrollerHeight{
     [self raiseErrorIfViewDidLoadHasBeenCalled];

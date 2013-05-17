@@ -6,15 +6,19 @@ An example of an app using this control as it's main UI is the Tom Thorpe Photog
 
 Example Screenshots
 ---
-Video:
+####Video:
+
 
 ![Screenshot](Screenshots/uiscrollslidingpages.gif)
 
-Screenshots:
+####Screenshots:
 
 ![Screenshot](Screenshots/1.png) ![Screenshot](Screenshots/4.png) 
 
 ![Screenshot](Screenshots/2.png)  ![Screenshot](Screenshots/3.png)
+
+######Same as above, but with titleScrollerHidden option set to YES:
+![Screenshot](Screenshots/5.png)
 
 What is UIScrollSlidingPages?
 ---
@@ -108,6 +112,7 @@ Options
 ---
 You should set these options after you have instantiated the control, before you set the `dataSource` and before the control is displayed).
 
+* `bool titleScrollerHidden` - Whether the title scroller bar is hidden or not. Set this to YES if you only want the pages, and don't want the titles at the top of the page. For now even if this is set to YES you will still need to implement the `-(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index` method in your datasource class, but you can just return nil for everything. Default is NO.
 * `int titleScrollerHeight` - The height in pixels of the header area. Default is 50px.
 * `int titleScrollerItemWidth` - The width in pixels of each 'page' in the header area. The smaller this is the more of the next and previous pages you can see in the header. Default is 150px.
 * `UIColor *titleScrollerBackgroundColour` - The background colour of the header area. As a tip, you can use the [UIColor colorWithPatternImage] method to set an image as the background here. The default is either the diagmonds.png background texture included with the source if you include it in your project (credit: from http://subtlepatterns.com/),  black if you dont. 
