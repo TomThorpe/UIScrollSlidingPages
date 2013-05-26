@@ -147,6 +147,14 @@
         topScrollViewWrapper.layer.shadowOffset = CGSizeMake(0, 4);
         topScrollViewWrapper.layer.shadowRadius = 4;
         topScrollViewWrapper.layer.shadowOpacity = 0.3;
+        
+        //Add shadow path (better performance)
+        CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:topScrollViewWrapper.bounds].CGPath;
+        [topScrollViewWrapper.layer setShadowPath:shadowPath];
+        //rasterize (also due to the better performance)
+        topScrollViewWrapper.layer.shouldRasterize = YES;
+        topScrollViewWrapper.layer.rasterizationScale = [UIScreen mainScreen].scale;
+        
         [self.view bringSubviewToFront:topScrollViewWrapper];//bring view to sit on top so you can see the shadow!
     }
     
