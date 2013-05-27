@@ -405,6 +405,12 @@
 -(void)viewDidLayoutSubviews{
     //this will get called when the screen rotates, at which point we need to fix the frames of all the subviews to be the new correct x position horizontally. The autolayout mask will automatically change the width for us.
     
+    if (!self.titleScrollerHidden && !self.disableTitleScrollerShadow){
+        //Fix the shadow path now the bounds might have changed.
+        CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:topScrollViewWrapper.bounds].CGPath;
+        [topScrollViewWrapper.layer setShadowPath:shadowPath];
+    }
+    
     //reposition the subviews and set the new contentsize width
     CGRect frame;
     int nextXPosition = 0;
