@@ -88,6 +88,7 @@
         pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageViewHeight)];
         pageControl.backgroundColor = [UIColor blackColor];
         pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [pageControl addTarget:self action:@selector(pageControlChangedPage:) forControlEvents:UIControlEventValueChanged];
         [self.view addSubview:pageControl];
         nextYPosition += pageViewHeight;
     }
@@ -529,6 +530,16 @@
     /*Just do a quick check, that if the paging enabled property is YES (paging is enabled), the user should not define widthForPageOnSlidingPagesViewController on the datasource delegate because scrollviews do not cope well with paging being enabled for scrollviews where each subview is not full width! */
     if (self.pagingEnabled == YES && [self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)]){
         NSLog(@"Warning: TTScrollSlidingPagesController. You have paging enabled in the TTScrollSlidingPagesController (pagingEnabled is either not set, or specifically set to YES), but you have also implemented widthForPageOnSlidingPagesViewController:atIndex:. ScrollViews do not cope well with paging being disabled when items have custom widths. You may get weird behaviour with your paging, in which case you should either disable paging (set pagingEnabled to NO) and keep widthForPageOnSlidingPagesViewController:atIndex: implented, or not implement widthForPageOnSlidingPagesViewController:atIndex: in your datasource for the TTScrollSlidingPagesController instance.");
+    }
+}
+
+#pragma mark UIPageControl page changed listener we set up on it 
+-(void)pageControlChangedPage:(id)sender
+{
+    //if not already on the page and the page is within the bounds of the pages we have, scroll to the page!
+    int page = pageControl.currentPage;
+    if ([self getCurrentDisplayedPage] != page && page < [bottomScrollView.subviews count]){
+        [self scrollToPage:page animated:YES];
     }
 }
 
