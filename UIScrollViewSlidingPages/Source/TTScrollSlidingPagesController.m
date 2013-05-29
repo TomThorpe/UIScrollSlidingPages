@@ -387,8 +387,8 @@
     //find out what page in the topscroller would be at that x location
     int page = [self getTopScrollViewPageForXPosition:point.x];
     
-    //if not already on the page, scroll to the page!
-    if ([self getCurrentDisplayedPage] != page){
+    //if not already on the page and the page is within the bounds of the pages we have, scroll to the page!
+    if ([self getCurrentDisplayedPage] != page && page < [bottomScrollView.subviews count]){
         [self scrollToPage:page animated:YES];
     }
     
