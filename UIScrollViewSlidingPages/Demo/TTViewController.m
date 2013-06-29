@@ -14,7 +14,7 @@
 #import "TTSlidingPageTitle.h"
 
 @interface TTViewController ()
-
+    @property (strong, nonatomic) TTScrollSlidingPagesController *slider;
 @end
 
 @implementation TTViewController
@@ -33,7 +33,7 @@
     [super viewDidLoad];
     
     //initial setup of the TTScrollSlidingPagesController. 
-    TTScrollSlidingPagesController *slider = [[TTScrollSlidingPagesController alloc] init];
+    self.slider = [[TTScrollSlidingPagesController alloc] init];
 
 
     
@@ -49,14 +49,13 @@
     //slider.zoomOutAnimationDisabled = YES;
     
     //set the datasource.
-    slider.dataSource = self;
+    self.slider.dataSource = self;
     
     //add the slider's view to this view as a subview, and add the viewcontroller to this viewcontrollers child collection (so that it gets retained and stays in memory! And gets all relevant events in the view controller lifecycle)
-    slider.view.frame = self.view.frame;
-    [self.view addSubview:slider.view];
-    [self addChildViewController:slider];
-    
-        
+    self.slider.view.frame = self.view.frame;
+    [self.view addSubview:self.slider.view];
+    [self addChildViewController:self.slider];
+
 }
 
 
