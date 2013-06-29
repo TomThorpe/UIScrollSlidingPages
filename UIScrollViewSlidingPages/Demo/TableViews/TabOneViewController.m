@@ -50,6 +50,10 @@
     [alert show];
 }
 
+- (void)dealloc {
+    NSLog(@"Tab One Dealloc");
+}
+
 
 
 

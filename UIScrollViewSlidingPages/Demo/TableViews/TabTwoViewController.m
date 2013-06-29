@@ -58,6 +58,10 @@
     [alert show];
 }
 
+- (void)dealloc {
+    NSLog(@"Tab Two Dealloc");
+}
+
 
 
 @end
