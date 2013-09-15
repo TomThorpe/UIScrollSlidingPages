@@ -394,6 +394,21 @@
     
 }
 
+/**If YES, hides the status bar and shows the page dots.
+ *If NO, shows the status bar and hides the page dots.
+ But only if the self.hideStatusBarWhenScrolling property is set to YES, and the disableUIPageControl is NO.
+ */
+-(void)setStatusBarReplacedWithPageDots:(BOOL)statusBarHidden{
+    if (self.hideStatusBarWhenScrolling && !self.disableUIPageControl){
+        //hide the status bar and show the page dots control
+        [[UIApplication sharedApplication] setStatusBarHidden:statusBarHidden withAnimation:UIStatusBarAnimationFade];
+        float pageControlAlpha = statusBarHidden ? 1 : 0;
+        [UIView animateWithDuration:0.3 animations:^{
+            pageControl.alpha = pageControlAlpha;
+        }];
+    }
+}
+
 
 #pragma mark Some delegate methods for handling rotation.
 
@@ -436,16 +451,12 @@
 
 #pragma mark UIScrollView delegate
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [self setStatusBarReplacedWithPageDots:YES];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     int currentPage = [self getCurrentDisplayedPage];
-    
-    if (self.hideStatusBarWhenScrolling && !self.disableUIPageControl){
-        //hide the status bar and show the page dots control
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-        [UIView animateWithDuration:0.3 animations:^{
-            pageControl.alpha = 1;
-        }];
-    }
     
     if (!self.zoomOutAnimationDisabled){
         //Do a zoom out effect on the current view and next view depending on the amount scrolled
@@ -524,13 +535,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int currentPage = [self getCurrentDisplayedPage];
     
-    if (self.hideStatusBarWhenScrolling && !self.disableUIPageControl){
-        //show the status bar then hide the page dots control
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-        [UIView animateWithDuration:0.3 animations:^{
-            pageControl.alpha = 0;
-        }];
-    }
+    [self setStatusBarReplacedWithPageDots:NO];
     
     //store the page you were on so if you have a rotate event, or you come back to this view you know what page to start at. (for example from a navigation controller), the viewDidLayoutSubviews method will know which page to navigate to (for example if the screen was portrait when you left, then you changed to landscape, and navigate back, then viewDidLayoutSubviews will need to change all the sizes of the views, but still know what page to set the offset to)
     currentPageBeforeRotation = [self getCurrentDisplayedPage];
