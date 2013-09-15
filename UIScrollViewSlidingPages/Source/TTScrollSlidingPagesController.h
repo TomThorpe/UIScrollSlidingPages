@@ -104,6 +104,19 @@
  *   Whether the "zoom out" effect that happens as you scroll from page to page should be disabled. Default is NO **/
 @property (nonatomic) bool zoomOutAnimationDisabled;
 
+/**  @property hideStatusBarWhenScrolling
+ *   @brief Intended for use in iOS7+ and when the UIScrollSlidingPages control is full screen. 
+ 
+    The new behaviour of iOS7 can result in the status bar overlapping the top of the UIScrollSlidingPages. If you set this property to YES, the page dots at the top of the screen will be hidden until the user starts scrolling, at which point the status bar is replaced with the page number dots until the user stops scrolling. 
+ 
+    If you set this to YES, you also need to add the "UIViewControllerBasedStatusBarAppearance" key as a BOOLEAN in info.plist and set it to NO, the app will throw an exception to alert you of this if you don't.  
+ 
+    If you use this in anything less than iOS7 it won't make sense unless in your view hierarchy you make sure the status bar overlaps the TTScrollSlidingPagesController. So unless you do that, it's probably best to enable this property conditionally if the device is iOS7+
+ 
+ *   Default is NO
+ **/
+@property (nonatomic) bool hideStatusBarWhenScrolling;
+
 
 
 @end

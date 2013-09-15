@@ -67,6 +67,7 @@
         self.initialPageNumber = 0;
         self.pagingEnabled = YES;
         self.zoomOutAnimationDisabled = NO;
+        self.hideStatusBarWhenScrolling = NO;
     }
     return self;
 }
@@ -84,7 +85,7 @@
     int pageViewHeight = 0;
     if (!self.disableUIPageControl){
         //create and add the UIPageControl
-        pageViewHeight = 15;
+        pageViewHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
         pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageViewHeight)];
         pageControl.backgroundColor = [UIColor blackColor];
         pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -161,6 +162,19 @@
     
     if (triangle != nil){
         [self.view bringSubviewToFront:triangle];
+    }
+    
+    if (self.hideStatusBarWhenScrolling){
+        //check the info.plist required key has been set and throw an exception if not
+        NSNumber *statusBarKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIViewControllerBasedStatusBarAppearance"];
+        if (statusBarKey == nil || [statusBarKey isEqualToNumber:@1 ]){
+            [NSException raise:@"TTScrollSlidingPagesController: Status Bar 'UIViewControllerBasedStatusBarAppearance' key missing from info.plist" format:@"The 'hideStarusBarWhenScrolling' property on the TTScrollSlidingPagesController is set to yes. This makes the page control (the page number dots) and the status bar share the same space at the top of the screen, and hide the status bar as the user changes pages. To do this, however you need to add the 'UIViewControllerBasedStatusBarAppearance' key to the info.plist and set it to a boolean of NO. See the instructions on github or the example project included with the control for help."];
+        }
+        
+        //set the status bar style to light because the background it shares with the pagedots is black
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        //hide the page dots initially
+        pageControl.alpha = 0;
     }
 }
 
@@ -274,13 +288,6 @@
         //set the number of dots on the page control, and set the initial selected dot
         pageControl.numberOfPages = numOfPages;
         pageControl.currentPage = initialPage;
-        
-        //fade in the page dots
-        if (pageControl.alpha != 1.0){
-            [UIView animateWithDuration:1.5 animations:^{
-                pageControl.alpha = 1.0f;
-            }];
-        }
     }
     
     //scroll to the initialpage
@@ -440,6 +447,14 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     int currentPage = [self getCurrentDisplayedPage];
     
+    if (self.hideStatusBarWhenScrolling && !self.disableUIPageControl){
+        //hide the status bar and show the page dots control
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+        [UIView animateWithDuration:0.3 animations:^{
+            pageControl.alpha = 1;
+        }];
+    }
+    
     if (!self.zoomOutAnimationDisabled){
         //Do a zoom out effect on the current view and next view depending on the amount scrolled
         double minimumZoom = 0.93;
@@ -516,6 +531,14 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int currentPage = [self getCurrentDisplayedPage];
+    
+    if (self.hideStatusBarWhenScrolling && !self.disableUIPageControl){
+        //show the status bar then hide the page dots control
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        [UIView animateWithDuration:0.3 animations:^{
+            pageControl.alpha = 0;
+        }];
+    }
     
     //store the page you were on so if you have a rotate event, or you come back to this view you know what page to start at. (for example from a navigation controller), the viewDidLayoutSubviews method will know which page to navigate to (for example if the screen was portrait when you left, then you changed to landscape, and navigate back, then viewDidLayoutSubviews will need to change all the sizes of the views, but still know what page to set the offset to)
     currentPageBeforeRotation = [self getCurrentDisplayedPage];

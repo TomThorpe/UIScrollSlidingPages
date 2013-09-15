@@ -38,6 +38,7 @@
 
     
     //set properties to customiser the slider. Make sure you set these BEFORE you access any other properties on the slider, such as the view or the datasource. Best to do it immediately after calling the init method.
+    //self.slider.hideStatusBarWhenScrolling = YES;
     //slider.titleScrollerHidden = YES;
     //slider.titleScrollerHeight = 100;
     //slider.titleScrollerItemWidth=60;
@@ -48,6 +49,10 @@
     //slider.pagingEnabled = NO;
     //slider.zoomOutAnimationDisabled = YES;
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7){
+        self.slider.hideStatusBarWhenScrolling = YES;//this property normally only makes sense on iOS7+. See the documentation in TTScrollSlidingPagesController.h. If you wanted to use it in iOS6 you'd have to make sure the status bar overlapped the TTScrollSlidingPagesController.
+    }
+    
     //set the datasource.
     self.slider.dataSource = self;
     
@@ -55,6 +60,8 @@
     self.slider.view.frame = self.view.frame;
     [self.view addSubview:self.slider.view];
     [self addChildViewController:self.slider];
+    
+    
 
 }
 

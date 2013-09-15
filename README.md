@@ -4,6 +4,20 @@ This control allows you to add multiple view controllers and have them scroll ho
 
 An example of an app using this control as it's main UI is the Tom Thorpe Photography app, available on the [App Store](https://itunes.apple.com/us/app/tom-thorpe-photography/id614901245?mt=8)
 
+New in version 1.1
+---
+Added the extra new property `hideStatusBarWhenScrolling` to better suit how the status bar works in iOS7. 
+
+In iOS7+ the status bar now overlaps the content, which caused a problem where this control was used full screen because the page dots (UIPageControl) now share the same space as the status bar.
+
+This property is intended for when the UIScrollSlidingPages is full screen and the status bar is overlapping the UIPageControl page dots. If you set this new property to YES, the page dots disappear when not scrolling, and show the status bar instead. And vice versa when you *are* scrolling.
+
+**For this property to work you need to add the "View controller-based status bar appearance" (UIViewControllerBasedStatusBarAppearance) key to info.plist and set it to a boolean of NO.**
+
+If you keep the current behaviour and don't set the new property above, in iOS7 you may need to add the self.edgesForExtendedLayout = UIRectEdgeNone; to your view controller to preserve the space for the status bar and mean the views don't overlap
+
+The default value is NO. I have changed the example project to set this project to YES though as I think it looks better in iOS7.
+
 Example Screenshots
 ---
 ####Video:
@@ -124,6 +138,10 @@ You should set these options after you have instantiated the control, before you
 * `int initialPageNumber` - Allows you to set a starting page number (zero-based, so first page is 0) for the page displayed (either on the first load, or afrer calling -reloadPages), which means for example you can start with pages to both the left and the right if you start at a page that isn't 0. Default is 0.
 * `BOOL pagingEnabled` - Whether the content view "snaps" to each page. Default is YES.
 * `BOOL zoomOutAnimationDisabled` - Whether the "zoom out" effect that happens as you scroll from page to page should be disabled. Default is NO.
+* `BOOL hideStatusBarWhenScrolling` - Intended for use in iOS7+ and when the UIScrollSlidingPages control is full screen. 
+	The new behaviour of iOS7 can result in the status bar overlapping the top of the UIScrollSlidingPages. If you set this property to YES, the page dots at the top of the screen will be hidden until the user starts scrolling, at which point the status bar is replaced with the page number dots until the user stops scrolling. 
+	If you set this to YES, you also need to add the "UIViewControllerBasedStatusBarAppearance" key as a BOOLEAN in info.plist and set it to NO, the app will throw an exception to alert you of this if you don't. 
+	See the example demo project where I have set this to YES for devices running iOS7+ as it looks best in iOS7+. If you use this in anything less than iOS7 it won't make sense unless in your view hierarchy you make sure the status bar overlaps the TTScrollSlidingPagesController. So unless you do that, it's probably best to enable this property conditionally if the device is iOS7+. Default is NO.
  
 Methods
 ---
