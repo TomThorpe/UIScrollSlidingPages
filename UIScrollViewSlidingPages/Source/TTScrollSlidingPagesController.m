@@ -93,7 +93,7 @@
         [self.view addSubview:pageControl];
         nextYPosition += pageViewHeight;
     }
-
+    
     TTBlackTriangle *triangle;
     if (!self.titleScrollerHidden){
         //add a triangle view to point to the currently selected page from the header
@@ -130,8 +130,8 @@
         [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
         nextYPosition += self.titleScrollerHeight;
     }
-        
-        
+    
+    
     //set up the bottom scroller (for the content to go in)
     bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.view.frame.size.height-nextYPosition)];
     bottomScrollView.pagingEnabled = self.pagingEnabled;
@@ -165,14 +165,6 @@
     }
     
     if (self.hideStatusBarWhenScrolling){
-        //check the info.plist required key has been set and throw an exception if not
-        NSNumber *statusBarKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIViewControllerBasedStatusBarAppearance"];
-        if (statusBarKey == nil || [statusBarKey isEqualToNumber:@1 ]){
-            [NSException raise:@"TTScrollSlidingPagesController: Status Bar 'UIViewControllerBasedStatusBarAppearance' key missing from info.plist" format:@"The 'hideStarusBarWhenScrolling' property on the TTScrollSlidingPagesController is set to yes. This makes the page control (the page number dots) and the status bar share the same space at the top of the screen, and hide the status bar as the user changes pages. To do this, however you need to add the 'UIViewControllerBasedStatusBarAppearance' key to the info.plist and set it to a boolean of NO. See the instructions on github or the example project included with the control for help."];
-        }
-        
-        //set the status bar style to light because the background it shares with the pagedots is black
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         //hide the page dots initially
         pageControl.alpha = 0;
     }
@@ -556,7 +548,7 @@
     }
 }
 
-#pragma mark UIPageControl page changed listener we set up on it 
+#pragma mark UIPageControl page changed listener we set up on it
 -(void)pageControlChangedPage:(id)sender
 {
     //if not already on the page and the page is within the bounds of the pages we have, scroll to the page!
@@ -616,6 +608,24 @@
 -(void)setDisableUIPageControl:(BOOL)disableUIPageControl{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _disableUIPageControl = disableUIPageControl;
+}
+-(void)setHideStatusBarWhenScrolling:(bool)hideStatusBarWhenScrolling{
+    if (hideStatusBarWhenScrolling){
+        //check the info.plist required key has been set and throw an exception if not
+        NSNumber *statusBarKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIViewControllerBasedStatusBarAppearance"];
+        if (statusBarKey == nil || [statusBarKey isEqualToNumber:@1 ]){
+            [NSException raise:@"TTScrollSlidingPagesController: Status Bar 'UIViewControllerBasedStatusBarAppearance' key missing from info.plist" format:@"The 'hideStarusBarWhenScrolling' property on the TTScrollSlidingPagesController is set to yes. This makes the page control (the page number dots) and the status bar share the same space at the top of the screen, and hide the status bar as the user changes pages. To do this, however you need to add the 'UIViewControllerBasedStatusBarAppearance' key to the info.plist and set it to a boolean of NO. See the instructions on github or the example project included with the control for help."];
+        }
+    }
+    
+    //otherwise, set the value
+    _hideStatusBarWhenScrolling = hideStatusBarWhenScrolling;
+    
+    if (hideStatusBarWhenScrolling){
+        //set the status bar style to light because the background it shares with the pagedots is black. You could do both of these in viewDidLoad, but doing it here just ensures that it still gets set if someone changed the property after viewDidLoad was called.
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+    }
 }
 
 
