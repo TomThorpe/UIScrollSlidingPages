@@ -528,6 +528,11 @@
         topScrollView.delegate = nil;
         topScrollView.contentOffset = CGPointMake(topXPosition, 0);
         topScrollView.delegate = self;
+      
+        //call the delegate to tell him you've scrolled to another page
+        if([self.delegate respondsToSelector:@selector(didScrollToViewAtIndex:)]){
+          [self.delegate didScrollToViewAtIndex:currentPage];
+        }
     }
     
 }
