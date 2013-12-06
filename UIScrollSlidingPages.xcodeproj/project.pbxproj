@@ -36,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37989C431852727A00A97623 /* TTSliddingPageDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTSliddingPageDelegate.h; sourceTree = "<group>"; };
 		9F2035E31706475B00438E50 /* diagmonds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diagmonds.png; sourceTree = "<group>"; };
 		9F2035E41706475B00438E50 /* diagmonds_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "diagmonds_@2X.png"; sourceTree = "<group>"; };
 		9F2035E51706475B00438E50 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
@@ -185,6 +186,7 @@
 				9F602A66171E083F00088A9C /* TTBlackTriangle.m */,
 				9FFDC5CA1722EEA1002A5689 /* TTScrollViewWrapper.h */,
 				9FFDC5CB1722EEA1002A5689 /* TTScrollViewWrapper.m */,
+				37989C431852727A00A97623 /* TTSliddingPageDelegate.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";

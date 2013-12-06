@@ -127,4 +127,10 @@
 //    }
 //}
 
+#pragma mark - delegate
+-(void)didScrollToViewAtIndex:(NSUInteger)index
+{
+  NSLog(@"scrolled to view");
+}
+
 @end

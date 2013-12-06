@@ -30,6 +30,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TTSlidingPagesDataSource.h"
+#import "TTSliddingPageDelegate.h"
+
 @class TTScrollViewWrapper;
 
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
@@ -52,7 +54,9 @@
 
 
 
-@property (nonatomic, strong) id<TTSlidingPagesDataSource> dataSource;
+@property (nonatomic, weak) id<TTSlidingPagesDataSource> dataSource;
+
+@property (nonatomic, weak) id<TTSliddingPageDelegate> delegate;
 
 /** @property titleScrollerHidden
  *  @brief Whether the title scroller bar is hidden or not.
