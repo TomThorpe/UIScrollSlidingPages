@@ -62,6 +62,7 @@
         }
         
         self.titleScrollerTextColour = [UIColor whiteColor];
+        self.triangleBackgroundColour = [UIColor blackColor];
         self.disableTitleScrollerShadow = NO;
         self.disableUIPageControl = NO;
         self.initialPageNumber = 0;
@@ -99,7 +100,7 @@
         //add a triangle view to point to the currently selected page from the header
         int triangleWidth = 30;
         int triangleHeight = 10;
-        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight)];
+        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
         triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.view addSubview:triangle];
         
@@ -606,6 +607,10 @@
 -(void)setTitleScrollerBackgroundColour:(UIColor *)titleScrollerBackgroundColour{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _titleScrollerBackgroundColour = titleScrollerBackgroundColour;
+}
+-(void)setTriangleBackgroundColour:(UIColor *)triangleBackgroundColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _triangleBackgroundColour = triangleBackgroundColour;
 }
 -(void)setTitleScrollerTextColour:(UIColor *)titleScrollerTextColour{
     [self raiseErrorIfViewDidLoadHasBeenCalled];

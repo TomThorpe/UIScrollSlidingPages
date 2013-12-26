@@ -9,6 +9,19 @@
 #import "TTBlackTriangle.h"
 
 @implementation TTBlackTriangle
+{
+    UIColor * color;
+}
+
+- (id)initWithFrame:(CGRect)frame color:(UIColor *)sColor
+{
+    color = sColor;
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setBackgroundColor:[UIColor clearColor]];
+    }
+    return self;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -31,7 +44,7 @@
     CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect));  // mid bottom
     CGContextClosePath(ctx);
     
-    CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillPath(ctx);
 }
 

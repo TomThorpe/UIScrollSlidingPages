@@ -10,4 +10,6 @@
 
 @interface TTBlackTriangle : UIView
 
+- (id)initWithFrame:(CGRect)frame color:(UIColor *)sColor;
+
 @end

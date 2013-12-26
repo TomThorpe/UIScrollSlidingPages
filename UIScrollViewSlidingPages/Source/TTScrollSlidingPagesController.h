@@ -83,6 +83,11 @@
  *   The colour of the text in the top scroller. If not set, the default will be white. **/
 @property (nonatomic, strong) UIColor *titleScrollerTextColour;
 
+/**  @property triangleBackgroundColour
+ *   @brief The colour of the triangle in the top scroller
+ *   The colour of the triangle in the top scroller. If not set, the default will be black. **/
+@property (nonatomic, strong) UIColor *triangleBackgroundColour;
+
 /**  @property disableTopScrollerShadow
  *   @brief Disables the shadow effect on the top header scroller
  *   If set to YES the shadow effect on the top header scroller will be disabled. Default is NO. **/
