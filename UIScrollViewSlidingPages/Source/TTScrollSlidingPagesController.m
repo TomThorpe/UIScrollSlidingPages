@@ -62,6 +62,7 @@
         }
         
         self.titleScrollerTextColour = [UIColor whiteColor];
+        self.triangleBackgroundColour = [UIColor blackColor];
         self.disableTitleScrollerShadow = NO;
         self.disableUIPageControl = NO;
         self.initialPageNumber = 0;
@@ -99,7 +100,7 @@
         //add a triangle view to point to the currently selected page from the header
         int triangleWidth = 30;
         int triangleHeight = 10;
-        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight)];
+        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
         triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.view addSubview:triangle];
         
@@ -528,11 +529,6 @@
         topScrollView.delegate = nil;
         topScrollView.contentOffset = CGPointMake(topXPosition, 0);
         topScrollView.delegate = self;
-      
-        //call the delegate to tell him you've scrolled to another page
-        if([self.delegate respondsToSelector:@selector(didScrollToViewAtIndex:)]){
-          [self.delegate didScrollToViewAtIndex:currentPage];
-        }
     }
     
 }
@@ -551,7 +547,12 @@
         //set the correct page on the pagedots
         pageControl.currentPage = currentPage;
     }
-    
+  
+    //call the delegate to tell him you've scrolled to another page
+    if([self.delegate respondsToSelector:@selector(didScrollToViewAtIndex:)]){
+      [self.delegate didScrollToViewAtIndex:currentPage];
+    }
+  
     /*Just do a quick check, that if the paging enabled property is YES (paging is enabled), the user should not define widthForPageOnSlidingPagesViewController on the datasource delegate because scrollviews do not cope well with paging being enabled for scrollviews where each subview is not full width! */
     if (self.pagingEnabled == YES && [self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)]){
         NSLog(@"Warning: TTScrollSlidingPagesController. You have paging enabled in the TTScrollSlidingPagesController (pagingEnabled is either not set, or specifically set to YES), but you have also implemented widthForPageOnSlidingPagesViewController:atIndex:. ScrollViews do not cope well with paging being disabled when items have custom widths. You may get weird behaviour with your paging, in which case you should either disable paging (set pagingEnabled to NO) and keep widthForPageOnSlidingPagesViewController:atIndex: implented, or not implement widthForPageOnSlidingPagesViewController:atIndex: in your datasource for the TTScrollSlidingPagesController instance.");
@@ -606,6 +607,10 @@
 -(void)setTitleScrollerBackgroundColour:(UIColor *)titleScrollerBackgroundColour{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _titleScrollerBackgroundColour = titleScrollerBackgroundColour;
+}
+-(void)setTriangleBackgroundColour:(UIColor *)triangleBackgroundColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _triangleBackgroundColour = triangleBackgroundColour;
 }
 -(void)setTitleScrollerTextColour:(UIColor *)titleScrollerTextColour{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
