@@ -86,7 +86,9 @@
     int pageDotsControlHeight = 0;
     if (!self.disableUIPageControl){
         //create and add the UIPageControl
-        pageDotsControlHeight = [[UIApplication sharedApplication] statusBarFrame].size.height; //same height as status bar so it sits in front of it
+        CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+        int statusBarHeight = MIN(statusBarFrame.size.height, statusBarFrame.size.width); // the height of the status bar will be the smaller value. Can't guarantee it's the height property because if the app starts in landscape sometimes the height is actually the width property :|
+        pageDotsControlHeight = statusBarHeight;
         pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageDotsControlHeight)];
         pageControl.backgroundColor = [UIColor blackColor];
         pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -465,9 +467,9 @@
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (bottomScrollView.subviews.count == 0){
-//        return; //there are no pages in the bottom scroll view so we couldn't have scrolled. This probably happened during a rotation before the pages had been created (E.g if the app starts in landscape mode)
-//    }
+    if (bottomScrollView.subviews.count == 0){
+        return; //there are no pages in the bottom scroll view so we couldn't have scrolled. This probably happened during a rotation before the pages had been created (E.g if the app starts in landscape mode)
+    }
     
     int currentPage = [self getCurrentDisplayedPage];
     
