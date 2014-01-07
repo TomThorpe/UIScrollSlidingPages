@@ -83,16 +83,16 @@
     viewDidLoadHasBeenCalled = YES;
     
     int nextYPosition = 0;
-    int pageViewHeight = 0;
+    int pageDotsControlHeight = 0;
     if (!self.disableUIPageControl){
         //create and add the UIPageControl
-        pageViewHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-        pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageViewHeight)];
+        pageDotsControlHeight = [[UIApplication sharedApplication] statusBarFrame].size.height; //same height as status bar so it sits in front of it
+        pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, pageDotsControlHeight)];
         pageControl.backgroundColor = [UIColor blackColor];
         pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [pageControl addTarget:self action:@selector(pageControlChangedPage:) forControlEvents:UIControlEventValueChanged];
         [self.view addSubview:pageControl];
-        nextYPosition += pageViewHeight;
+        nextYPosition += pageDotsControlHeight;
     }
     
     TTBlackTriangle *triangle;
@@ -168,6 +168,13 @@
     if (self.hideStatusBarWhenScrolling){
         //hide the page dots initially
         pageControl.alpha = 0;
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    if (!viewDidAppearHasBeenCalled){
+        viewDidAppearHasBeenCalled = YES;
+        [self reloadPages];
     }
 }
 
@@ -456,7 +463,12 @@
     [self setStatusBarReplacedWithPageDots:YES];
 }
 
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (bottomScrollView.subviews.count == 0){
+//        return; //there are no pages in the bottom scroll view so we couldn't have scrolled. This probably happened during a rotation before the pages had been created (E.g if the app starts in landscape mode)
+//    }
+    
     int currentPage = [self getCurrentDisplayedPage];
     
     if (!self.zoomOutAnimationDisabled){
@@ -573,9 +585,9 @@
 
 -(void)setDataSource:(id<TTSlidingPagesDataSource>)dataSource{
     _dataSource = dataSource;
-    if (self.view != nil){
-        [self reloadPages];
-    }
+//    if (self.isViewLoaded){
+//        [self reloadPages];
+//    }
 }
 
 -(void)setPagingEnabled:(BOOL)pagingEnabled{

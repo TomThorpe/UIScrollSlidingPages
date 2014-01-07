@@ -37,6 +37,7 @@
 @interface TTScrollSlidingPagesController : UIViewController<UIScrollViewDelegate>{
     int currentPageBeforeRotation;
     bool viewDidLoadHasBeenCalled;
+    bool viewDidAppearHasBeenCalled;
     UIPageControl *pageControl;
     TTScrollViewWrapper *topScrollViewWrapper;
     UIScrollView *bottomScrollView, *topScrollView;
