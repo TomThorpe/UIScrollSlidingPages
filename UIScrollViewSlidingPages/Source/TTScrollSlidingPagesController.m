@@ -268,10 +268,19 @@
         }
         UIView *contentView = page.contentView;
         
-        //put it in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).
-        contentView.frame = CGRectMake(nextXPosition, 0, pageWidth, bottomScrollView.frame.size.height);
-        [bottomScrollView addSubview:contentView];
-        nextXPosition = nextXPosition + contentView.frame.size.width;
+        //make a container view
+        UIView *containerView = [[UIView alloc] init];
+        
+        //put the container view in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).
+        containerView.frame = CGRectMake(nextXPosition, 0, pageWidth, bottomScrollView.frame.size.height);
+        nextXPosition = nextXPosition + containerView.frame.size.width;
+        
+        //put the content view inside the container view
+        [containerView addSubview:contentView];
+        
+        //add the container view to the scroll view
+        [bottomScrollView addSubview:containerView];
+        
         
         if (page.contentViewController != nil){
             [self addChildViewController:page.contentViewController];
@@ -525,25 +534,25 @@
         bottomScrollView.contentOffset = CGPointMake(bottomScrollOffset, 0);
         bottomScrollView.delegate = self;
     }
-    else if (scrollView == bottomScrollView){
-        //translate the bottom scroll to the top scroll. The bottom scroll items can in theory be different widths so it's a bit more complicated.
-        
-        //get the x position of the page in the top scroller
-        int topXPosition = self.titleScrollerItemWidth * currentPage;
-        
-        //work out the percentage past this page the view currently is, by getting the xPosition of the next page and seeing how close it is
-        float currentPageStartXPosition = [self getXPositionOfPage:currentPage]; //subtract the current page's start x position from both the current offset and next page's start position, to mean that we're on a base level. So for example if we're on page 1 so that the currentPageStartXPosition is 320, and the current offset is 330, the next page xPosition is 640, then 330-320 - 10, and 640-320 - 320. So we're 10 pixels into 320, so roughly 3%.
-        float nextPagesXPosition = [self getXPositionOfPage:currentPage+1];
-        float percentageTowardsNextPage = (scrollView.contentOffset.x-currentPageStartXPosition) / (nextPagesXPosition-currentPageStartXPosition);
-        //multiply the percentage towards the next page that you are, by the width of each topScroller item, and add it to the topXPosition
-        
-        float addToTopXPosition = percentageTowardsNextPage * self.titleScrollerItemWidth;
-        topXPosition = topXPosition + roundf(addToTopXPosition);
-        
-        topScrollView.delegate = nil;
-        topScrollView.contentOffset = CGPointMake(topXPosition, 0);
-        topScrollView.delegate = self;
-    }
+//    else if (scrollView == bottomScrollView){
+//        //translate the bottom scroll to the top scroll. The bottom scroll items can in theory be different widths so it's a bit more complicated.
+//        
+//        //get the x position of the page in the top scroller
+//        int topXPosition = self.titleScrollerItemWidth * currentPage;
+//        
+//        //work out the percentage past this page the view currently is, by getting the xPosition of the next page and seeing how close it is
+//        float currentPageStartXPosition = [self getXPositionOfPage:currentPage]; //subtract the current page's start x position from both the current offset and next page's start position, to mean that we're on a base level. So for example if we're on page 1 so that the currentPageStartXPosition is 320, and the current offset is 330, the next page xPosition is 640, then 330-320 - 10, and 640-320 - 320. So we're 10 pixels into 320, so roughly 3%.
+//        float nextPagesXPosition = [self getXPositionOfPage:currentPage+1];
+//        float percentageTowardsNextPage = (scrollView.contentOffset.x-currentPageStartXPosition) / (nextPagesXPosition-currentPageStartXPosition);
+//        //multiply the percentage towards the next page that you are, by the width of each topScroller item, and add it to the topXPosition
+//        
+//        float addToTopXPosition = percentageTowardsNextPage * self.titleScrollerItemWidth;
+//        topXPosition = topXPosition + roundf(addToTopXPosition);
+//        
+//        topScrollView.delegate = nil;
+//        topScrollView.contentOffset = CGPointMake(topXPosition, 0);
+//        topScrollView.delegate = self;
+//    }
     
 }
 
