@@ -268,7 +268,7 @@
         }
         UIView *contentView = page.contentView;
         
-        //make a container view
+        //make a container view (putting it inside a container view because if the contentView uses any autolayout it doesn't work well with the .transform property that the zoom animation uses. The container view shields it from this).
         UIView *containerView = [[UIView alloc] init];
         
         //put the container view in the right position, y is always 0, x is incremented with each item you add (it is a horizontal scroller).
