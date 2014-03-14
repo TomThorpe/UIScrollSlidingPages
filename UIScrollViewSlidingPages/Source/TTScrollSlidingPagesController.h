@@ -84,7 +84,7 @@
  *   The colour of the text in the top scroller. If not set, the default will be white. **/
 @property (nonatomic, strong) UIColor *titleScrollerTextColour;
 
-@property (nonatomic, strong) UIColor *titleScrollerNonActiveTextColour;
+@property (nonatomic, strong) UIColor *titleScrollerInActiveTextColour;
 
 @property (nonatomic, strong) UIColor *titleScrollerTextDropShadowColour;
 

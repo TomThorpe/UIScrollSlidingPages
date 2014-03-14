@@ -62,7 +62,7 @@
         }
         
         self.titleScrollerTextColour = [UIColor whiteColor];
-        self.titleScrollerNonActiveTextColour = [UIColor whiteColor];
+        self.titleScrollerInActiveTextColour = [UIColor whiteColor];
         self.titleScrollerTextDropShadowColour = [UIColor blackColor];
         self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
         self.triangleBackgroundColour = [UIColor blackColor];
@@ -244,7 +244,7 @@
             label.text = title.headerText;
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
-            label.textColor = self.titleScrollerNonActiveTextColour;
+            label.textColor = self.titleScrollerInActiveTextColour;
             label.font = self.titleScrollerTextFont;
             label.backgroundColor = [UIColor clearColor];
             
@@ -403,7 +403,7 @@
         if(title == page && [v isKindOfClass:[UILabel class]]){
             ((UILabel *) v).textColor = self.titleScrollerTextColour;
         } else if([v isKindOfClass:[UILabel class]]) {
-            ((UILabel *) v).textColor = self.titleScrollerNonActiveTextColour;
+            ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
         }
         
         title++;
@@ -597,7 +597,7 @@
         if(title == currentPage && [v isKindOfClass:[UILabel class]]){
             ((UILabel *) v).textColor = self.titleScrollerTextColour;
         } else if([v isKindOfClass:[UILabel class]]) {
-            ((UILabel *) v).textColor = self.titleScrollerNonActiveTextColour;
+            ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
         }
         
         title++;
@@ -672,9 +672,9 @@
     _titleScrollerTextColour = titleScrollerTextColour;
 }
 
--(void)setTitleScrollerNonActiveTextColour:(UIColor *)titleScrollerNonActiveTextColour{
+-(void)setTitleScrollerInActiveTextColour:(UIColor *)titleScrollerNonActiveTextColour{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
-    _titleScrollerNonActiveTextColour = titleScrollerNonActiveTextColour;
+    _titleScrollerInActiveTextColour = titleScrollerNonActiveTextColour;
 }
 -(void)setTitleScrollerTextFont:(UIFont *)titleScrollerTextFont{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
