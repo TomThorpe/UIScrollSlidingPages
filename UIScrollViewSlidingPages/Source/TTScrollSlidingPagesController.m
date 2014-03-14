@@ -62,6 +62,9 @@
         }
         
         self.titleScrollerTextColour = [UIColor whiteColor];
+        self.titleScrollerNonActiveTextColour = [UIColor whiteColor];
+        self.titleScrollerTextDropShadowColour = [UIColor blackColor];
+        self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
         self.triangleBackgroundColour = [UIColor blackColor];
         self.disableTitleScrollerShadow = NO;
         self.disableUIPageControl = NO;
@@ -132,6 +135,11 @@
         [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
         [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
         nextYPosition += self.titleScrollerHeight;
+        
+        UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topScrollViewWrapper.frame) - 3, CGRectGetWidth(topScrollViewWrapper.frame), 3)];
+        barView.backgroundColor = self.titleScrollerBottomEdgeColour;
+        [topScrollViewWrapper addSubview:barView];
+        [topScrollViewWrapper bringSubviewToFront:barView];
     }
     
     
@@ -236,12 +244,12 @@
             label.text = title.headerText;
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
-            label.textColor = self.titleScrollerTextColour;
-            label.font = [UIFont boldSystemFontOfSize:19];
+            label.textColor = self.titleScrollerNonActiveTextColour;
+            label.font = self.titleScrollerTextFont;
             label.backgroundColor = [UIColor clearColor];
             
             //add subtle drop shadow
-            label.layer.shadowColor = [[UIColor blackColor] CGColor];
+            label.layer.shadowColor = [self.titleScrollerTextDropShadowColour CGColor];
             label.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
             label.layer.shadowRadius = 2.0f;
             label.layer.shadowOpacity = 1.0f;
@@ -387,6 +395,18 @@
     //update the pagedots pagenumber
     if (!self.disableUIPageControl){
         pageControl.currentPage = page;
+    }
+    
+    NSArray *vs = [topScrollView subviews];
+    int title = 0;
+    for (UIView *v in vs) {
+        if(title == page && [v isKindOfClass:[UILabel class]]){
+            ((UILabel *) v).textColor = self.titleScrollerTextColour;
+        } else if([v isKindOfClass:[UILabel class]]) {
+            ((UILabel *) v).textColor = self.titleScrollerNonActiveTextColour;
+        }
+        
+        title++;
     }
 }
 
@@ -570,6 +590,18 @@
         //set the correct page on the pagedots
         pageControl.currentPage = currentPage;
     }
+    
+    NSArray *vs = [topScrollView subviews];
+    int title = 0;
+    for (UIView *v in vs) {
+        if(title == currentPage && [v isKindOfClass:[UILabel class]]){
+            ((UILabel *) v).textColor = self.titleScrollerTextColour;
+        } else if([v isKindOfClass:[UILabel class]]) {
+            ((UILabel *) v).textColor = self.titleScrollerNonActiveTextColour;
+        }
+        
+        title++;
+    }
   
     //call the delegate to tell him you've scrolled to another page
     if([self.delegate respondsToSelector:@selector(didScrollToViewAtIndex:)]){
@@ -639,6 +671,24 @@
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _titleScrollerTextColour = titleScrollerTextColour;
 }
+
+-(void)setTitleScrollerNonActiveTextColour:(UIColor *)titleScrollerNonActiveTextColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerNonActiveTextColour = titleScrollerNonActiveTextColour;
+}
+-(void)setTitleScrollerTextFont:(UIFont *)titleScrollerTextFont{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerTextFont = titleScrollerTextFont;
+}
+-(void)setTitleScrollerTextDropShadowColour:(UIColor *)titleScrollerTextDropShadowColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerTextDropShadowColour = titleScrollerTextDropShadowColour;
+}
+-(void)setTitleScrollerBottomEdgeColour:(UIColor *)titleScrollerBottomEdgeColour{
+    [self raiseErrorIfViewDidLoadHasBeenCalled];
+    _titleScrollerBottomEdgeColour = titleScrollerBottomEdgeColour;
+}
+
 -(void)setDisableTitleScrollerShadow:(BOOL)disableTitleScrollerShadow{
     [self raiseErrorIfViewDidLoadHasBeenCalled];
     _disableTitleScrollerShadow = disableTitleScrollerShadow;

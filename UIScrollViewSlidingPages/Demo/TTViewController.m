@@ -34,6 +34,8 @@
     
     //initial setup of the TTScrollSlidingPagesController. 
     self.slider = [[TTScrollSlidingPagesController alloc] init];
+    self.slider.titleScrollerNonActiveTextColour = [UIColor grayColor];
+    self.slider.titleScrollerBottomEdgeColour = [UIColor yellowColor];
 
 
     

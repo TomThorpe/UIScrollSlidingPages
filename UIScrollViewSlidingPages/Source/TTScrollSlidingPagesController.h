@@ -84,6 +84,14 @@
  *   The colour of the text in the top scroller. If not set, the default will be white. **/
 @property (nonatomic, strong) UIColor *titleScrollerTextColour;
 
+@property (nonatomic, strong) UIColor *titleScrollerNonActiveTextColour;
+
+@property (nonatomic, strong) UIColor *titleScrollerTextDropShadowColour;
+
+@property (nonatomic, strong) UIFont *titleScrollerTextFont;
+
+@property (nonatomic, strong) UIColor *titleScrollerBottomEdgeColour;
+
 /**  @property triangleBackgroundColour
  *   @brief The colour of the triangle in the top scroller
  *   The colour of the triangle in the top scroller. If not set, the default will be black. **/
