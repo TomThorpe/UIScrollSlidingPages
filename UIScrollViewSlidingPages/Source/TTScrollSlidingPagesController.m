@@ -65,6 +65,8 @@
         self.titleScrollerInActiveTextColour = [UIColor whiteColor];
         self.titleScrollerTextDropShadowColour = [UIColor blackColor];
         self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
+        self.titleScrollerBottomEdgeHeight = 3;
+        self.titleScrollerBottomEdgeColour = [UIColor clearColor];
         self.triangleBackgroundColour = [UIColor blackColor];
         self.disableTitleScrollerShadow = NO;
         self.disableUIPageControl = NO;
@@ -136,7 +138,7 @@
         [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
         nextYPosition += self.titleScrollerHeight;
         
-        UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topScrollViewWrapper.frame) - 3, CGRectGetWidth(topScrollViewWrapper.frame), 3)];
+        UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topScrollViewWrapper.frame) - self.titleScrollerBottomEdgeHeight, CGRectGetWidth(topScrollViewWrapper.frame), self.titleScrollerBottomEdgeHeight)];
         barView.backgroundColor = self.titleScrollerBottomEdgeColour;
         [topScrollViewWrapper addSubview:barView];
         [topScrollViewWrapper bringSubviewToFront:barView];

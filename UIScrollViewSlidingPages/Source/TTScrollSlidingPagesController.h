@@ -92,6 +92,8 @@
 
 @property (nonatomic, strong) UIColor *titleScrollerBottomEdgeColour;
 
+@property (nonatomic) int titleScrollerBottomEdgeHeight;
+
 /**  @property triangleBackgroundColour
  *   @brief The colour of the triangle in the top scroller
  *   The colour of the triangle in the top scroller. If not set, the default will be black. **/
