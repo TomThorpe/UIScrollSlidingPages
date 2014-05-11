@@ -35,9 +35,8 @@
     //initial setup of the TTScrollSlidingPagesController. 
     self.slider = [[TTScrollSlidingPagesController alloc] init];
     self.slider.titleScrollerInActiveTextColour = [UIColor grayColor];
-    self.slider.titleScrollerBottomEdgeColour = [UIColor yellowColor];
-
-
+    self.slider.titleScrollerBottomEdgeColour = [UIColor darkGrayColor];
+    self.slider.titleScrollerBottomEdgeHeight = 2;
     
     //set properties to customiser the slider. Make sure you set these BEFORE you access any other properties on the slider, such as the view or the datasource. Best to do it immediately after calling the init method.
     //self.slider.hideStatusBarWhenScrolling = YES;

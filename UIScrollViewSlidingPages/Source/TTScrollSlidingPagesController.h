@@ -84,14 +84,29 @@
  *   The colour of the text in the top scroller. If not set, the default will be white. **/
 @property (nonatomic, strong) UIColor *titleScrollerTextColour;
 
+/** @property titleScrollerInActiveTextColour
+ *  @brief The colour of the inactive headings in the header area
+ *  The colour of the inactive text in the top scroller. If not set, the default will be white. **/
 @property (nonatomic, strong) UIColor *titleScrollerInActiveTextColour;
 
+/** @property titleScrollerTextDropShadowColour
+ *  @brief The colour of the drop shadow for the heading text
+ *  The colour of the drop shadow for the heading text. If not set, the default will be black. **/
 @property (nonatomic, strong) UIColor *titleScrollerTextDropShadowColour;
 
+/** @property titleScrollerTextFont
+ *  @brief The font for the text in the header area
+ *  The font for the text in the header area. If not set, the default will be the bold system font. **/
 @property (nonatomic, strong) UIFont *titleScrollerTextFont;
 
+/** @property titleScrollerBottomEdgeColour
+ *  @brief The colour of the border on the bottom edge of the header area
+ *  The colour of the border on the bottom edge of the header area. If not set, the default will be transparent. **/
 @property (nonatomic, strong) UIColor *titleScrollerBottomEdgeColour;
 
+/** @property titleScrollerBottomEdgeHeight
+ *  @brief The height of the border on the bottom edge of the header area
+ *  The height of the border on the bottom edge of the header area. If not set, the default will be 3. **/
 @property (nonatomic) int titleScrollerBottomEdgeHeight;
 
 /**  @property triangleBackgroundColour
