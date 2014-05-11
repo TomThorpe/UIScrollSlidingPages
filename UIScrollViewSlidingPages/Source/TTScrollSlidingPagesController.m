@@ -377,6 +377,25 @@
 }
 
 /**
+ Sets the active and inactive colors of the heading text labels
+ 
+ @param page The X position of the active page index
+ */
+- (void)updateHeaderTextColour:(int)page {
+    NSArray *vs = [topScrollView subviews];
+    int title = 0;
+    for (UIView *v in vs) {
+        if(title == page && [v isKindOfClass:[UILabel class]]){
+            ((UILabel *) v).textColor = self.titleScrollerTextColour;
+        } else if([v isKindOfClass:[UILabel class]]) {
+            ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
+        }
+        
+        title++;
+    }
+}
+
+/**
  Scrolls the bottom scorller (content scroller) to a particular page number.
  
  @param page The page number to scroll to.
@@ -399,17 +418,7 @@
         pageControl.currentPage = page;
     }
     
-    NSArray *vs = [topScrollView subviews];
-    int title = 0;
-    for (UIView *v in vs) {
-        if(title == page && [v isKindOfClass:[UILabel class]]){
-            ((UILabel *) v).textColor = self.titleScrollerTextColour;
-        } else if([v isKindOfClass:[UILabel class]]) {
-            ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
-        }
-        
-        title++;
-    }
+    [self updateHeaderTextColour:page];
 }
 
 
@@ -593,17 +602,7 @@
         pageControl.currentPage = currentPage;
     }
     
-    NSArray *vs = [topScrollView subviews];
-    int title = 0;
-    for (UIView *v in vs) {
-        if(title == currentPage && [v isKindOfClass:[UILabel class]]){
-            ((UILabel *) v).textColor = self.titleScrollerTextColour;
-        } else if([v isKindOfClass:[UILabel class]]) {
-            ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
-        }
-        
-        title++;
-    }
+    [self updateHeaderTextColour:currentPage];
   
     //call the delegate to tell him you've scrolled to another page
     if([self.delegate respondsToSelector:@selector(didScrollToViewAtIndex:)]){
