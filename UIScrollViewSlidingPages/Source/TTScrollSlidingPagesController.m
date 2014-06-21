@@ -619,7 +619,7 @@
 -(void)pageControlChangedPage:(id)sender
 {
     //if not already on the page and the page is within the bounds of the pages we have, scroll to the page!
-    int page = pageControl.currentPage;
+    int page = (int)pageControl.currentPage;
     if ([self getCurrentDisplayedPage] != page && page < [bottomScrollView.subviews count]){
         [self scrollToPage:page animated:YES];
     }
