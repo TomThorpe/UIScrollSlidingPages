@@ -53,6 +53,7 @@
         self.titleScrollerHidden = NO;
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 150;
+        self.disableTitleShadow = NO;
         
         UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
         if (backgroundImage != nil){
@@ -249,13 +250,15 @@
             label.textColor = self.titleScrollerInActiveTextColour;
             label.font = self.titleScrollerTextFont;
             label.backgroundColor = [UIColor clearColor];
-            
-            //add subtle drop shadow
-            label.layer.shadowColor = [self.titleScrollerTextDropShadowColour CGColor];
-            label.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-            label.layer.shadowRadius = 2.0f;
-            label.layer.shadowOpacity = 1.0f;
-            
+
+            if (self.disableTitleShadow) {
+                //add subtle drop shadow
+                label.layer.shadowColor = [self.titleScrollerTextDropShadowColour CGColor];
+                label.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+                label.layer.shadowRadius = 2.0f;
+                label.layer.shadowOpacity = 1.0f;
+            }
+
             //set view as the top item
             topItem = (UIView *)label;
         }
