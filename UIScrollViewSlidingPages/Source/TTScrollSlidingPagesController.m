@@ -37,6 +37,8 @@
 
 @interface TTScrollSlidingPagesController ()
 
+@property (nonatomic, strong) NSMutableArray *titleLabels;
+
 @end
 
 @implementation TTScrollSlidingPagesController
@@ -57,6 +59,8 @@
         self.triangleType = TTTriangleTypeTop;
         self.triangleSize = CGSizeMake(30, 10);
 
+        _titleLabels = [NSMutableArray array];
+
         UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
         if (backgroundImage != nil){
             self.titleScrollerBackgroundColour = [UIColor colorWithPatternImage:backgroundImage];
@@ -68,6 +72,7 @@
         self.titleScrollerInActiveTextColour = [UIColor whiteColor];
         self.titleScrollerTextDropShadowColour = [UIColor blackColor];
         self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
+        self.titleScrollerTextSelectedFont = [UIFont boldSystemFontOfSize:24];
         self.titleScrollerBottomEdgeHeight = 3;
         self.titleScrollerBottomEdgeColour = [UIColor clearColor];
         self.triangleBackgroundColour = [UIColor blackColor];
@@ -237,7 +242,9 @@
     //keep track of where next to put items in each scroller
     int nextXPosition = 0;
     int nextTopScrollerXPosition = 0;
-    
+
+    [_titleLabels removeAllObjects];
+
     //loop through each page and add it to the scroller
     for (int i=0; i<numOfPages; i++){
         //top scroller (nav) add----
@@ -278,8 +285,8 @@
         topItem.frame = CGRectMake(nextTopScrollerXPosition, 0, topScrollView.frame.size.width, topScrollView.frame.size.height);
         [topScrollView addSubview:topItem];
         nextTopScrollerXPosition = nextTopScrollerXPosition + topItem.frame.size.width;
-        
-        
+        [_titleLabels addObject:topItem];
+
         //bottom scroller add-----
         //set the default width of the page
         int pageWidth = bottomScrollView.frame.size.width;
@@ -624,7 +631,22 @@
     if([self.delegate respondsToSelector:@selector(didScrollToViewAtIndex:)]){
       [self.delegate didScrollToViewAtIndex:currentPage];
     }
-  
+
+    //get the number of pages
+    int numOfPages = [self.dataSource numberOfPagesForSlidingPagesViewController:self];
+
+    //loop through each page and change font for current page
+    for (int i=0; i < numOfPages; i++){
+        UIView *label = self.titleLabels[i];
+        if ([label isMemberOfClass:[UILabel class]]) {
+            if (currentPage == i) {
+                [(UILabel *)label setFont:self.titleScrollerTextSelectedFont];
+            } else {
+                [(UILabel *)label setFont:self.titleScrollerTextFont];
+            }
+        }
+    }
+
     /*Just do a quick check, that if the paging enabled property is YES (paging is enabled), the user should not define widthForPageOnSlidingPagesViewController on the datasource delegate because scrollviews do not cope well with paging being enabled for scrollviews where each subview is not full width! */
     if (self.pagingEnabled == YES && [self.dataSource respondsToSelector:@selector(widthForPageOnSlidingPagesViewController:atIndex:)]){
         NSLog(@"Warning: TTScrollSlidingPagesController. You have paging enabled in the TTScrollSlidingPagesController (pagingEnabled is either not set, or specifically set to YES), but you have also implemented widthForPageOnSlidingPagesViewController:atIndex:. ScrollViews do not cope well with paging being disabled when items have custom widths. You may get weird behaviour with your paging, in which case you should either disable paging (set pagingEnabled to NO) and keep widthForPageOnSlidingPagesViewController:atIndex: implented, or not implement widthForPageOnSlidingPagesViewController:atIndex: in your datasource for the TTScrollSlidingPagesController instance.");
