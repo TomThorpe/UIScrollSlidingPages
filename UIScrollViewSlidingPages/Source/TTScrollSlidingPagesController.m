@@ -268,7 +268,7 @@
             label.textAlignment = NSTextAlignmentCenter;
             label.adjustsFontSizeToFitWidth = YES;
             label.textColor = self.titleScrollerInActiveTextColour;
-            label.font = self.titleScrollerTextFont;
+            label.font = i == 0 ? self.titleScrollerTextSelectedFont : self.titleScrollerTextFont;
             label.backgroundColor = [UIColor clearColor];
 
             if (self.disableTitleShadow) {

@@ -98,7 +98,7 @@
     TTSlidingPageTitle *title;
     if (index == 0){
         //use a image as the header for the first page
-        title= [[TTSlidingPageTitle alloc] initWithHeaderImage:[UIImage imageNamed:@"about-tomthorpelogo.png"]];
+        title= [[TTSlidingPageTitle alloc] initWithHeaderText:@"Text"];
     } else {
         //all other pages just use a simple text header
         switch (index) {
