@@ -31,6 +31,7 @@
 #import <UIKit/UIKit.h>
 #import "TTSlidingPagesDataSource.h"
 #import "TTSliddingPageDelegate.h"
+#import "TTTriangle.h"
 
 @class TTScrollViewWrapper;
 
@@ -118,6 +119,21 @@
 *   @brief Disables the shadow effect on the title label
 *   If set to YES the shadow effect on the title should be disabled. Default is NO. **/
 @property (nonatomic) BOOL disableTitleShadow;
+
+/**  @property triangleType
+*   @brief You can change triangle type (it means position) Top or Bottom
+*   Triangle position (type). If not set, the default will be TTBlackTriangleTypeTop. **/
+@property (nonatomic, assign) TTTriangleType triangleType;
+
+/**  @property triangleSize
+*   @brief You can change triangle size
+*   Triangle size. If not set, the default will be CGSize(30, 10). **/
+@property (nonatomic, assign) CGSize triangleSize;
+
+/**  @property trianglePosition
+*   @brief You can change triangle position
+*   Triangle size. If not set, the default will be CGSize(30, 10). **/
+@property (nonatomic, assign) CGPoint trianglePosition;
 
 /**  @property disableTopScrollerShadow
  *   @brief Disables the shadow effect on the top header scroller

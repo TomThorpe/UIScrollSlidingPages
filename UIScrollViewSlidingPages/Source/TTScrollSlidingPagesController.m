@@ -32,7 +32,7 @@
 #import "TTSlidingPage.h"
 #import "TTSlidingPageTitle.h"
 #import <QuartzCore/QuartzCore.h>
-#import "TTBlackTriangle.h"
+#import "TTTriangle.h"
 #import "TTScrollViewWrapper.h"
 
 @interface TTScrollSlidingPagesController ()
@@ -54,7 +54,9 @@
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 150;
         self.disableTitleShadow = NO;
-        
+        self.triangleType = TTTriangleTypeTop;
+        self.triangleSize = CGSizeMake(30, 10);
+
         UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
         if (backgroundImage != nil){
             self.titleScrollerBackgroundColour = [UIColor colorWithPatternImage:backgroundImage];
@@ -103,12 +105,23 @@
         nextYPosition += pageDotsControlHeight;
     }
     
-    TTBlackTriangle *triangle;
+    TTTriangle *triangle;
     if (!self.titleScrollerHidden){
         //add a triangle view to point to the currently selected page from the header
-        int triangleWidth = 30;
-        int triangleHeight = 10;
-        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
+        CGRect triangleFrame = CGRectZero;
+        // check user set triangle position
+        if (self.trianglePosition.x) {
+            triangleFrame = CGRectMake(self.trianglePosition.x, self.trianglePosition.y, self.triangleSize.width, self.triangleSize.height);
+        } else {
+            if (self.triangleType == TTTriangleTypeTop) {
+                /*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/
+                triangleFrame = CGRectMake(self.view.frame.size.width/2-(self.triangleSize.width/2), nextYPosition, self.triangleSize.width, self.triangleSize.height);
+            } else if (self.triangleType == TTTriangleTypeBottom) {
+                triangleFrame = CGRectMake(self.view.frame.size.width/2-(self.triangleSize.width/2), nextYPosition - self.triangleSize.height, self.triangleSize.width, self.triangleSize.height);
+            }
+        }
+
+        triangle = [[TTTriangle alloc] initWithFrame:triangleFrame color:self.triangleBackgroundColour type:self.triangleType];
         triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.view addSubview:triangle];
         
