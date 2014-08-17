@@ -114,6 +114,11 @@
  *   The colour of the triangle in the top scroller. If not set, the default will be black. **/
 @property (nonatomic, strong) UIColor *triangleBackgroundColour;
 
+/**  @property disableTitleShadow
+*   @brief Disables the shadow effect on the title label
+*   If set to YES the shadow effect on the title should be disabled. Default is NO. **/
+@property (nonatomic) BOOL disableTitleShadow;
+
 /**  @property disableTopScrollerShadow
  *   @brief Disables the shadow effect on the top header scroller
  *   If set to YES the shadow effect on the top header scroller will be disabled. Default is NO. **/
