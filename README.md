@@ -139,6 +139,7 @@ You should set these options after you have instantiated the control, before you
 * `UIColor titleScrollerBottomEdgeColour` - The colour of the border on the bottom edge of the header area. If not set, the default will be transparent.
 * `int titleScrollerBottomEdgeHeight` - The height of the border on the bottom edge of the header area. If not set, the default will be 3.
 * `BOOL disableTitleScrollerShadow` - Allows you to disable the shadow effect on the text in the header area. Default is NO.
+* `BOOL disableTitleShadow` - Disables the (very subtle) shadow effect on the title text label
 * `BOOL disableUIPageControl` - Allows you to disable the `UIPageControl` at the top of the page (this is the "page dots" that show you how many pages there are, and what the current page is). Default is NO.
 * `int initialPageNumber` - Allows you to set a starting page number (zero-based, so first page is 0) for the page displayed (either on the first load, or afrer calling -reloadPages), which means for example you can start with pages to both the left and the right if you start at a page that isn't 0. Default is 0.
 * `BOOL pagingEnabled` - Whether the content view "snaps" to each page. Default is YES.

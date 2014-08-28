@@ -49,6 +49,7 @@
     //slider.initialPageNumber = 1;
     //slider.pagingEnabled = NO;
     //slider.zoomOutAnimationDisabled = YES;
+    //self.slider.disableTitleShadow = YES;
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7){
         self.slider.hideStatusBarWhenScrolling = YES;//this property normally only makes sense on iOS7+. See the documentation in TTScrollSlidingPagesController.h. If you wanted to use it in iOS6 you'd have to make sure the status bar overlapped the TTScrollSlidingPagesController.

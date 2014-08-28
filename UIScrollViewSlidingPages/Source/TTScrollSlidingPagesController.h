@@ -115,8 +115,8 @@
 @property (nonatomic, strong) UIColor *triangleBackgroundColour;
 
 /**  @property disableTitleShadow
-*   @brief Disables the shadow effect on the title label
-*   If set to YES the shadow effect on the title should be disabled. Default is NO. **/
+ *   @brief Disables the (very subtle) shadow effect on the title text label
+ *   If set to YES the shadow effect on the title text label will be disabled. Default is NO. **/
 @property (nonatomic) BOOL disableTitleShadow;
 
 /**  @property disableTopScrollerShadow
