@@ -139,8 +139,10 @@
         [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
         nextYPosition += self.titleScrollerHeight;
         
+        //line underneith the top scroller
         UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topScrollViewWrapper.frame) - self.titleScrollerBottomEdgeHeight, CGRectGetWidth(topScrollViewWrapper.frame), self.titleScrollerBottomEdgeHeight)];
         barView.backgroundColor = self.titleScrollerBottomEdgeColour;
+        barView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [topScrollViewWrapper addSubview:barView];
         [topScrollViewWrapper bringSubviewToFront:barView];
     }
