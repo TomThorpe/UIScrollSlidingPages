@@ -119,16 +119,6 @@
     return title;
 }
 
-////The below method in the datasource might get removed from the control some time in the future as it doesn't work that well with the headers if the width is small.
-//-(int)widthForPageOnSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index
-//{
-//    if (index ==3){
-//        return 130;
-//    } else {
-//        return self.view.frame.size.width;
-//    }
-//}
-
 #pragma mark - delegate
 -(void)didScrollToViewAtIndex:(NSUInteger)index
 {

@@ -18,9 +18,6 @@
 		9F70249416DBF6650003B5FA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F70249216DBF6650003B5FA /* InfoPlist.strings */; };
 		9F70249616DBF6650003B5FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F70249516DBF6650003B5FA /* main.m */; };
 		9F70249A16DBF6650003B5FA /* TTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F70249916DBF6650003B5FA /* TTAppDelegate.m */; };
-		9F70249C16DBF6650003B5FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F70249B16DBF6650003B5FA /* Default.png */; };
-		9F70249E16DBF6650003B5FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F70249D16DBF6650003B5FA /* Default@2x.png */; };
-		9F7024A016DBF6650003B5FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F70249F16DBF6650003B5FA /* Default-568h@2x.png */; };
 		9F7024C316DBF7080003B5FA /* TTUITableViewZoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7024C216DBF7080003B5FA /* TTUITableViewZoomController.m */; };
 		9F7024C916DBF7E20003B5FA /* TabOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7024C716DBF7E20003B5FA /* TabOneViewController.m */; };
 		9F7024CA16DBF7E20003B5FA /* TabOneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024C816DBF7E20003B5FA /* TabOneViewController.xib */; };
@@ -28,6 +25,8 @@
 		9F7024CF16DBF7F80003B5FA /* TabTwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024CD16DBF7F80003B5FA /* TabTwoViewController.xib */; };
 		9F7024D116DBFBE20003B5FA /* FancyCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7024D016DBFBE20003B5FA /* FancyCellView.xib */; };
 		9F936B55170650EF001622D8 /* TTSlidingPageTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F936B54170650EF001622D8 /* TTSlidingPageTitle.m */; };
+		9F98735719CDCF2E0067A379 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F98735619CDCF2E0067A379 /* Images.xcassets */; };
+		9F98735919CDD4DA0067A379 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F98735819CDD4DA0067A379 /* MainStoryboard.storyboard */; };
 		9F9B9B9B1703758A00CD45B4 /* TTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9B991703758A00CD45B4 /* TTViewController.m */; };
 		9F9B9B9C1703758A00CD45B4 /* TTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */; };
 		9F9B9BA117037C0B00CD45B4 /* TTScrollSlidingPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B9BA017037C0B00CD45B4 /* TTScrollSlidingPagesController.m */; };
@@ -53,9 +52,6 @@
 		9F70249716DBF6650003B5FA /* UIScrollSlidingPages-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollSlidingPages-Prefix.pch"; sourceTree = "<group>"; };
 		9F70249816DBF6650003B5FA /* TTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTAppDelegate.h; sourceTree = "<group>"; };
 		9F70249916DBF6650003B5FA /* TTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTAppDelegate.m; sourceTree = "<group>"; };
-		9F70249B16DBF6650003B5FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Demo/Default.png; sourceTree = "<group>"; };
-		9F70249D16DBF6650003B5FA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Demo/Default@2x.png"; sourceTree = "<group>"; };
-		9F70249F16DBF6650003B5FA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Demo/Default-568h@2x.png"; sourceTree = "<group>"; };
 		9F7024C116DBF7080003B5FA /* TTUITableViewZoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTUITableViewZoomController.h; sourceTree = "<group>"; };
 		9F7024C216DBF7080003B5FA /* TTUITableViewZoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTUITableViewZoomController.m; sourceTree = "<group>"; };
 		9F7024C616DBF7E20003B5FA /* TabOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabOneViewController.h; sourceTree = "<group>"; };
@@ -67,6 +63,8 @@
 		9F7024D016DBFBE20003B5FA /* FancyCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FancyCellView.xib; sourceTree = "<group>"; };
 		9F936B53170650EF001622D8 /* TTSlidingPageTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSlidingPageTitle.h; sourceTree = "<group>"; };
 		9F936B54170650EF001622D8 /* TTSlidingPageTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSlidingPageTitle.m; sourceTree = "<group>"; };
+		9F98735619CDCF2E0067A379 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../UIScrollSlidingPages/Images.xcassets; sourceTree = "<group>"; };
+		9F98735819CDD4DA0067A379 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = ../../MainStoryboard.storyboard; sourceTree = "<group>"; };
 		9F9B9B981703758A00CD45B4 /* TTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTViewController.h; sourceTree = "<group>"; };
 		9F9B9B991703758A00CD45B4 /* TTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTViewController.m; sourceTree = "<group>"; };
 		9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTViewController.xib; sourceTree = "<group>"; };
@@ -159,13 +157,11 @@
 		9F70249016DBF6650003B5FA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9F98735619CDCF2E0067A379 /* Images.xcassets */,
 				9F70249116DBF6650003B5FA /* UIScrollSlidingPages-Info.plist */,
 				9F70249216DBF6650003B5FA /* InfoPlist.strings */,
 				9F70249516DBF6650003B5FA /* main.m */,
 				9F70249716DBF6650003B5FA /* UIScrollSlidingPages-Prefix.pch */,
-				9F70249B16DBF6650003B5FA /* Default.png */,
-				9F70249D16DBF6650003B5FA /* Default@2x.png */,
-				9F70249F16DBF6650003B5FA /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			path = ..;
@@ -200,6 +196,7 @@
 				9F9B9B9A1703758A00CD45B4 /* TTViewController.xib */,
 				9F7024C516DBF7AA0003B5FA /* TableViews */,
 				9F70249016DBF6650003B5FA /* Supporting Files */,
+				9F98735819CDD4DA0067A379 /* MainStoryboard.storyboard */,
 				9F70249816DBF6650003B5FA /* TTAppDelegate.h */,
 				9F70249916DBF6650003B5FA /* TTAppDelegate.m */,
 			);
@@ -282,9 +279,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F70249416DBF6650003B5FA /* InfoPlist.strings in Resources */,
-				9F70249C16DBF6650003B5FA /* Default.png in Resources */,
-				9F70249E16DBF6650003B5FA /* Default@2x.png in Resources */,
-				9F7024A016DBF6650003B5FA /* Default-568h@2x.png in Resources */,
+				9F98735919CDD4DA0067A379 /* MainStoryboard.storyboard in Resources */,
+				9F98735719CDCF2E0067A379 /* Images.xcassets in Resources */,
 				9F7024CA16DBF7E20003B5FA /* TabOneViewController.xib in Resources */,
 				9F7024CF16DBF7F80003B5FA /* TabTwoViewController.xib in Resources */,
 				9F7024D116DBFBE20003B5FA /* FancyCellView.xib in Resources */,
@@ -393,10 +389,13 @@
 		9F7024BE16DBF6650003B5FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIScrollViewSlidingPages/UIScrollSlidingPages-Prefix.pch";
 				INFOPLIST_FILE = "UIScrollViewSlidingPages/UIScrollSlidingPages-Info.plist";
 				PRODUCT_NAME = UIScrollSlidingPages;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -404,10 +403,13 @@
 		9F7024BF16DBF6650003B5FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIScrollViewSlidingPages/UIScrollSlidingPages-Prefix.pch";
 				INFOPLIST_FILE = "UIScrollViewSlidingPages/UIScrollSlidingPages-Info.plist";
 				PRODUCT_NAME = UIScrollSlidingPages;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
