@@ -289,6 +289,7 @@
         nextXPosition = nextXPosition + containerView.frame.size.width;
         
         //put the content view inside the container view
+        contentView.frame = CGRectMake(0, 0, pageWidth, bottomScrollView.frame.size.height);
         [containerView addSubview:contentView];
         
         //add the container view to the scroll view
