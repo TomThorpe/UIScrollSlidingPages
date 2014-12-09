@@ -41,6 +41,12 @@
 
 @implementation TTScrollSlidingPagesController
 
+- (void)dealloc
+{
+   topScrollView.delegate = nil;
+   bottomScrollView.delegate = nil;
+}
+
 /**
  Initalises the control and sets all the default values for the user-settable properties.
  */
