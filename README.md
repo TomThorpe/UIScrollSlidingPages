@@ -69,7 +69,7 @@ There is one main distinction, once you have instantiated `TTScrollSlidingPagesC
 For example, to instantiate `TTScrollSlidingPagesController` and add it to the current view from another view controller, do the following:
 
 ```  objc
-    TTScrollSlidingPagesController slider = [[TTScrollSlidingPagesController alloc] init];
+    TTScrollSlidingPagesController *slider = [[TTScrollSlidingPagesController alloc] init];
     slider.dataSource = self; /*the current view controller (self) conforms to the TTSlidingPagesDataSource protocol)*/
     slider.view.frame = self.view.frame; //I'm setting up the view to be fullscreen in the current view
     [scrollPagerView addSubview:slider.view];
