@@ -1,8 +1,8 @@
 UIScrollSlidingPages
 =========================
-This control allows you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. Similar in style to the Groupon app.
+This control allows you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. 
 
-An example of an app using this control as it's main UI is the Tom Thorpe Photography app, available on the [App Store](https://itunes.apple.com/us/app/tom-thorpe-photography/id614901245?mt=8)
+![Screenshot](Screenshots/uiscrollslidingpages.gif)
 
 New in version 1.1
 ---
@@ -11,13 +11,6 @@ Added the extra new property `hideStatusBarWhenScrolling` to better suit how the
 This property is intended for when the UIScrollSlidingPages is full screen and the status bar is overlapping the UIPageControl page indicator dots. If you set this new property to YES, the page indicator dots replace the status bar when scrolling, and disappear when not scrolling.
 
 The property is disabled by default.
-
-Example Screenshots
----
-####Screenshot:
-
-
-![Screenshot](Screenshots/uiscrollslidingpages.gif)
 
 What is UIScrollSlidingPages?
 ---
