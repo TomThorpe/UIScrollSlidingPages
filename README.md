@@ -8,31 +8,16 @@ New in version 1.1
 ---
 Added the extra new property `hideStatusBarWhenScrolling` to better suit how the status bar works in iOS7.
 
-In iOS7+ the status bar now overlaps the content, which caused a problem where this control was used full screen because the page dots (UIPageControl) now share the same space as the status bar.
+This property is intended for when the UIScrollSlidingPages is full screen and the status bar is overlapping the UIPageControl page indicator dots. If you set this new property to YES, the page indicator dots replace the status bar when scrolling, and disappear when not scrolling.
 
-This property is intended for when the UIScrollSlidingPages is full screen and the status bar is overlapping the UIPageControl page dots. If you set this new property to YES, the page dots disappear when not scrolling, and show the status bar instead. And vice versa when you *are* scrolling.
-
-**For this property to work you need to add the "View controller-based status bar appearance" (UIViewControllerBasedStatusBarAppearance) key to info.plist and set it to a boolean of NO.**
-
-If you keep the current behaviour and don't set the new property above, in iOS7 you may need to add the self.edgesForExtendedLayout = UIRectEdgeNone; to your view controller to preserve the space for the status bar and mean the views don't overlap
-
-The default value is NO. I have changed the example project to set this project to YES though as I think it looks better in iOS7.
+The property is disabled by default.
 
 Example Screenshots
 ---
-####Video:
+####Screenshot:
 
 
 ![Screenshot](Screenshots/uiscrollslidingpages.gif)
-
-####Screenshots:
-
-![Screenshot](Screenshots/1.png) ![Screenshot](Screenshots/4.png)
-
-![Screenshot](Screenshots/2.png)  ![Screenshot](Screenshots/3.png)
-
-######Same as above, but with titleScrollerHidden option set to YES:
-![Screenshot](Screenshots/5.png)
 
 What is UIScrollSlidingPages?
 ---
