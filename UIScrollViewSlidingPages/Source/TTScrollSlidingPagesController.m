@@ -334,7 +334,7 @@
     while (currentXPosition <= bottomScrollView.contentOffset.x && currentXPosition < bottomScrollView.contentSize.width){
         currentXPosition += [self getWidthOfPage:page];
         
-        if (currentXPosition <= bottomScrollView.contentOffset.x){
+        if (currentXPosition <= bottomScrollView.contentOffset.x && page < [bottomScrollView.subviews count]-1){
             page++;
         }
     }
