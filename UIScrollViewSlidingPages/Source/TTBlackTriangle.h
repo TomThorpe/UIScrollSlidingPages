@@ -11,5 +11,6 @@
 @interface TTBlackTriangle : UIView
 
 - (id)initWithFrame:(CGRect)frame color:(UIColor *)sColor;
+- (id)initWithFrame:(CGRect)frame color:(UIColor *)sColor shouldBeSquare:(BOOL)square;
 
 @end
