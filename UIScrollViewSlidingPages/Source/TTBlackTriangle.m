@@ -11,11 +11,13 @@
 @implementation TTBlackTriangle
 {
     UIColor * color;
+    BOOL shouldBeSquare;
 }
 
 - (id)initWithFrame:(CGRect)frame color:(UIColor *)sColor
 {
     color = sColor;
+    shouldBeSquare = NO;
     self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
@@ -25,6 +27,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+    shouldBeSquare = NO;
     self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
@@ -32,20 +35,32 @@
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame color:(UIColor *)sColor shouldBeSquare:(BOOL)square {
+    color = sColor;
+    shouldBeSquare = YES;
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setBackgroundColor:color];
+    }
+    return self;
+}
+
 -(void)drawRect:(CGRect)rect
 {
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
-    CGContextClearRect(ctx, rect);
-    
-    CGContextBeginPath(ctx);
-    CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));  // top left
-    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect));  // top right
-    CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect));  // mid bottom
-    CGContextClosePath(ctx);
-    
-    CGContextSetFillColorWithColor(ctx, color.CGColor);
-    CGContextFillPath(ctx);
+    if (shouldBeSquare == NO) {
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        
+        CGContextClearRect(ctx, rect);
+        
+        CGContextBeginPath(ctx);
+        CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));  // top left
+        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect));  // top right
+        CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect));  // mid bottom
+        CGContextClosePath(ctx);
+        
+        CGContextSetFillColorWithColor(ctx, color.CGColor);
+        CGContextFillPath(ctx);
+    }
 }
 
 @end

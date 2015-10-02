@@ -75,6 +75,9 @@
         self.pagingEnabled = YES;
         self.zoomOutAnimationDisabled = NO;
         self.hideStatusBarWhenScrolling = NO;
+        self.titleScrollerIndicatorSquare = NO;
+        self.titleScrollerIndicatorOnTop = YES;
+        self.titleScrollerIndicatorSize = CGSizeMake(30, 10);
     }
     return self;
 }
@@ -106,9 +109,16 @@
     TTBlackTriangle *triangle;
     if (!self.titleScrollerHidden){
         //add a triangle view to point to the currently selected page from the header
-        int triangleWidth = 30;
-        int triangleHeight = 10;
-        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
+        int triangleWidth = self.titleScrollerIndicatorSize.width;
+        int triangleHeight = self.titleScrollerIndicatorSize.height;
+        int indicatorYPosition = nextYPosition;
+        
+        if (!self.titleScrollerIndicatorOnTop) {
+            indicatorYPosition += self.titleScrollerHeight - triangleHeight - self.titleScrollerBottomEdgeHeight;
+        }
+        
+        
+        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), indicatorYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour shouldBeSquare:self.titleScrollerIndicatorSquare];
         triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.view addSubview:triangle];
         
