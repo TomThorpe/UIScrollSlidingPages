@@ -77,6 +77,7 @@
         self.hideStatusBarWhenScrolling = NO;
         self.titleScrollerIndicatorSquare = NO;
         self.titleScrollerIndicatorOnTop = YES;
+        self.titleScrollerIndicatorSize = CGSizeMake(30, 10);
     }
     return self;
 }
@@ -108,8 +109,8 @@
     TTBlackTriangle *triangle;
     if (!self.titleScrollerHidden){
         //add a triangle view to point to the currently selected page from the header
-        int triangleWidth = 30;
-        int triangleHeight = 10;
+        int triangleWidth = self.titleScrollerIndicatorSize.width;
+        int triangleHeight = self.titleScrollerIndicatorSize.height;
         int indicatorYPosition = nextYPosition;
         
         if (!self.titleScrollerIndicatorOnTop) {
