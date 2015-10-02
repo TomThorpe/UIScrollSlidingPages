@@ -53,7 +53,7 @@
 -(int)getCurrentDisplayedPage;
 -(int)getXPositionOfPage:(int)page;
 
-
+@property BOOL titleScrollerIndicatorSquare;
 
 @property (nonatomic, weak) id<TTSlidingPagesDataSource> dataSource;
 
