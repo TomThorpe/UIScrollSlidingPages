@@ -550,6 +550,9 @@
     
     if (scrollView == topScrollView){
         //translate the top scroll to the bottom scroll
+
+        //prevent vertical scrolling
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0)];
         
         //get the page number of the scroll item (e.g third header = 3rd page).
         int pageNumber =  [self getTopScrollViewPageForXPosition:topScrollView.contentOffset.x];
