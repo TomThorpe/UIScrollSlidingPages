@@ -37,6 +37,11 @@
     self.slider.titleScrollerInActiveTextColour = [UIColor grayColor];
     self.slider.titleScrollerBottomEdgeColour = [UIColor darkGrayColor];
     self.slider.titleScrollerBottomEdgeHeight = 2;
+    self.slider.triangleType = TTTriangleTypeTop;
+    self.slider.titleScrollerHeight = 38;
+    self.slider.triangleSize = CGSizeMake(15, 8);
+    self.slider.trianglePosition = CGPointMake(self.view.frame.size.width/2-(self.slider.triangleSize.width/2), [UIApplication sharedApplication].statusBarFrame.size.height + self.slider.titleScrollerHeight);
+    self.slider.triangleBackgroundColour = [UIColor whiteColor];
     
     //set properties to customiser the slider. Make sure you set these BEFORE you access any other properties on the slider, such as the view or the datasource. Best to do it immediately after calling the init method.
     //self.slider.hideStatusBarWhenScrolling = YES;
@@ -94,7 +99,7 @@
     TTSlidingPageTitle *title;
     if (index == 0){
         //use a image as the header for the first page
-        title= [[TTSlidingPageTitle alloc] initWithHeaderImage:[UIImage imageNamed:@"about-tomthorpelogo.png"]];
+        title= [[TTSlidingPageTitle alloc] initWithHeaderText:@"Text"];
     } else {
         //all other pages just use a simple text header
         switch (index) {
