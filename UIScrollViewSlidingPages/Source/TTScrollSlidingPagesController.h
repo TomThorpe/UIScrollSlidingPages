@@ -31,6 +31,7 @@
 #import <UIKit/UIKit.h>
 #import "TTSlidingPagesDataSource.h"
 #import "TTSliddingPageDelegate.h"
+#import "TTTriangle.h"
 
 @class TTScrollViewWrapper;
 
@@ -99,6 +100,11 @@
  *  The font for the text in the header area. If not set, the default will be the bold system font. **/
 @property (nonatomic, strong) UIFont *titleScrollerTextFont;
 
+/** @property titleScrollerTextSelectedFont
+*  @brief The font for the text in the header area for selected page
+*  The font for the text in the header area. If not set, the default will be the bold system font. **/
+@property (nonatomic, strong) UIFont *titleScrollerTextSelectedFont;
+
 /** @property titleScrollerBottomEdgeColour
  *  @brief The colour of the border on the bottom edge of the header area
  *  The colour of the border on the bottom edge of the header area. If not set, the default will be transparent. **/
@@ -118,6 +124,21 @@
  *   @brief Disables the (very subtle) shadow effect on the title text label
  *   If set to YES the shadow effect on the title text label will be disabled. Default is NO. **/
 @property (nonatomic) BOOL disableTitleShadow;
+
+/**  @property triangleType
+*   @brief You can change triangle type (it means position) Top or Bottom
+*   Triangle position (type). If not set, the default will be TTBlackTriangleTypeTop. **/
+@property (nonatomic, assign) TTTriangleType triangleType;
+
+/**  @property triangleSize
+*   @brief You can change triangle size
+*   Triangle size. If not set, the default will be CGSize(30, 10). **/
+@property (nonatomic, assign) CGSize triangleSize;
+
+/**  @property trianglePosition
+*   @brief You can change triangle position
+*   Triangle size. If not set, the default will be CGSize(30, 10). **/
+@property (nonatomic, assign) CGPoint trianglePosition;
 
 /**  @property disableTopScrollerShadow
  *   @brief Disables the shadow effect on the top header scroller
