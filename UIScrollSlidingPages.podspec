@@ -6,9 +6,9 @@ Pod::Spec.new do |s|
 
   s.homepage         = "https://github.com/TomThorpe/UIScrollSlidingPages"
   s.screenshots     = [
-"https://github.com/TomThorpe/UIScrollSlidingPages/raw/master/Screenshots/1.png",
-"https://github.com/TomThorpe/UIScrollSlidingPages/raw/master/Screenshots/4.png",
-"https://github.com/TomThorpe/UIScrollSlidingPages/raw/master/Screenshots/uiscrollslidingpages.gif"
+"https://raw.github.com/TomThorpe/UIScrollSlidingPages/1.4/Screenshots/1.png",
+"https://raw.github.com/TomThorpe/UIScrollSlidingPages/1.4/Screenshots/4.png",
+"https://raw.github.com/TomThorpe/UIScrollSlidingPages/1.4/Screenshots/uiscrollslidingpages.gif"
 ]
   s.license          = 'MIT'
   s.author           = { "Tom Thorpe" => "code@tomthorpe.co.uk" }
