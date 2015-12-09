@@ -48,35 +48,48 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        viewDidLoadHasBeenCalled = NO;
-        //set defaults
-        self.titleScrollerHidden = NO;
-        self.titleScrollerHeight = 50;
-        self.titleScrollerItemWidth = 150;
-        self.disableTitleShadow = NO;
-        
-        UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
-        if (backgroundImage != nil){
-            self.titleScrollerBackgroundColour = [UIColor colorWithPatternImage:backgroundImage];
-        } else {
-            self.titleScrollerBackgroundColour = [UIColor blackColor];
-        }
-        
-        self.titleScrollerTextColour = [UIColor whiteColor];
-        self.titleScrollerInActiveTextColour = [UIColor whiteColor];
-        self.titleScrollerTextDropShadowColour = [UIColor blackColor];
-        self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
-        self.titleScrollerBottomEdgeHeight = 3;
-        self.titleScrollerBottomEdgeColour = [UIColor clearColor];
-        self.triangleBackgroundColour = [UIColor blackColor];
-        self.disableTitleScrollerShadow = NO;
-        self.disableUIPageControl = NO;
-        self.initialPageNumber = 0;
-        self.pagingEnabled = YES;
-        self.zoomOutAnimationDisabled = NO;
-        self.hideStatusBarWhenScrolling = NO;
+        [self commonInitialization];
     }
     return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonInitialization];
+    }
+    return self;
+}
+
+- (void)commonInitialization{
+    viewDidLoadHasBeenCalled = NO;
+    //set defaults
+    self.titleScrollerHidden = NO;
+    self.titleScrollerHeight = 50;
+    self.titleScrollerItemWidth = 150;
+    self.disableTitleShadow = NO;
+    
+    UIImage *backgroundImage = [UIImage imageNamed:@"diagmonds.png"];
+    if (backgroundImage != nil){
+        self.titleScrollerBackgroundColour = [UIColor colorWithPatternImage:backgroundImage];
+    } else {
+        self.titleScrollerBackgroundColour = [UIColor blackColor];
+    }
+    
+    self.titleScrollerTextColour = [UIColor whiteColor];
+    self.titleScrollerInActiveTextColour = [UIColor whiteColor];
+    self.titleScrollerTextDropShadowColour = [UIColor blackColor];
+    self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
+    self.titleScrollerBottomEdgeHeight = 3;
+    self.titleScrollerBottomEdgeColour = [UIColor clearColor];
+    self.triangleBackgroundColour = [UIColor blackColor];
+    self.disableTitleScrollerShadow = NO;
+    self.disableUIPageControl = NO;
+    self.initialPageNumber = 0;
+    self.pagingEnabled = YES;
+    self.zoomOutAnimationDisabled = NO;
+    self.hideStatusBarWhenScrolling = NO;
 }
 
 /**
