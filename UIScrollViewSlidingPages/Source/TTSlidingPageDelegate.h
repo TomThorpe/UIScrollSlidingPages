@@ -28,7 +28,7 @@
  */
 #import <Foundation/Foundation.h>
 
-@protocol TTSliddingPageDelegate <NSObject>
+@protocol TTSlidingPageDelegate <NSObject>
 
 -(void)didScrollToViewAtIndex:(NSUInteger)index;
 

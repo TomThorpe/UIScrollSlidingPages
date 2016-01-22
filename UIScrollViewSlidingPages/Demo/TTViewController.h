@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TTSlidingPagesDataSource.h"
-#import "TTSliddingPageDelegate.h"
+#import "TTSlidingPageDelegate.h"
 
-@interface TTViewController : UIViewController<TTSlidingPagesDataSource, TTSliddingPageDelegate>{
+@interface TTViewController : UIViewController<TTSlidingPagesDataSource, TTSlidingPageDelegate>{
 }
 
 @end
