@@ -64,6 +64,11 @@
  *  Whether the title scroller bar is hidden or not. Set this to YES if you only want the pages, and don't want the titles at the top of the page. For now even if this is set to YES you will still need to implement the `-(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index` method in your datasource class, but you can just return nil for everything. Default is NO.  **/
 @property (nonatomic) bool titleScrollerHidden;
 
+/** @property titleScrollerTriangleHidden
+ *  @brief Whether the triange in the scroller bar is hidden or not.
+ *  Whether the triange in the scroller bar is hidden or not. Set this to YES if you only want to display the scroller with titles without a triangular mark over the active page. Default is NO.**/
+@property (nonatomic) bool titleScrollerTriangleHidden;
+
 /**  @property titleScrollerHeight
  *   @brief The height of the top scroller
  *   The height of the top navigation scroller (the one with the header texts or images in). If not set, this will default to 50px.  **/

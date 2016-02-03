@@ -51,6 +51,7 @@
         viewDidLoadHasBeenCalled = NO;
         //set defaults
         self.titleScrollerHidden = NO;
+        self.titleScrollerTriangleHidden = NO;
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 150;
         self.disableTitleShadow = NO;
@@ -106,12 +107,14 @@
     
     TTBlackTriangle *triangle;
     if (!self.titleScrollerHidden){
-        //add a triangle view to point to the currently selected page from the header
-        int triangleWidth = 30;
-        int triangleHeight = 10;
-        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
-        triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        [self.view addSubview:triangle];
+        if (!self.titleScrollerTriangleHidden) {
+            //add a triangle view to point to the currently selected page from the header
+            int triangleWidth = 30;
+            int triangleHeight = 10;
+            triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - (triangleWidth / 2), nextYPosition /*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
+            triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+            [self.view addSubview:triangle];
+        }
         
         //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
         topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
