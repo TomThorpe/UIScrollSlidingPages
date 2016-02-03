@@ -66,6 +66,7 @@
         self.titleScrollerInActiveTextColour = [UIColor whiteColor];
         self.titleScrollerTextDropShadowColour = [UIColor blackColor];
         self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
+        self.titleScrollerInActiveTextFont = [UIFont boldSystemFontOfSize:19];
         self.titleScrollerBottomEdgeHeight = 3;
         self.titleScrollerBottomEdgeColour = [UIColor clearColor];
         self.triangleBackgroundColour = [UIColor blackColor];
@@ -393,8 +394,10 @@
     for (UIView *v in vs) {
         if(title == page && [v isKindOfClass:[UILabel class]]){
             ((UILabel *) v).textColor = self.titleScrollerTextColour;
+            ((UILabel *) v).font = self.titleScrollerTextFont;
         } else if([v isKindOfClass:[UILabel class]]) {
             ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
+            ((UILabel *) v).font = self.titleScrollerInActiveTextFont;
         }
         
         title++;

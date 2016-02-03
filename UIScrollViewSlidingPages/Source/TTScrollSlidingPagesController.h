@@ -99,6 +99,11 @@
  *  The font for the text in the header area. If not set, the default will be the bold system font. **/
 @property (nonatomic, strong) UIFont *titleScrollerTextFont;
 
+/** @property titleScrollerInActiveTextFont
+ *  @brief The font for the inactive text in the header area
+ *  The font for the inactive text in the header area. If not set, the default will be the bold system font. **/
+@property (nonatomic, strong) UIFont *titleScrollerInActiveTextFont;
+
 /** @property titleScrollerBottomEdgeColour
  *  @brief The colour of the border on the bottom edge of the header area
  *  The colour of the border on the bottom edge of the header area. If not set, the default will be transparent. **/
