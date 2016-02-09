@@ -128,6 +128,13 @@
         topScrollView.backgroundColor = [UIColor clearColor];
         topScrollView.pagingEnabled = self.pagingEnabled;
         topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
+        
+        topScrollViewWrapperContainer = [[UIView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight)];
+        topScrollViewWrapperContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        topScrollViewWrapperContainer.backgroundColor = [UIColor clearColor];
+        topScrollViewWrapperContainer.clipsToBounds = YES;
+        [self.view addSubview:topScrollViewWrapperContainer];
+        
         topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
         topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour;
@@ -140,7 +147,7 @@
         [topScrollViewWrapper addGestureRecognizer: singleTap];
         
         [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
-        [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
+        [topScrollViewWrapperContainer addSubview:topScrollViewWrapper]; //put the wrapper in this view.
         nextYPosition += self.titleScrollerHeight;
         
         //line underneith the top scroller

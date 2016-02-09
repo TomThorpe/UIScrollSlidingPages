@@ -40,6 +40,7 @@
     bool viewDidAppearHasBeenCalled;
     UIPageControl *pageControl;
     TTScrollViewWrapper *topScrollViewWrapper;
+    UIView *topScrollViewWrapperContainer;
     UIScrollView *bottomScrollView, *topScrollView;
 }
 
