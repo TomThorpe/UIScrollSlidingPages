@@ -57,6 +57,7 @@
     
     //set the datasource.
     self.slider.dataSource = self;
+    self.slider.delegate = self;
     
     //add the slider's view to this view as a subview, and add the viewcontroller to this viewcontrollers child collection (so that it gets retained and stays in memory! And gets all relevant events in the view controller lifecycle)
     self.slider.view.frame = self.view.frame;
@@ -120,9 +121,14 @@
 }
 
 #pragma mark - delegate
--(void)didScrollToViewAtIndex:(NSUInteger)index
+- (void)didScrollToViewAtIndex:(NSUInteger)index
 {
-  NSLog(@"scrolled to view");
+    NSLog(@"scrolled to view");
+}
+
+- (void)didTapOnScrollTopView:(NSUInteger)index
+{
+    NSLog(@"tapped to view");
 }
 
 @end

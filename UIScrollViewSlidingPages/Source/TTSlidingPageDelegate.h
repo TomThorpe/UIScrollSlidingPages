@@ -31,5 +31,6 @@
 @protocol TTSlidingPageDelegate <NSObject>
 
 -(void)didScrollToViewAtIndex:(NSUInteger)index;
+-(void)didTapOnScrollTopView:(NSUInteger)index;
 
 @end

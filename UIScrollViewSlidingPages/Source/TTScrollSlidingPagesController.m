@@ -448,6 +448,9 @@
         [self scrollToPage:page animated:YES];
     }
     
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapOnScrollTopView:)]) {
+        [self.delegate didTapOnScrollTopView:page];
+    }
 }
 
 /**If YES, hides the status bar and shows the page dots.
