@@ -51,6 +51,7 @@
         viewDidLoadHasBeenCalled = NO;
         //set defaults
         self.titleScrollerHidden = NO;
+        self.titleScrollerTriangleHidden = NO;
         self.titleScrollerHeight = 50;
         self.titleScrollerItemWidth = 150;
         self.disableTitleShadow = NO;
@@ -66,6 +67,7 @@
         self.titleScrollerInActiveTextColour = [UIColor whiteColor];
         self.titleScrollerTextDropShadowColour = [UIColor blackColor];
         self.titleScrollerTextFont = [UIFont boldSystemFontOfSize:19];
+        self.titleScrollerInActiveTextFont = [UIFont boldSystemFontOfSize:19];
         self.titleScrollerBottomEdgeHeight = 3;
         self.titleScrollerBottomEdgeColour = [UIColor clearColor];
         self.triangleBackgroundColour = [UIColor blackColor];
@@ -105,12 +107,14 @@
     
     TTBlackTriangle *triangle;
     if (!self.titleScrollerHidden){
-        //add a triangle view to point to the currently selected page from the header
-        int triangleWidth = 30;
-        int triangleHeight = 10;
-        triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(triangleWidth/2), nextYPosition/*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
-        triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        [self.view addSubview:triangle];
+        if (!self.titleScrollerTriangleHidden) {
+            //add a triangle view to point to the currently selected page from the header
+            int triangleWidth = 30;
+            int triangleHeight = 10;
+            triangle = [[TTBlackTriangle alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - (triangleWidth / 2), nextYPosition /*start at the top of the nextYPosition, but dont increment the yposition, so this means the triangle sits on top of the topscroller and cuts into it a bit*/, triangleWidth, triangleHeight) color:self.triangleBackgroundColour];
+            triangle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+            [self.view addSubview:triangle];
+        }
         
         //set up the top scroller (for the nav titles to go in) - it is one frame wide, but has clipToBounds turned off to enable you to see the next and previous items in the scroller. We wrap it in an outer uiview so that the background colour can be set on that and span the entire view (because the width of the topScrollView is only one frame wide and centered).
         topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.titleScrollerItemWidth, self.titleScrollerHeight)];
@@ -124,6 +128,13 @@
         topScrollView.backgroundColor = [UIColor clearColor];
         topScrollView.pagingEnabled = self.pagingEnabled;
         topScrollView.delegate = self; //move the bottom scroller proportionally as you drag the top.
+        
+        topScrollViewWrapperContainer = [[UIView alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight)];
+        topScrollViewWrapperContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        topScrollViewWrapperContainer.backgroundColor = [UIColor clearColor];
+        topScrollViewWrapperContainer.clipsToBounds = YES;
+        [self.view addSubview:topScrollViewWrapperContainer];
+        
         topScrollViewWrapper = [[TTScrollViewWrapper alloc] initWithFrame:CGRectMake(0, nextYPosition, self.view.frame.size.width, self.titleScrollerHeight) andUIScrollView:topScrollView];//make the view to put the scroll view inside which will allow the background colour, and allow dragging from anywhere in this wrapper to be passed to the scrollview.
         topScrollViewWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         topScrollViewWrapper.backgroundColor = self.titleScrollerBackgroundColour;
@@ -136,7 +147,7 @@
         [topScrollViewWrapper addGestureRecognizer: singleTap];
         
         [topScrollViewWrapper addSubview:topScrollView];//put the top scroll view in the wrapper.
-        [self.view addSubview:topScrollViewWrapper]; //put the wrapper in this view.
+        [topScrollViewWrapperContainer addSubview:topScrollViewWrapper]; //put the wrapper in this view.
         nextYPosition += self.titleScrollerHeight;
         
         //line underneith the top scroller
@@ -393,8 +404,10 @@
     for (UIView *v in vs) {
         if(title == page && [v isKindOfClass:[UILabel class]]){
             ((UILabel *) v).textColor = self.titleScrollerTextColour;
+            ((UILabel *) v).font = self.titleScrollerTextFont;
         } else if([v isKindOfClass:[UILabel class]]) {
             ((UILabel *) v).textColor = self.titleScrollerInActiveTextColour;
+            ((UILabel *) v).font = self.titleScrollerInActiveTextFont;
         }
         
         title++;
