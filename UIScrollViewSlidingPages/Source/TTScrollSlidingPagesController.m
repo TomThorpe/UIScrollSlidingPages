@@ -427,8 +427,12 @@
     [self updateHeaderTextColour:page];
 }
 
-
-
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapOnScrollTopView:)]) {
+        [self.delegate didTapOnScrollTopView:[self getCurrentDisplayedPage]];
+    }
+}
 
 /**
  Handler for the gesture recogniser on the top scrollview wrapper. When the topscrollview wrapper is tapped, this works out the tap position and scrolls the view to that page.
@@ -446,10 +450,6 @@
     //if not already on the page and the page is within the bounds of the pages we have, scroll to the page!
     if ([self getCurrentDisplayedPage] != page && page < [bottomScrollView.subviews count]){
         [self scrollToPage:page animated:YES];
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapOnScrollTopView:)]) {
-        [self.delegate didTapOnScrollTopView:page];
     }
 }
 
