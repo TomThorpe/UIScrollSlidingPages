@@ -40,6 +40,7 @@
     bool viewDidAppearHasBeenCalled;
     UIPageControl *pageControl;
     TTScrollViewWrapper *topScrollViewWrapper;
+    UIView *topScrollViewWrapperContainer;
     UIScrollView *bottomScrollView, *topScrollView;
 }
 
@@ -63,6 +64,11 @@
  *  @brief Whether the title scroller bar is hidden or not.
  *  Whether the title scroller bar is hidden or not. Set this to YES if you only want the pages, and don't want the titles at the top of the page. For now even if this is set to YES you will still need to implement the `-(TTSlidingPageTitle *)titleForSlidingPagesViewController:(TTScrollSlidingPagesController *)source atIndex:(int)index` method in your datasource class, but you can just return nil for everything. Default is NO.  **/
 @property (nonatomic) bool titleScrollerHidden;
+
+/** @property titleScrollerTriangleHidden
+ *  @brief Whether the triange in the scroller bar is hidden or not.
+ *  Whether the triange in the scroller bar is hidden or not. Set this to YES if you only want to display the scroller with titles without a triangular mark over the active page. Default is NO.**/
+@property (nonatomic) bool titleScrollerTriangleHidden;
 
 /**  @property titleScrollerHeight
  *   @brief The height of the top scroller
@@ -98,6 +104,11 @@
  *  @brief The font for the text in the header area
  *  The font for the text in the header area. If not set, the default will be the bold system font. **/
 @property (nonatomic, strong) UIFont *titleScrollerTextFont;
+
+/** @property titleScrollerInActiveTextFont
+ *  @brief The font for the inactive text in the header area
+ *  The font for the inactive text in the header area. If not set, the default will be the bold system font. **/
+@property (nonatomic, strong) UIFont *titleScrollerInActiveTextFont;
 
 /** @property titleScrollerBottomEdgeColour
  *  @brief The colour of the border on the bottom edge of the header area
