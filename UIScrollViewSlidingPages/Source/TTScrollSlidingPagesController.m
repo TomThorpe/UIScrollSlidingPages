@@ -41,6 +41,12 @@
 
 @implementation TTScrollSlidingPagesController
 
+- (void)dealloc
+{
+   topScrollView.delegate = nil;
+   bottomScrollView.delegate = nil;
+}
+
 /**
  Initalises the control and sets all the default values for the user-settable properties.
  */
@@ -197,11 +203,21 @@
     }
 }
 
+-(void)reloadPagesDuringFirstAppearIfNeeded{
+   if (!viewDidAppearHasBeenCalled){
+      viewDidAppearHasBeenCalled = YES;
+      [self reloadPages];
+   }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+   if (animated){
+      [self reloadPagesDuringFirstAppearIfNeeded];
+   }
+}
+
 -(void)viewDidAppear:(BOOL)animated{
-    if (!viewDidAppearHasBeenCalled){
-        viewDidAppearHasBeenCalled = YES;
-        [self reloadPages];
-    }
+    [self reloadPagesDuringFirstAppearIfNeeded];
 }
 
 
