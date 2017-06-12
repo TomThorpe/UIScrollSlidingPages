@@ -539,18 +539,24 @@
         //Do a zoom out effect on the current view and next view depending on the amount scrolled
         double minimumZoom = 0.93;
         double zoomSpeed = 1000;//increase this number to slow down the zoom
-        UIView *currentView = [bottomScrollView.subviews objectAtIndex:currentPage];
+        UIView *currentView;
         UIView *nextView;
-        if (currentPage < [bottomScrollView.subviews count]-1){
+        if (currentPage < bottomScrollView.subviews.count) {
+            currentView = [bottomScrollView.subviews objectAtIndex:currentPage];
+        }
+        if (currentPage < [bottomScrollView.subviews count]-1) {
             nextView = [bottomScrollView.subviews objectAtIndex:currentPage+1];
         }
         
-        //currentView zooms out as scroll left
         int distanceFromPageOrigin = bottomScrollView.contentOffset.x - [self getXPositionOfPage:currentPage]; //find out how far the scroll is away from the start of the page, and use this to adjust the transform of the currentView
         if (distanceFromPageOrigin < 0) {distanceFromPageOrigin = 0;}
         double scaleAmount = 1-(distanceFromPageOrigin/zoomSpeed);
         if (scaleAmount < minimumZoom ){scaleAmount = minimumZoom;}
-        currentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, scaleAmount, scaleAmount);
+        
+        //currentView zooms out as scroll left
+        if (currentView != nil) {
+            currentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, scaleAmount, scaleAmount);
+        }
         
         //nextView zooms in as scroll left
         if (nextView != nil){
