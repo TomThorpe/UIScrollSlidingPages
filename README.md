@@ -1,3 +1,6 @@
+## Update - NO LONGER IN ACTIVE DEVELOPMENT
+This project is quite old, its old code, and old UI. It's not really recommended that you use this for projects now. I doubt I will keep track of issues anymore on this, but may accept PRs depending on the simplicity. Even so, I think this library has pretty much come to the end of it's life. Thanks for using it and for all your support and help from anyone who contributed!
+
 UIScrollSlidingPages
 =========================
 This control allows you to add multiple view controllers and have them scroll horizontally, each with a smaller header view that scrolls in proportion as the content scrolls. 
